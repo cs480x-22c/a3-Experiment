@@ -1,10 +1,5 @@
 import Graph from "./Graph";
 import * as d3 from 'd3'
-import { thresholdScott } from "d3";
-
-const ARC_WIDTH = 20
-const ARC_SPACING = 20
-const START_RADIUS = 50 
 
 export default class RadialBarChart extends Graph
 {
@@ -12,7 +7,7 @@ export default class RadialBarChart extends Graph
     {
         super("radial_bar_chart")
 
-        this._arcWidth = 20
+        this._arcWidth = 30
         this._arcSpacing = 20
         this._startRadius = 20
     }
@@ -39,9 +34,10 @@ export default class RadialBarChart extends Graph
             .data([this.bigValLoc, this.smallValLoc])
             .join('text')
             .attr('x', 0)
-            .attr('y', (i) => -(this._startRadius + this._arcSpacing * i + this._arcWidth * i + 2))
+            .attr('y', (i) => -(this._startRadius + this._arcSpacing * i + this._arcWidth * i - 10))
             .text("*")
             .attr('fill', 'red')
+            .attr('font-size', 40)
             .attr("transform", "translate("+ this.experiment.sizes.centerX + "," + this.experiment.sizes.centerY + ")")
     }
     

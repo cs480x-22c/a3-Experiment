@@ -1,11 +1,12 @@
-import DummyDataGenerator from "./data/DummyDataGenerator"
-import UserResults from "./data/UserResults"
-import Sizes from "./utils/Sizes"
+import DummyDataGenerator from "./data/DummyDataGenerator.js"
+import UserResults from "./data/UserResults.js"
+import Sizes from "./utils/Sizes.js"
 import * as d3 from 'd3'
-import TrialManager from "./TrialManager"
-import ArrayUtils from "./utils/ArrayUtils"
-import Graph from "./charts/Graph"
-import RadialBarChart from "./charts/RadialBarChart"
+import TrialManager from "./TrialManager.js"
+import ArrayUtils from "./utils/ArrayUtils.js"
+import Graph from "./charts/Graph.js"
+import RadialBarChart from "./charts/RadialBarChart.js"
+import BarChart from "./charts/BarChart.js"
 
 let instance = null
 
@@ -28,7 +29,7 @@ export default class Experiment
 
         this.userResults = new UserResults()
         this.dummyDataGenerator = new DummyDataGenerator(5, 10, 5, 100, 1)
-        this.trialManager = new TrialManager(20, [new RadialBarChart()], "guessField", "submitGuess")
+        this.trialManager = new TrialManager(20, [new BarChart(), new RadialBarChart()], "guessField", "submitGuess")
     }
 
     
