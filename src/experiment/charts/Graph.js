@@ -16,7 +16,7 @@ export default class Graph
     {
         return this.data[this.bigValLoc].value
     }
-
+    
     getSmallVal()
     {
         return this.data[this.smallValLoc].value
@@ -30,7 +30,8 @@ export default class Graph
 
     _pickBigSmallVals()
     {
-        let specialValLocs = this.experiment.arrayUtils.nUniqueNumbers(2, 0, this.data.length)
+        let specialValLocs = this.experiment.arrayUtils.nUniqueNumbers(2, 0, this.data.length-1)
+        console.log(specialValLocs)
 
         this.bigValLoc = specialValLocs[0]
         this.smallValLoc = specialValLocs[1]

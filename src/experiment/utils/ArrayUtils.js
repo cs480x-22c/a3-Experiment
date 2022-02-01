@@ -1,8 +1,20 @@
 export default class ArrayUtils
 {
-    shuffle(array)
-    {
-        return array.sort(() => Math.random - 0.5)
+    /**
+     * Shuffles array in place.
+     * @param {Array} a items An array containing the items.
+     * 
+     * FROM: https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+     */
+    shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
     }
 
     nUniqueNumbers(total, min, max)
@@ -15,10 +27,10 @@ export default class ArrayUtils
 
         numbersArray = this.shuffle(numbersArray)
 
-        if(total <= max-min)
+        if(total >= max-min)
             return numbersArray
         
-        let randomNums = [];
+        let randomNums = []
         for(let i = 0; i < total; i++)
         {
             randomNums.push(numbersArray[i])
