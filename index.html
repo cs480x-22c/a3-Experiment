@@ -1,13 +1,14 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
-
-<style>
-</style>
-
-<body>
-  <h1> Experiment </h1>
-</body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<svg width=1920 height=1080></svg>
+<script>  
+  d3.select("svg")
+    .selectAll("rect")
+    .data(data2)
+    .enter().append('rect')
+    .attr('x', function(d) { return (Math.random()*d)*100; })
+    .attr('y', function(d) { return (Math.random()*d)*100; })
+    .attr('width', function(d) { return (Math.random()*d)*30; })
+    .attr('height', function(d) { return (Math.random()*d)*30; })
+    .attr('stroke', 'red')
+    .attr('fill', '#69a3b2');
 </script>
