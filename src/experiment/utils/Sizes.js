@@ -4,5 +4,7 @@ export default class Sizes
     {
         this.width = 800;
         this.height = 800;
+        this.centerX = this.width / 2
+        this.centerY = this.height / 2
     }
 }
