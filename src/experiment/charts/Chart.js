@@ -1,7 +1,7 @@
 import Experiment from "../Experiment"
 
 
-export default class Graph
+export default class Chart
 {
     constructor(name)
     {

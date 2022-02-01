@@ -29,7 +29,7 @@ export default class TrialManager
 
     startNewTrial()
     {   
-        this.currentGraph = this.chartTrials[this.currentTrial]
+        this.currentGraph = this.chartTrials[this.currentTrial - 1]
         this.currentGraph.load()
     }
 
@@ -49,6 +49,7 @@ export default class TrialManager
         else
         {
             this.experiment.userResults.printResults()
+            alert("Thank you for taking part in this experiment!")
         }
     }
 

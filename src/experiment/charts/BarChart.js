@@ -1,8 +1,8 @@
-import Graph from "./Graph";
+import Chart from "./Chart";
 import * as d3 from 'd3'
 import { range, svg } from "d3";
 
-export default class RadialBarChart extends Graph
+export default class RadialBarChart extends Chart
 {
     constructor()
     {
@@ -47,9 +47,5 @@ export default class RadialBarChart extends Graph
             .text("*")
             .attr('font-size', 40)
             .attr('fill', 'red')
-
-        
     }
-    
-
 }

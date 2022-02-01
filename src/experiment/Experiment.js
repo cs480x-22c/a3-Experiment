@@ -4,9 +4,9 @@ import Sizes from "./utils/Sizes.js"
 import * as d3 from 'd3'
 import TrialManager from "./TrialManager.js"
 import ArrayUtils from "./utils/ArrayUtils.js"
-import Graph from "./charts/Graph.js"
 import RadialBarChart from "./charts/RadialBarChart.js"
 import BarChart from "./charts/BarChart.js"
+import PieChart from "./charts/PieChart.js"
 
 let instance = null
 
@@ -29,8 +29,7 @@ export default class Experiment
 
         this.userResults = new UserResults()
         this.dummyDataGenerator = new DummyDataGenerator(5, 10, 5, 100, 1)
-        this.trialManager = new TrialManager(20, [new BarChart(), new RadialBarChart()], "guessField", "submitGuess")
+        this.trialManager = new TrialManager(1, [new PieChart()], "guessField", "submitGuess")
     }
 
-    
 }

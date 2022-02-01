@@ -1,15 +1,15 @@
-import Graph from "./Graph";
+import Chart from "./Chart";
 import * as d3 from 'd3'
 
-export default class RadialBarChart extends Graph
+export default class RadialBarChart extends Chart
 {
     constructor()
     {
         super("radial_bar_chart")
 
-        this._arcWidth = 30
+        this._arcWidth = 20
         this._arcSpacing = 20
-        this._startRadius = 20
+        this._startRadius = 40
     }
     
     load()
