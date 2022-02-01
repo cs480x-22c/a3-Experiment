@@ -2,23 +2,24 @@
 <script src="FileSaver.js"></script>
 <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
 
-<svg width=800 height=1000></svg>
+<svg width=800 height=1080></svg>
 <script>
-	var height = 800;
-	var width = 800;
+
+	var height = 960;
+	var width = 600;
 	var barWidth = 50;
 	var barCount = 10;
-	var fract = ((Math.random() * 5) + 3) / 10;
+	var fract = ((Math.random() * 5) + 3) / barCount;
 	
 	var pairHeight = (Math.random() * 400) + barWidth;
 	var svg = d3.select("svg");
 	
 	var pairs = [];
 	while(pairs.length < 2) {
-		var r = Math.floor(Math.random() * 10);
+		var r = Math.floor(Math.random() * barCount);
 		if(pairs.indexOf(r) === -1) pairs.push(r);
 	}
-	document.write(pairs[0].toString() + ", " + pairs[1].toString() + ", percent: " + fract.toString());
+	document.title = (pairs[0].toString() + ", " + pairs[1].toString() + ", percent: " + fract.toString());
 	
     for (let i = 0; i < barCount; i++) {
 		var pos = (Math.random() * 400) + barWidth;
@@ -38,13 +39,13 @@
 		if(i == pairs[1]) {
 			svg.append('rect')
 				.attr('x', (barCount + barWidth) * i)
-				.attr('y', height - (pairHeight / fract))
+				.attr('y', height - (pairHeight * fract))
 				.attr('width', barWidth)
-				.attr('height', (pairHeight / fract))
+				.attr('height', (pairHeight * fract))
 				.attr('fill', 'black');
 			svg.append('circle')
 				.attr('cx', ((barCount + barWidth) * i) + (barWidth / 2))
-				.attr('cy', height - (pairHeight / (fract * 2)))
+				.attr('cy', height - (pairHeight * fract) / 2)
 				.attr('r', barWidth / 8)
 				.attr('fill', 'yellow');
 		}
