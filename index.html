@@ -9,9 +9,10 @@
 </body>
 
 <script>
-  console.log(d3); // test if d3 is loaded
-  width=400;
-  height=400;
+  const n = 10;
+
+  width=500;
+  height=500;
   var svg = d3.select("body")
   .append("svg")
   .attr("width", width)
@@ -21,9 +22,9 @@
     var cx = [];
     var sum=nums[0];
     for(var i=0; i < nums.length; i++){
-      sum = sum+nums[i];
+      sum = sum+n*((nums[i] / Math.PI)**0.5);
       cx.push(sum);
-      sum = sum+nums[i]+20;
+      sum = sum+n*((nums[i] / Math.PI)**0.5)+10;
     }
     
     
@@ -59,7 +60,7 @@
       return c;
     })
     .attr("cy", 150)
-    .attr("r", function(d){ return d;})
+    .attr("r", function(d){ return  n*((d / Math.PI)**0.5);})
     .style("fill", "white")
     .style("stroke", "black");
     
