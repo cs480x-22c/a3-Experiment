@@ -10,4 +10,74 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+  width=400;
+  height=400;
+  var svg = d3.select("body")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height)
+
+  function createBubbleChart(nums, mark1, mark2, ratio){
+    var cx = [];
+    var sum=nums[0];
+    for(var i=0; i < nums.length; i++){
+      sum = sum+nums[i];
+      cx.push(sum);
+      sum = sum+nums[i]+20;
+    }
+    
+    
+    var scaleX = d3.scaleLinear()
+    .domain([0,350])
+    .range([0,width-100]);
+
+    var x = d3.axisBottom()
+    .scale(scaleX);
+
+    var scaleY = d3.scaleLinear()
+    .domain(0, nums.length*20)
+    .range(height-100, 40);
+
+    var y = d3.axisLeft()
+    .scale(scaleY);
+
+    svg.append("g")
+    .attr("transform", "translate(40," + (height-100)+")");
+
+    svg.append("g")
+    .attr("transform", "translate(40,0)");
+
+    var count = 0;
+    svg.append("g")
+    .selectAll("dot")
+    .data(nums)
+    .enter()
+    .append("circle")
+    .attr("cx", function(){ 
+      var c = cx[count];
+      count++;
+      return c;
+    })
+    .attr("cy", 150)
+    .attr("r", function(d){ return d;})
+    .style("fill", "white")
+    .style("stroke", "black");
+    
+    svg.append("circle")
+    .attr("cx", function(){
+      return cx[mark1];
+    })
+    .attr("cy", 150)
+    .attr("r", 3);
+
+    svg.append("circle")
+    .attr("cx", function(){
+      return cx[mark2]; 
+    })
+    .attr("cy", 150)
+    .attr("r", 3);
+
+  }
+
+  createBubbleChart([37.55174893355209, 26.7242869088752, 7.279825722381671, 3.1068271579164195, 25.337311277274612],3,0,0.08273455288098452)
 </script>
