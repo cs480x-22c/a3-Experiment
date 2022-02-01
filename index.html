@@ -9,16 +9,16 @@
 </body>
 
 <script>
-  const n = 10;
-
+  
   width=500;
   height=500;
   var svg = d3.select("body")
   .append("svg")
   .attr("width", width)
-  .attr("height", height)
+  .attr("height", height);
 
   function createBubbleChart(nums, mark1, mark2, ratio){
+    const n = 10;
     var cx = [];
     var sum=nums[0];
     for(var i=0; i < nums.length; i++){
@@ -26,7 +26,6 @@
       cx.push(sum);
       sum = sum+n*((nums[i] / Math.PI)**0.5)+10;
     }
-    
     
     var scaleX = d3.scaleLinear()
     .domain([0,350])
@@ -80,5 +79,63 @@
 
   }
 
-  createBubbleChart([37.55174893355209, 26.7242869088752, 7.279825722381671, 3.1068271579164195, 25.337311277274612],3,0,0.08273455288098452)
+  //createBubbleChart([37.55174893355209, 26.7242869088752, 7.279825722381671, 3.1068271579164195, 25.337311277274612],3,0,0.08273455288098452)
+
+  function createBarChart(nums, mark1, mark2, ratio){
+    
+    var xVals = [];
+    var sum = 0;
+    var rectWidth = 15;
+    for(var i=0; i < nums.length; i++){
+      sum+=rectWidth;
+      xVals.push(sum);
+      sum+=rectWidth+10;
+    }
+
+    var scaleX = d3.scaleBand()
+    .domain(nums.map(function(d){ return d;}))
+    .range([0,width]);
+
+    var x = d3.axisBottom()
+    .scale(scaleX);
+
+    var scaleY = d3.scaleLinear()
+    .domain([0,350])
+    .range([height-100, 40]);
+
+    var y = d3.axisLeft()
+    .scale(scaleY);
+
+    svg.append("g")
+    .attr("transform", "translate(40," + (height-100)+")")
+    .call(x.ticks(2));
+
+    svg.append("g")
+    .attr("transform", "translate(40,0)")
+    .call(y.ticks(2));
+
+    var count=0;
+    console.log(nums[0]);
+    svg.selectAll("mybar")
+    .data(nums)
+    .enter()
+    .append("rect")
+    .attr("x", function(d){
+      //n = xVals[count];
+      //count++;
+      console.log(scaleX(d));
+      return scaleX(d);
+    })
+    .attr("y", function(d){
+      return scaleY(d);
+    })
+    .attr("w", scaleX.bandwidth())
+    .attr("h", function(d){
+      return height-100-scaleY(d);
+    });
+
+
+  }
+
+  createBarChart([37.55174893355209, 26.7242869088752, 7.279825722381671, 3.1068271579164195, 25.337311277274612],3,0,0.08273455288098452);
 </script>
