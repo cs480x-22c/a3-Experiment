@@ -84,23 +84,28 @@
   function createBarChart(nums, mark1, mark2, ratio){
     
     var xVals = [];
-    var sum = 0;
+    var sum = 40;
     var rectWidth = 15;
+    const m = 5;
+    var maxNum=0;
     for(var i=0; i < nums.length; i++){
       sum+=rectWidth;
       xVals.push(sum);
-      sum+=rectWidth+10;
+      sum+=rectWidth;
+      if(nums[i]>maxNum){
+        maxNum = nums[i]
+      }
     }
 
-    var scaleX = d3.scaleBand()
-    .domain(nums.map(function(d){ return d;}))
-    .range([0,width]);
+    var scaleX = d3.scaleLinear()
+    .domain([0, width])
+    .range([0, 35*nums.length]);
 
     var x = d3.axisBottom()
     .scale(scaleX);
 
     var scaleY = d3.scaleLinear()
-    .domain([0,350])
+    .domain([0,maxNum*m])
     .range([height-100, 40]);
 
     var y = d3.axisLeft()
@@ -108,11 +113,11 @@
 
     svg.append("g")
     .attr("transform", "translate(40," + (height-100)+")")
-    .call(x.ticks(2));
+    .call(x.ticks(0));
 
     svg.append("g")
     .attr("transform", "translate(40,0)")
-    .call(y.ticks(2));
+    .call(y.ticks(0));
 
     var count=0;
     console.log(nums[0]);
@@ -121,20 +126,33 @@
     .enter()
     .append("rect")
     .attr("x", function(d){
-      //n = xVals[count];
-      //count++;
-      console.log(scaleX(d));
-      return scaleX(d);
+      n = xVals[count];
+      count++;
+      return n;
     })
     .attr("y", function(d){
-      return scaleY(d);
+      return scaleY(d*m);
     })
-    .attr("w", scaleX.bandwidth())
-    .attr("h", function(d){
-      return height-100-scaleY(d);
-    });
+    .attr("width", rectWidth)
+    .attr("height", function(d){
+      return height-100-scaleY(d*m);
+    })
+    .style("fill", "white")
+    .style("stroke", "black");
 
+    svg.append("circle")
+    .attr("cx", function(){
+      return xVals[mark1]+7.5;
+    })
+    .attr("cy", height-105)
+    .attr("r", 3);
 
+    svg.append("circle")
+    .attr("cx", function(){
+      return xVals[mark2]+7.5; 
+    })
+    .attr("cy", height-105)
+    .attr("r", 3);
   }
 
   createBarChart([37.55174893355209, 26.7242869088752, 7.279825722381671, 3.1068271579164195, 25.337311277274612],3,0,0.08273455288098452);
