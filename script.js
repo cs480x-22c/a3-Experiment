@@ -1,14 +1,15 @@
-let results = [];
+const container = d3.select("#container");
+let results = []; //store results
+let order; //random order to display charts
+let counter = 0; //what graph we are on
 
 function drawStartPage() {
-    const container = d3.select("#container");
-
+    //add text
     const text1 = "In this experiment, you are asked to judge what percent\
     a smaller region is of a larger region in several charts. We won't record\
     any information from you except your answers."
     const text2 = "Click Agree to begin.";
     const text3 = "Thank you!";
-
     container.append("p")
         .text(text1);
     container.append("p")
@@ -16,16 +17,18 @@ function drawStartPage() {
     container.append("p")
         .text(text3);
 
+    //add buttons
     container.append("div")
-        .attr("id", "button-div");
-    const buttonDiv = d3.select("#button-div");
+        .attr("id", "form-div");
+    const formDiv = d3.select("#form-div");
 
-    buttonDiv.append("button")
+    formDiv.append("button")
         .text("Disagree")
         .attr("id", "disagree-button");
-    buttonDiv.append("button")
+    formDiv.append("button")
         .text("Agree")
-        .attr("id", "agree-button");
+        .attr("id", "agree-button")
+        .attr("autocomplete", "off");
 
     d3.select("#disagree-button").on("click", e => {
         drawEndPage();
@@ -37,17 +40,66 @@ function drawStartPage() {
     });
 }
 
-function drawGraphPage(d) {
-    console.log(d);
-    const container = d3.select("#container");
+function drawGraphPage(data) {
+    order = shuffle(data.length);
+
+    //clear screen
     container.html("");
 
+    //add svg and draw first graph
     container.append("svg")
         .attr("width", width)
         .attr("height", height);
+    let d = data[order[counter]];
+    drawGraph(d.id, stringToArray(d.nums), d.mark1, d.mark2);
+
+    //add text
+    const text1 = "Two values are marked with dots. What percent do you think\
+    the smaller value is of the larger value? Please put your answer below.";
+    const text2 = "EXAMPLE: If you think the smaller one is exactly half of\
+    the bigger one, input 50.";
+    container.append("p")
+        .text(text1);
+    container.append("p")
+        .text(text2);
+
+    //add form
+    container.append("div")
+        .attr("id", "form-div");
+    const formDiv = d3.select("#form-div");
+
+    formDiv.append("input")
+        .attr("type", "text")
+        .attr("id", "input-box");
+
+    formDiv.append("button")
+        .text("Next")
+        .attr("id", "next-button");
+
+    d3.select("#next-button").on("click", e => {
+        let inputValue = d3.select("#input-box").node().value.trim();
+        if (inputValue != "") {
+            //clear input field and store result
+            d3.select("#input-box").node().value = "";
+            results.push({id: d3.select("svg").attr("data-id"), response: inputValue});
+
+            //draw next graph or go to end page
+            if (counter < data.length - 1) {
+                counter++;
+                d = data[order[counter]];
+                drawGraph(d.id, stringToArray(d.nums), d.mark1, d.mark2);
+            }
+            else {
+                drawEndPage();
+            }
+        }
+    });  
 }
 
 function drawGraph(id, data, mark1, mark2) {
+    d3.select("svg").html("");
+    d3.select("svg")
+        .attr("data-id", id);
     if (id.includes("bar")) {
         drawBarChart(data, mark1, mark2);
     }
@@ -60,14 +112,47 @@ function drawGraph(id, data, mark1, mark2) {
 }
 
 function drawEndPage() {
-    const container = d3.select("#container");
+    //clear screen
     container.html("");
 
+    //draw text
     const text1 = "Thank you for participating!";
-
     container.append("p")
         .text(text1);
+
+    //log results to console
     console.log(results);
+}
+
+//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffle(length) {
+    let array = [], i;
+    for (i = 0; i < length; i++) {
+        array.push(i);
+    }
+
+    let currentIndex = array.length, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
+function stringToArray(string) {
+    string = string.substring(1, string.length - 1); //remove brackets
+    array = string.split(","); //split on comma
+    array = array.map(d => Number(d)); //convert to number
+    return array;
 }
 
 drawStartPage();

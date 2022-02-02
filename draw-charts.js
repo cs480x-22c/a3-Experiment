@@ -77,7 +77,7 @@ function getCoordinates(cx, cy, radius, angle) {
 function drawBubbleChart(nums, mark1, mark2) {
     const svg = d3.select("svg");
 
-    const n = 20;
+    const n = 10;
     var cx = [];
     var sum = nums[0];
     for (var i = 0; i < nums.length; i++) {
