@@ -70,7 +70,7 @@ function drawGraphPage(data) {
         .text(text2);
 
     //add form
-    container.append("div")
+    container.append("form")
         .attr("id", "form-div");
     const formDiv = d3.select("#form-div");
 
@@ -82,7 +82,9 @@ function drawGraphPage(data) {
         .text("Next")
         .attr("id", "next-button");
 
-    d3.select("#next-button").on("click", e => {
+    d3.select("#form-div").on("submit", e => {
+        e.preventDefault();
+
         let inputValue = d3.select("#input-box").node().value.trim();
         if (inputValue != "") { //replace with true to ignore check
             //clear input field and store result
