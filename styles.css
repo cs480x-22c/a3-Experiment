@@ -22,6 +22,8 @@ body {
     display: flex;
     justify-content: space-evenly;
     width: 75%;
+    position: relative;
+    left: 25px;
 }
 #progress-text {
     width: 50px;

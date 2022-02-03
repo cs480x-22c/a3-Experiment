@@ -54,10 +54,9 @@ function drawGraphPage(data) {
         .attr("width", width / 2)
         .attr("height", 15)
         .attr("id", "progress-bar");
-    updateProgressBar(counter + 1, data.length);
     progressDiv.append("span")
-        .text(`${counter + 1}/${data.length}`)
         .attr("id", "progress-text");
+    updateProgressBar(counter + 1, data.length);
 
     //add svg and draw first graph
     container.append("svg")
@@ -104,7 +103,6 @@ function drawGraphPage(data) {
             if (counter < data.length - 1) {
                 counter++;
                 updateProgressBar(counter + 1, data.length);
-                d3.select("#progress-text").text(`${counter + 1}/${data.length}`);
                 d = data[order[counter]];
                 drawGraph(d.id, stringToArray(d.nums), d.mark1, d.mark2);
             }
@@ -132,6 +130,7 @@ function updateProgressBar(part, whole) {
         .attr("width", barWidth)
         .attr("height", 15)
         .attr("fill", "black");
+        d3.select("#progress-text").text(`${part}/${whole}`);
 }
 
 function drawGraph(id, data, mark1, mark2) {

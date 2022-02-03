@@ -60,13 +60,20 @@ def generate_lists(n):
     df['mark2'] = mark2
     df['ratio'] = ratios
     
+    df['ratio'] = df['ratio'].apply(lambda x: x * 100)
+    df['ratio'] = df['ratio'].round();
     return df.sort_values(by="ratio")
 
 #generate many possible sets
-df = generate_lists(1000)
+df = generate_lists(10000)
+df.drop_duplicates(subset="ratio", keep="first", inplace=True)
+df = df[df['ratio'] % 5 == 0]
 
 #sample from range of indices to get range of ratios
-sample = df.iloc[range(0, 1000, 50)]
+sample = pd.DataFrame.copy(df);
+sample.loc[len(df.index)] = [[4, 5, 5, 6, 80], 0, 4, 5];
+sample = sample.sort_values(by="ratio")
+
 sample["num"] = range(1, 21);
 
 sample_bar = pd.DataFrame.copy(sample);
