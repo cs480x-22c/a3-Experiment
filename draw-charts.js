@@ -78,7 +78,7 @@ function drawBubbleChart(nums, mark1, mark2) {
     const svg = d3.select("#graph-svg");
     const n = 12;
     var cx = [];
-    var sum = width / 4;
+    var sum = 0;
 
     //Gets a list of cx values for each circle
     for (var i = 0; i < nums.length; i++) {
@@ -87,9 +87,11 @@ function drawBubbleChart(nums, mark1, mark2) {
         sum = sum + n * ((nums[i] / Math.PI) ** 0.5) + 10;
     }
 
+    centered = ((width/2) - (sum/2));
+
     //Sets up the axis
     var scaleX = d3.scaleLinear()
-        .domain([0, 350])
+        .domain([0, sum])
         .range([0, width - 100]);
 
     var x = d3.axisBottom()
@@ -103,10 +105,10 @@ function drawBubbleChart(nums, mark1, mark2) {
         .scale(scaleY);
 
     svg.append("g")
-        .attr("transform", "translate(" + (width / 2) + "," + (height - 100) + ")");
+        .attr("transform", "translate(" + centered + "," + (height - 100) + ")");
 
     svg.append("g")
-        .attr("transform", "translate(" + (width / 2) + ",0)");
+        .attr("transform", "translate(" + centered + ",0)");
 
     var count = 0;
 
@@ -117,7 +119,7 @@ function drawBubbleChart(nums, mark1, mark2) {
         .enter()
         .append("circle")
         .attr("cx", function () {
-            var c = cx[count];
+            var c = cx[count]+ centered;
             count++;
             return c;
         })
@@ -131,7 +133,7 @@ function drawBubbleChart(nums, mark1, mark2) {
     //Adds the markers
     svg.append("circle")
         .attr("cx", function () {
-            return cx[mark1];
+            return cx[mark1] + centered;
         })
         .attr("cy", height / 2)
         .attr("r", 3)
@@ -139,7 +141,7 @@ function drawBubbleChart(nums, mark1, mark2) {
 
     svg.append("circle")
         .attr("cx", function () {
-            return cx[mark2];
+            return cx[mark2] + centered;
         })
         .attr("cy", height / 2)
         .attr("r", 3)
@@ -153,7 +155,7 @@ function drawBarChart(nums, mark1, mark2) {
     const svg = d3.select("#graph-svg");
 
     var xVals = [];
-    var sum = width / 3;
+    var sum = 0;
     var rectWidth = 15;
     const m = 5;
     var maxNum = 0;
@@ -168,9 +170,11 @@ function drawBarChart(nums, mark1, mark2) {
         }
     }
 
+    centered = ((width/2) - (sum/2));
+
     //Sets up the axis
     var scaleX = d3.scaleLinear()
-        .domain([0, width])
+        .domain([0, sum])
         .range([0, 35 * nums.length]);
 
     var x = d3.axisBottom()
@@ -184,12 +188,12 @@ function drawBarChart(nums, mark1, mark2) {
         .scale(scaleY);
 
     svg.append("g")
-        .attr("transform", "translate(" + (width / 3) + "," + (height - 100) + ")")
+        .attr("transform", "translate(" + centered + "," + (height - 100) + ")")
         .call(x.ticks(0))
         .style("stroke-width", 2);
 
     svg.append("g")
-        .attr("transform", "translate(" + (width / 3) + ",0)")
+        .attr("transform", "translate(" + centered + ",0)")
         .call(y.ticks(0))
         .style("stroke-width", 2);
 
@@ -201,7 +205,7 @@ function drawBarChart(nums, mark1, mark2) {
         .enter()
         .append("rect")
         .attr("x", function (d) {
-            n = xVals[count];
+            n = xVals[count] + centered;
             count++;
             return n;
         })
@@ -219,7 +223,7 @@ function drawBarChart(nums, mark1, mark2) {
     //Adds the markers to the graph
     svg.append("circle")
         .attr("cx", function () {
-            return xVals[mark1] + 7.5;
+            return xVals[mark1] + (rectWidth/2) + centered;
         })
         .attr("cy", height - 105)
         .attr("r", 3)
@@ -227,7 +231,7 @@ function drawBarChart(nums, mark1, mark2) {
 
     svg.append("circle")
         .attr("cx", function () {
-            return xVals[mark2] + 7.5;
+            return xVals[mark2] + (rectWidth/2) + centered;
         })
         .attr("cy", height - 105)
         .attr("r", 3)
