@@ -164,7 +164,7 @@ function drawBarChart(nums, mark1, mark2) {
         xVals.push(sum);
         sum += rectWidth;
         if (nums[i] > maxNum) {
-            maxNum = nums[i]
+            maxNum = nums[i];
         }
     }
 
