@@ -29,3 +29,6 @@ button {
 input {
     width: 100px;
 }
+#progress-text {
+    align-self: flex-end;
+}

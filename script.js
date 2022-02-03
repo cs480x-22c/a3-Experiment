@@ -1,4 +1,5 @@
 const container = d3.select("#container");
+const path = "data.csv";
 let results = []; //store results
 let order; //random order to display charts
 let counter = 0; //what graph we are on
@@ -35,7 +36,7 @@ function drawStartPage() {
     });
 
     d3.select("#agree-button").on("click", e => {
-        d3.csv("data.csv")
+        d3.csv(path)
             .then(d => drawGraphPage(d));
     });
 }
@@ -45,6 +46,11 @@ function drawGraphPage(data) {
 
     //clear screen
     container.html("");
+
+    //add progress text
+    container.append("span")
+        .text(`${counter + 1}/${data.length}`)
+        .attr("id", "progress-text");
 
     //add svg and draw first graph
     container.append("svg")
@@ -56,7 +62,7 @@ function drawGraphPage(data) {
     //add text
     const text1 = "Two values are marked with dots. What percent do you think\
     the smaller value is of the larger value? Please put your answer below.";
-    const text2 = "EXAMPLE: If you think the smaller one is exactly half of\
+    const text2 = "For example if you think the smaller one is exactly half of\
     the bigger one, input 50.";
     container.append("p")
         .text(text1);
@@ -78,14 +84,15 @@ function drawGraphPage(data) {
 
     d3.select("#next-button").on("click", e => {
         let inputValue = d3.select("#input-box").node().value.trim();
-        if (inputValue != "") {
+        if (inputValue != "") { //replace with true to ignore check
             //clear input field and store result
             d3.select("#input-box").node().value = "";
-            results.push({id: d3.select("svg").attr("data-id"), response: inputValue});
+            results.push({ id: d3.select("svg").attr("data-id"), response: inputValue });
 
             //draw next graph or go to end page
             if (counter < data.length - 1) {
                 counter++;
+                d3.select("#progress-text").text(`${counter + 1}/${data.length}`);
                 d = data[order[counter]];
                 drawGraph(d.id, stringToArray(d.nums), d.mark1, d.mark2);
             }
@@ -93,7 +100,7 @@ function drawGraphPage(data) {
                 drawEndPage();
             }
         }
-    });  
+    });
 }
 
 function drawGraph(id, data, mark1, mark2) {

@@ -3,8 +3,8 @@ const height = 400;
 
 //--------------------Pie Chart--------------------
 function drawPieChart(data, mark1, mark2) {
-    const cx = 250;
-    const cy = 250;
+    const cx = 200;
+    const cy = 200;
     const r = 150;
 
     const svg = d3.select("svg");
@@ -76,10 +76,9 @@ function getCoordinates(cx, cy, radius, angle) {
 
 function drawBubbleChart(nums, mark1, mark2) {
     const svg = d3.select("svg");
-    console.log("here");
     const n = 6;
     var cx = [];
-    var sum = width/5;
+    var sum = width / 5;
 
     //Gets a list of cx values for each circle
     for (var i = 0; i < nums.length; i++) {
@@ -104,10 +103,10 @@ function drawBubbleChart(nums, mark1, mark2) {
         .scale(scaleY);
 
     svg.append("g")
-        .attr("transform", "translate("+ (width/2) + "," + (height - 100) + ")");
+        .attr("transform", "translate(" + (width / 2) + "," + (height - 100) + ")");
 
     svg.append("g")
-        .attr("transform", "translate("+(width/2) + ",0)");
+        .attr("transform", "translate(" + (width / 2) + ",0)");
 
     var count = 0;
 
@@ -122,7 +121,7 @@ function drawBubbleChart(nums, mark1, mark2) {
             count++;
             return c;
         })
-        .attr("cy", width/2)
+        .attr("cy", width / 2)
         .attr("r", function (d) { return n * ((d / Math.PI) ** 0.5); })
         .style("fill", "white")
         .style("stroke", "black");
@@ -133,14 +132,14 @@ function drawBubbleChart(nums, mark1, mark2) {
         .attr("cx", function () {
             return cx[mark1];
         })
-        .attr("cy", width/2)
+        .attr("cy", width / 2)
         .attr("r", 3);
 
     svg.append("circle")
         .attr("cx", function () {
             return cx[mark2];
         })
-        .attr("cy", width/2)
+        .attr("cy", width / 2)
         .attr("r", 3);
 
 }
@@ -151,7 +150,7 @@ function drawBarChart(nums, mark1, mark2) {
     const svg = d3.select("svg");
 
     var xVals = [];
-    var sum = width/5;
+    var sum = width / 5;
     var rectWidth = 15;
     const m = 5;
     var maxNum = 0;
@@ -182,11 +181,11 @@ function drawBarChart(nums, mark1, mark2) {
         .scale(scaleY);
 
     svg.append("g")
-        .attr("transform", "translate("+ (width/5) + "," + (height - 100) + ")")
+        .attr("transform", "translate(" + (width / 5) + "," + (height - 100) + ")")
         .call(x.ticks(0));
 
     svg.append("g")
-        .attr("transform", "translate("+(width/5) + ",0)")
+        .attr("transform", "translate(" + (width / 5) + ",0)")
         .call(y.ticks(0));
 
     var count = 0;
@@ -210,7 +209,7 @@ function drawBarChart(nums, mark1, mark2) {
         })
         .style("fill", "white")
         .style("stroke", "black");
-    
+
     //Adds the markers to the graph
     svg.append("circle")
         .attr("cx", function () {
