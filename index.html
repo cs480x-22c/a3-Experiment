@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<head>
+    <link rel="stylesheet" href="formatting.css">
+</head>
+<div id="content">
+    <div id="a">
+        In this experiment <br />
+        <div id="b">
+            you are asked to judge<br />
+            <div id="" c">
+                what is the percent of a smaller value to a larger value in several charts.<br />
+                <div id="d">
+                    We won't record any other information from you except your answers.<br />
+                    <div id="e">
+                        Click next to begin.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<button id="next" onclick='next()'>Next</button>
+<form method="post" id="form" action="https://docs.google.com/forms/d/1-jfpI551iJL2tsuCrpJR145ufVwNCMiiRLXMDsDv6Mw/formResponse">
+    <div id="fstuff">
+        <label for="input" hidden="hidden">What percent is the smaller marked section of the larger one?</label>
+        <input type="text" name="entry.976539467" id="inp1" hidden="hidden">
+        <input type="text" name="entry.1662701453" id="inp2" hidden="hidden">
+        <input type="text" name="entry.793370282" id="inp3" hidden="hidden">
+        <button type="submit" id="submit" value="Submit" hidden="hidden">Submit</button>
+    </div>
+</form>
+<br />
+<svg width=800 height=600></svg>
+<script>
+    window.onload = init;
+    function init() {
+        var form = document.getElementById('form');
+        form.onsubmit = testSubmit;
+
+        function testSubmit() {
+            if (!form['inp1'].value || !form['inp2'].value || !form['inp3'].value) {
+                alert("Please fill out all of the boxes.")
+                return false;
+            }
+        }
+    }
+    let i = 0;
+    function next() {
+        var svg = d3.select("svg");
+        i += 1;
+        switch (i) {
+            case 1:
+                var height = 540;
+                var width = 600;
+                var barWidth = 50;
+                var barCount = 10;
+                var fract = ((Math.random() * 5) + 3) / barCount;
+
+                var pairHeight = (Math.random() * 400) + barWidth;
+
+                var pairs = [];
+                while (pairs.length < 2) {
+                    var r = Math.floor(Math.random() * barCount);
+                    if (pairs.indexOf(r) === -1) pairs.push(r);
+                }
+                for (let i = 0; i < barCount; i++) {
+                    var pos = (Math.random() * 400) + barWidth;
+                    if (i == pairs[0]) {
+                        svg.append('rect')
+                            .attr('x', (barCount + barWidth) * i)
+                            .attr('y', height - pairHeight)
+                            .attr('width', barWidth)
+                            .attr('height', pairHeight)
+                            .attr('fill', 'black');
+                        svg.append('circle')
+                            .attr('cx', ((barCount + barWidth) * i) + (barWidth / 2))
+                            .attr('cy', (height - pairHeight) + (pairHeight / 2))
+                            .attr('r', barWidth / 8)
+                            .attr('fill', 'yellow');
+                    }
+                    if (i == pairs[1]) {
+                        svg.append('rect')
+                            .attr('x', (barCount + barWidth) * i)
+                            .attr('y', height - (pairHeight * fract))
+                            .attr('width', barWidth)
+                            .attr('height', (pairHeight * fract))
+                            .attr('fill', 'black');
+                        svg.append('circle')
+                            .attr('cx', ((barCount + barWidth) * i) + (barWidth / 2))
+                            .attr('cy', height - (pairHeight * fract) / 2)
+                            .attr('r', barWidth / 8)
+                            .attr('fill', 'yellow');
+                    }
+                    else if (i != pairs[0] && i != pairs[1]) {
+                        svg.append('rect')
+                            .attr('x', (barCount + barWidth) * i)
+                            .attr('y', height - pos)
+                            .attr('width', barWidth)
+                            .attr('height', pos)
+                            .attr('fill', 'black');
+                    }
+                }
+                document.getElementById("inp1").hidden = false;
+                document.getElementById("inp2").hidden = false;
+                document.getElementById("inp3").hidden = false;
+                document.getElementById("submit").hidden = false;
+                break;
+            case 2:
+                svg.selectAll("*").remove();
+                document.getElementById("inp1").disabled = true
+                const reducer = (previousValue, currentValue) => previousValue + currentValue;
+                var width = 800;
+                var height = 540;
+                var size = 200
+                var lines = 6;
+                svg.append('circle')
+                    .attr('cx', width / 2)
+                    .attr('cy', height / 2)
+                    .attr('r', size)
+                    .attr('fill', 'black');
+
+                var angles = [];
+                var nums = [];
+                var x = [];
+                var y = [];
+                var sum = 0;
+                var pair = [];
+                var val = 0;
+                for (let i = 0; i < 2; i++) {
+                    if (i == 0) {
+                        val += Math.floor(Math.random() * 3) + 1;
+                        pair[i] = (val % 6);
+                    }
+                    else if (i == 1) {
+                        val += Math.floor(Math.random() * 3) + 1;
+                        pair[i] = (val % 6);
+                    }
+                }
+                for (let i = 0; i < lines; i++) {
+                    sum += Math.floor(Math.random() * 30) + 30;
+                    if (i == 0) {
+                        sum = 0;
+                    }
+                    nums[i] = sum;
+                    x[i] = (Math.cos((sum / 180) * Math.PI) * 200) + (width / 2);
+                    y[i] = (Math.sin((sum / 180) * Math.PI) * 200) + (height / 2);
+                    svg.append('line')
+                        .style("stroke", "red")
+                        .style("stroke-width", 5)
+                        .attr("x1", width / 2)
+                        .attr("y1", height / 2)
+                        .attr("x2", x[i])
+                        .attr("y2", y[i]);
+                }
+                var total = 0;
+                for (let i = 0; i < lines; i++) {
+                    if (i == 0) {
+                        angles[i] = 0;
+                        continue;
+                    }
+                    else {
+                        total += nums[i] - nums[i - 1];
+                        angles[i] = nums[i] - nums[i - 1];
+                    }
+                }
+                for (let i = 0; i < pair.length; i++) {
+                    var small = nums[pair[i]] + (nums[(pair[i] + 1) % 6] - nums[pair[i]]) / 2;
+                    if (pair[i] == (lines - 1)) {
+                        small += 180;
+                        svg.append('circle')
+                            .attr('cx', (width / 2) + ((Math.cos((small / 180) * Math.PI) * 140)))
+                            .attr('cy', (height / 2) + ((Math.sin((small / 180) * Math.PI) * 140)))
+                            .attr('r', 10)
+                            .attr('fill', 'yellow');
+                    }
+                    else {
+                        svg.append('circle')
+                            .attr('cx', (width / 2) + ((Math.cos((small / 180) * Math.PI) * 140)))
+                            .attr('cy', (height / 2) + ((Math.sin((small / 180) * Math.PI) * 140)))
+                            .attr('r', 10)
+                            .attr('fill', 'yellow');
+                    }
+                }
+                angles.push(360 - angles.reduce(reducer));
+                break;
+            case 3:
+                svg.selectAll("*").remove();
+                var barWidth = 100;
+                var heights = [];
+                var bars = 10;
+                var pair = [];
+
+                while (pair.length < 2) {
+                    var r = Math.floor(Math.random() * bars);
+                    if (pair.indexOf(r) === -1) pair.push(r);
+                }
+
+                var sum = 2;
+                for (let i = 0; i < bars; i++) {
+                    var h1 = Math.floor(Math.random() * 40) + 20;
+                    heights[i] = h1;
+                    svg.append('rect')
+                        .attr('x', 10)
+                        .attr('y', sum)
+                        .attr('width', barWidth)
+                        .attr('height', h1)
+                        .attr('fill', 'white')
+                        .attr('stroke', 'black')
+                        .attr('stroke-width', '3');
+                    if (pair.includes(i)) {
+                        svg.append('circle')
+                            .attr('cx', (barWidth / 2) + 10)
+                            .attr('cy', sum + (h1 / 2))
+                            .attr('r', 5)
+                            .attr('fill', 'red');
+                    }
+                    sum += h1;
+                }
+                document.getElementById("inp2").disabled = true;
+                break;
+            default:
+                svg.selectAll("*").remove();
+                document.getElementById("inp3").disabled = true;
+                document.getElementById("content").innerHTML = '';
+                document.getElementById("post").innerHTML = '<body>Thank you for participating! Press submit to complete.</body>';
+                document.getElementById("inp1").disabled = false;
+                document.getElementById("inp2").disabled = false;
+                document.getElementById("inp3").disabled = false;
+                document.getElementById("next").hidden = true;
+        }
+    }
+</script>
+<div id="post"> </div>
