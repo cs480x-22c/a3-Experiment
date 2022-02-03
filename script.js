@@ -7,7 +7,8 @@ let counter = 0; //what graph we are on
 function drawStartPage() {
     //add text
     const text1 = "In this experiment, you are asked to judge what percent\
-    a smaller region is of a larger region in several charts. We won't record\
+    a smaller region is of a larger region in several charts. Make a quick\
+    visual judgement and do not try to make measurements. We won't record\
     any information from you except your answers."
     const text2 = "Click Agree to begin.";
     const text3 = "Thank you!";
