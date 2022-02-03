@@ -74,7 +74,13 @@ var svg = d3.select("#my_dataviz")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 // Create dummy data
-var data = {a: 10, b: 20, c:30, d:8, e:12}
+var ran_split_donut = getRandomIntInclusive(5,10); //random number of splits for the chart
+  //random values between 0 and 100
+  var data_donut = []; //initialize data
+  for (i=0; i<ran_split_donut; i++){
+    var new_data = getRandomIntInclusive(0, 100);
+    data_donut.push(new_data);
+  }
 
 // set the color scale
 
@@ -82,7 +88,7 @@ var data = {a: 10, b: 20, c:30, d:8, e:12}
 // Compute the position of each group on the pie:
 var pie = d3.pie()
   .value(function(d) {return d.value; })
-var data_ready = pie(d3.entries(data))
+var data_ready = pie(d3.entries(data_donut))
 
 // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
 svg
