@@ -13,7 +13,19 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
-  var data = [2,4,6,8];
+  //functon to random number for number of splits
+  function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+}
+  var ran_split = getRandomIntInclusive(5,10); //random number of splits for the chart
+  //random values between 0 and 100
+  var data = []; //initialize data
+  for (i=0; i<ran_split; i++){
+    var new_data = getRandomIntInclusive(0, 100);
+    data.push(new_data);
+  }
   var svg = d3.select("svg"),
         width = svg.attr("width"),
         height = svg.attr("height"),
