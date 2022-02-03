@@ -1,10 +1,10 @@
-const width = 400;
+const width = 800;
 const height = 400;
 
 //--------------------Pie Chart--------------------
 function drawPieChart(data, mark1, mark2) {
-    const cx = 200;
-    const cy = 200;
+    const cx = width/2;
+    const cy = height/2;
     const r = 150;
 
     const svg = d3.select("svg");
@@ -76,9 +76,9 @@ function getCoordinates(cx, cy, radius, angle) {
 
 function drawBubbleChart(nums, mark1, mark2) {
     const svg = d3.select("svg");
-    const n = 6;
+    const n = 12;
     var cx = [];
-    var sum = width / 5;
+    var sum = width / 4;
 
     //Gets a list of cx values for each circle
     for (var i = 0; i < nums.length; i++) {
@@ -121,10 +121,11 @@ function drawBubbleChart(nums, mark1, mark2) {
             count++;
             return c;
         })
-        .attr("cy", width / 2)
+        .attr("cy", height / 2)
         .attr("r", function (d) { return n * ((d / Math.PI) ** 0.5); })
         .style("fill", "white")
-        .style("stroke", "black");
+        .style("stroke", "black")
+        .style("stroke-width", 2);
 
 
     //Adds the markers
@@ -132,15 +133,17 @@ function drawBubbleChart(nums, mark1, mark2) {
         .attr("cx", function () {
             return cx[mark1];
         })
-        .attr("cy", width / 2)
-        .attr("r", 3);
+        .attr("cy", height / 2)
+        .attr("r", 3)
+        .style("stroke-width", 2);
 
     svg.append("circle")
         .attr("cx", function () {
             return cx[mark2];
         })
-        .attr("cy", width / 2)
-        .attr("r", 3);
+        .attr("cy", height / 2)
+        .attr("r", 3)
+        .style("stroke-width", 2);
 
 }
 
@@ -150,7 +153,7 @@ function drawBarChart(nums, mark1, mark2) {
     const svg = d3.select("svg");
 
     var xVals = [];
-    var sum = width / 5;
+    var sum = width / 3;
     var rectWidth = 15;
     const m = 5;
     var maxNum = 0;
@@ -181,12 +184,14 @@ function drawBarChart(nums, mark1, mark2) {
         .scale(scaleY);
 
     svg.append("g")
-        .attr("transform", "translate(" + (width / 5) + "," + (height - 100) + ")")
-        .call(x.ticks(0));
+        .attr("transform", "translate(" + (width / 3) + "," + (height - 100) + ")")
+        .call(x.ticks(0))
+        .style("stroke-width", 2);
 
     svg.append("g")
-        .attr("transform", "translate(" + (width / 5) + ",0)")
-        .call(y.ticks(0));
+        .attr("transform", "translate(" + (width / 3) + ",0)")
+        .call(y.ticks(0))
+        .style("stroke-width", 2);
 
     var count = 0;
 
@@ -208,7 +213,8 @@ function drawBarChart(nums, mark1, mark2) {
             return height - 100 - scaleY(d * m);
         })
         .style("fill", "white")
-        .style("stroke", "black");
+        .style("stroke", "black")
+        .style("stroke-width", 2);
 
     //Adds the markers to the graph
     svg.append("circle")
@@ -216,12 +222,14 @@ function drawBarChart(nums, mark1, mark2) {
             return xVals[mark1] + 7.5;
         })
         .attr("cy", height - 105)
-        .attr("r", 3);
+        .attr("r", 3)
+        .style("stroke-width", 2);
 
     svg.append("circle")
         .attr("cx", function () {
             return xVals[mark2] + 7.5;
         })
         .attr("cy", height - 105)
-        .attr("r", 3);
+        .attr("r", 3)
+        .style("stroke-width", 2);
 }
