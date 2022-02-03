@@ -92,10 +92,10 @@
 	angles.push(360 - angles.reduce(reducer));
 	document.write(pair);
 	document.write("<br>");
-	if(angles[pair[1]] > angles[pair[0]]) {
-		document.write("Angle %: " + (angles[pair[0]] / angles[pair[1]]));
+	if(angles[pair[1] + 1] > angles[pair[0] + 1]) {
+		document.write("Angle %: " + (angles[pair[0] + 1] / angles[pair[1] + 1]));
 	}
 	else {
-		document.write("Angle %: " + (angles[pair[1]] / angles[pair[0]]));
+		document.write("Angle %: " + (angles[pair[1] + 1] / angles[pair[0] + 1]));
 	}
 </script>
