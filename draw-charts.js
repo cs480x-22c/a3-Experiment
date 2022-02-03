@@ -7,7 +7,7 @@ function drawPieChart(data, mark1, mark2) {
     const cy = height/2;
     const r = 150;
 
-    const svg = d3.select("svg");
+    const svg = d3.select("#graph-svg");
 
     //draw border
     svg.append("circle")
@@ -40,7 +40,7 @@ function drawPieChart(data, mark1, mark2) {
 }
 
 function drawPieChartLine(x1, y1, x2, y2) {
-    const svg = d3.select("svg");
+    const svg = d3.select("#graph-svg");
 
     svg.append("line")
         .attr("x1", x1)
@@ -53,7 +53,7 @@ function drawPieChartLine(x1, y1, x2, y2) {
 
 //draw small circle on sector
 function markSector(cx, cy, radius, current, angle) {
-    const svg = d3.select("svg");
+    const svg = d3.select("#graph-svg");
 
     markAngle = current - (angle / 2);
     coords = getCoordinates(cx, cy, radius / 2, markAngle);
@@ -75,7 +75,7 @@ function getCoordinates(cx, cy, radius, angle) {
 //--------------------Bubble Chart--------------------
 
 function drawBubbleChart(nums, mark1, mark2) {
-    const svg = d3.select("svg");
+    const svg = d3.select("#graph-svg");
     const n = 12;
     var cx = [];
     var sum = width / 4;
@@ -150,7 +150,7 @@ function drawBubbleChart(nums, mark1, mark2) {
 //--------------------Bar Chart--------------------
 
 function drawBarChart(nums, mark1, mark2) {
-    const svg = d3.select("svg");
+    const svg = d3.select("#graph-svg");
 
     var xVals = [];
     var sum = width / 3;

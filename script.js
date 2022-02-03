@@ -28,8 +28,7 @@ function drawStartPage() {
         .attr("id", "disagree-button");
     formDiv.append("button")
         .text("Agree")
-        .attr("id", "agree-button")
-        .attr("autocomplete", "off");
+        .attr("id", "agree-button");
 
     d3.select("#disagree-button").on("click", e => {
         drawEndPage();
@@ -47,15 +46,24 @@ function drawGraphPage(data) {
     //clear screen
     container.html("");
 
-    //add progress text
-    container.append("span")
+    //add progress bar
+    container.append("div")
+        .attr("id", "progress-div");
+    const progressDiv = d3.select("#progress-div");
+    progressDiv.append("svg")
+        .attr("width", width / 2)
+        .attr("height", 15)
+        .attr("id", "progress-bar");
+    updateProgressBar(counter + 1, data.length);
+    progressDiv.append("span")
         .text(`${counter + 1}/${data.length}`)
         .attr("id", "progress-text");
 
     //add svg and draw first graph
     container.append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .attr("id", "graph-svg");
     let d = data[order[counter]];
     drawGraph(d.id, stringToArray(d.nums), d.mark1, d.mark2);
 
@@ -76,7 +84,8 @@ function drawGraphPage(data) {
 
     formDiv.append("input")
         .attr("type", "text")
-        .attr("id", "input-box");
+        .attr("id", "input-box")
+        .attr("autocomplete", "off");
 
     formDiv.append("button")
         .text("Next")
@@ -89,11 +98,12 @@ function drawGraphPage(data) {
         if (inputValue != "") { //replace with true to ignore check
             //clear input field and store result
             d3.select("#input-box").node().value = "";
-            results.push({ id: d3.select("svg").attr("data-id"), response: inputValue });
+            results.push({ id: d3.select("#graph-svg").attr("data-id"), response: inputValue });
 
             //draw next graph or go to end page
             if (counter < data.length - 1) {
                 counter++;
+                updateProgressBar(counter + 1, data.length);
                 d3.select("#progress-text").text(`${counter + 1}/${data.length}`);
                 d = data[order[counter]];
                 drawGraph(d.id, stringToArray(d.nums), d.mark1, d.mark2);
@@ -105,9 +115,28 @@ function drawGraphPage(data) {
     });
 }
 
+function updateProgressBar(part, whole) {
+    let barWidth = (width / 2 / whole) * part;
+    const bar = d3.select("#progress-bar");
+    bar.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", width / 2)
+        .attr("height", 15)
+        .attr("fill", "none")
+        .attr("stroke", "black")
+        .attr("stroke-width", 2);
+    bar.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", barWidth)
+        .attr("height", 15)
+        .attr("fill", "black");
+}
+
 function drawGraph(id, data, mark1, mark2) {
-    d3.select("svg").html("");
-    d3.select("svg")
+    d3.select("#graph-svg").html("");
+    d3.select("#graph-svg")
         .attr("data-id", id);
     if (id.includes("bar")) {
         drawBarChart(data, mark1, mark2);

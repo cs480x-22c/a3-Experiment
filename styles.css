@@ -18,6 +18,14 @@ body {
     justify-content: center;
     row-gap: 10px;
 }
+#progress-div {
+    display: flex;
+    justify-content: space-evenly;
+    width: 75%;
+}
+#progress-text {
+    width: 50px;
+}
 #form-div {
     width: 50%;
     display: flex;
@@ -28,7 +36,4 @@ button {
 }
 input {
     width: 100px;
-}
-#progress-text {
-    align-self: flex-end;
 }
