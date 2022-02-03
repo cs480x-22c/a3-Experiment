@@ -1,5 +1,5 @@
-const width = 500;
-const height = 500;
+const width = 400;
+const height = 400;
 
 //--------------------Pie Chart--------------------
 function drawPieChart(data, mark1, mark2) {
@@ -76,16 +76,19 @@ function getCoordinates(cx, cy, radius, angle) {
 
 function drawBubbleChart(nums, mark1, mark2) {
     const svg = d3.select("svg");
-
-    const n = 10;
+    console.log("here");
+    const n = 6;
     var cx = [];
-    var sum = nums[0];
+    var sum = width/5;
+
+    //Gets a list of cx values for each circle
     for (var i = 0; i < nums.length; i++) {
         sum = sum + n * ((nums[i] / Math.PI) ** 0.5);
         cx.push(sum);
         sum = sum + n * ((nums[i] / Math.PI) ** 0.5) + 10;
     }
 
+    //Sets up the axis
     var scaleX = d3.scaleLinear()
         .domain([0, 350])
         .range([0, width - 100]);
@@ -101,12 +104,14 @@ function drawBubbleChart(nums, mark1, mark2) {
         .scale(scaleY);
 
     svg.append("g")
-        .attr("transform", "translate(40," + (height - 100) + ")");
+        .attr("transform", "translate("+ (width/2) + "," + (height - 100) + ")");
 
     svg.append("g")
-        .attr("transform", "translate(40,0)");
+        .attr("transform", "translate("+(width/2) + ",0)");
 
     var count = 0;
+
+    //Adds the circles
     svg.append("g")
         .selectAll("dot")
         .data(nums)
@@ -117,23 +122,25 @@ function drawBubbleChart(nums, mark1, mark2) {
             count++;
             return c;
         })
-        .attr("cy", 150)
+        .attr("cy", width/2)
         .attr("r", function (d) { return n * ((d / Math.PI) ** 0.5); })
         .style("fill", "white")
         .style("stroke", "black");
 
+
+    //Adds the markers
     svg.append("circle")
         .attr("cx", function () {
             return cx[mark1];
         })
-        .attr("cy", 150)
+        .attr("cy", width/2)
         .attr("r", 3);
 
     svg.append("circle")
         .attr("cx", function () {
             return cx[mark2];
         })
-        .attr("cy", 150)
+        .attr("cy", width/2)
         .attr("r", 3);
 
 }
@@ -144,10 +151,12 @@ function drawBarChart(nums, mark1, mark2) {
     const svg = d3.select("svg");
 
     var xVals = [];
-    var sum = 40;
+    var sum = width/5;
     var rectWidth = 15;
     const m = 5;
     var maxNum = 0;
+
+    //Gets a list of x values for each bar
     for (var i = 0; i < nums.length; i++) {
         sum += rectWidth;
         xVals.push(sum);
@@ -157,6 +166,7 @@ function drawBarChart(nums, mark1, mark2) {
         }
     }
 
+    //Sets up the axis
     var scaleX = d3.scaleLinear()
         .domain([0, width])
         .range([0, 35 * nums.length]);
@@ -165,21 +175,23 @@ function drawBarChart(nums, mark1, mark2) {
         .scale(scaleX);
 
     var scaleY = d3.scaleLinear()
-        .domain([0, maxNum * m])
+        .domain([0, 200])
         .range([height - 100, 40]);
 
     var y = d3.axisLeft()
         .scale(scaleY);
 
     svg.append("g")
-        .attr("transform", "translate(40," + (height - 100) + ")")
+        .attr("transform", "translate("+ (width/5) + "," + (height - 100) + ")")
         .call(x.ticks(0));
 
     svg.append("g")
-        .attr("transform", "translate(40,0)")
+        .attr("transform", "translate("+(width/5) + ",0)")
         .call(y.ticks(0));
 
     var count = 0;
+
+    //Adds the bars to the graph
     svg.selectAll("mybar")
         .data(nums)
         .enter()
@@ -198,7 +210,8 @@ function drawBarChart(nums, mark1, mark2) {
         })
         .style("fill", "white")
         .style("stroke", "black");
-
+    
+    //Adds the markers to the graph
     svg.append("circle")
         .attr("cx", function () {
             return xVals[mark1] + 7.5;
