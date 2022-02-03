@@ -112,6 +112,7 @@
                 document.getElementById("inp2").hidden = false;
                 document.getElementById("inp3").hidden = false;
                 document.getElementById("submit").hidden = false;
+                document.getElementById("inp4").value = barPercent * 100;
                 break;
             case 2:
                 svg.selectAll("*").remove();
@@ -191,12 +192,12 @@
                 }
                 angles.push(360 - angles.reduce(reducer));
                 if (angles[pair[1]] > angles[pair[0]]) {
-                     piePercent = (angles[pair[0]] / angles[pair[1]]);
+                    piePercent = (angles[pair[0]] / angles[pair[1]]);
                 }
                 else {
-                     piePercent = (angles[pair[1]] / angles[pair[0]]);
+                    piePercent = (angles[pair[1]] / angles[pair[0]]);
                 }
-                document.getElementById("inp4").value = barPercent * 100;
+                document.getElementById("inp5").value = piePercent * 100;
                 break;
             case 3:
                 svg.selectAll("*").remove();
@@ -239,10 +240,9 @@
                 else {
                     rectPercent = (heights[pair[1]] / heights[pair[0]]);
                 }
-                document.getElementById("inp5").value = piePercent * 100;
+                document.getElementById("inp6").value = rectPercent * 100;
                 break;
             default:
-                document.getElementById("inp6").value = rectPercent * 100;
                 svg.selectAll("*").remove();
                 document.getElementById("inp3").disabled = true;
                 document.getElementById("content").innerHTML = '';
