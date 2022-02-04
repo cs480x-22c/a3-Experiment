@@ -29,7 +29,7 @@ export default class Experiment
 
         this.userResults = new UserResults()
         this.dummyDataGenerator = new DummyDataGenerator(5, 10, 5, 100, 1)
-        this.trialManager = new TrialManager(1, [new PieChart(), new RadialBarChart(), new BarChart()], "guessField", "submitGuess")
+        this.trialManager = new TrialManager(20, [new PieChart(), new RadialBarChart(), new BarChart()], "guessField", "submitGuess")
     }
 
 }

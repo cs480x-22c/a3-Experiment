@@ -11,7 +11,6 @@ export default class Chart
         this.smallValLoc = 0
         this.experiment = new Experiment()
         this.labelColor = 'red'
-        this.labelSize = 40
     }
     
     getBigVal()
@@ -38,7 +37,6 @@ export default class Chart
     _pickBigSmallVals()
     {
         let specialValLocs = this.experiment.arrayUtils.nUniqueNumbers(2, 0, this.data.length-1)
-        console.log(specialValLocs)
 
         this.bigValLoc = specialValLocs[0]
         this.smallValLoc = specialValLocs[1]

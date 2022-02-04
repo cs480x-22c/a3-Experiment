@@ -40,9 +40,9 @@ export default class TrialManager
         //Erase SVG
         this.experiment.svg.selectAll('*').remove()
 
-        this.currentTrial++
+        this.experiment.userResults.saveResult(this.currentTrial, this.currentChart.name, this.currentChart.getCorrectAnswer(), userResponse)
 
-        this.experiment.userResults.saveResult(this.currentChart.name, this.currentChart.getCorrectAnswer(), userResponse)
+        this.currentTrial++
 
         if(this.currentTrial <= this.totalTrials)
         {
@@ -50,6 +50,7 @@ export default class TrialManager
         }
         else
         {
+            this.experiment.userResults.printResults()
             let userScore = this.experiment.userResults.calculateUserScore()
             alert(`Your score was ${userScore}% \nThank you for taking part in this experiment!`)
         }
