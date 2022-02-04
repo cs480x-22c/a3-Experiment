@@ -10,8 +10,9 @@ export default class Chart
         this.bigValLoc = 0
         this.smallValLoc = 0
         this.experiment = new Experiment()
+        this.labelColor = 'red'
     }
-
+    
     getBigVal()
     {
         return this.data[this.bigValLoc].value
@@ -20,6 +21,11 @@ export default class Chart
     getSmallVal()
     {
         return this.data[this.smallValLoc].value
+    }
+
+    getCorrectAnswer()
+    {
+        return (this.getSmallVal() / this.getBigVal()) * 100
     }
 
     _generateData()

@@ -14,6 +14,7 @@ export default class UserResults
             "actual": actual,
             "guess": guess
         }
+        console.log("A:" + actual)
 
         this.userResults.push(result)
     }

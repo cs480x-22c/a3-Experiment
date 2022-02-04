@@ -1,12 +1,12 @@
 body
 {
-    background-color: #F7F7FF;
+     background-color: #0a282b;
+
     
 }
 
 #main
 {
-    background-color: #053b06;
     margin-top: 0;
     padding: 5px;
 }
@@ -18,12 +18,17 @@ body
     width: 50%
 }
 
+h2
+{
+    text-align: center;
+    color: white
+}
+
 #experimentSvg
 {
     width: 800px;
     height: 800px;
     margin: 5px auto;
-    background-color: lightblue;
 }
 
 .container

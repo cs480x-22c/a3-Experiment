@@ -22,14 +22,12 @@ export default class Experiment
 
         this.svg = d3.select("#" + _svgID)
         
-
-        //might not need actually
         this.sizes = new Sizes()
         this.arrayUtils = new ArrayUtils()
 
         this.userResults = new UserResults()
         this.dummyDataGenerator = new DummyDataGenerator(5, 10, 5, 100, 1)
-        this.trialManager = new TrialManager(1, [new PieChart()], "guessField", "submitGuess")
+        this.trialManager = new TrialManager(10, [new PieChart()], "guessField", "submitGuess")
     }
 
 }

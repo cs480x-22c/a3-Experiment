@@ -12,11 +12,12 @@ export default class TrialManager
         this.inputField = document.getElementById(inputBoxID)
         this.btn = document.getElementById(submitBtnID)
         this.btn.addEventListener('click', () => this.onButtonSubmit())
-        this.currentGraph = null
+        window.addEventListener('keydown', (e) => {if(e.code == "Enter") 
+                                                        this.onButtonSubmit()})
+        this.currentChart = null
 
         //Loading Trials into array
         this.chartTrials = []
-        console.log(graphs)
         graphs.forEach(graph =>
         {
             for(let i = 0; i < this.trialsPerGraph; i++)
@@ -29,8 +30,9 @@ export default class TrialManager
 
     startNewTrial()
     {   
-        this.currentGraph = this.chartTrials[this.currentTrial - 1]
-        this.currentGraph.load()
+        this.inputField.focus()
+        this.currentChart = this.chartTrials[this.currentTrial - 1]
+        this.currentChart.load()
     }
 
     onTrialEnd(userResponse)
@@ -40,7 +42,7 @@ export default class TrialManager
 
         this.currentTrial++
 
-        this.experiment.userResults.saveResult(this.currentGraph.name, this.currentGraph.getBigVal(), userResponse)
+        this.experiment.userResults.saveResult(this.currentChart.name, this.currentChart.getCorrectAnswer(), userResponse)
 
         if(this.currentTrial <= this.totalTrials)
         {
@@ -62,5 +64,5 @@ export default class TrialManager
             this.inputField.value = ""
             this.onTrialEnd(+answer)
         }
-    }
+    }    
 }
