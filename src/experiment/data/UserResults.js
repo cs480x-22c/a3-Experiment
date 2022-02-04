@@ -14,9 +14,15 @@ export default class UserResults
             "actual": actual,
             "guess": guess
         }
-        console.log("A:" + actual)
 
         this.userResults.push(result)
+    }
+
+    calculateUserScore()
+    {
+        let average = 0;
+        this.userResults.map(trial => (trial.guess > trial.actual) ? (trial.actual/trial.guess) : (trial.guess /trial.actual)).forEach(value => average += value)
+        return Math.floor(average / this.userResults.length * 100)
     }
 
     saveResultsToWeb()

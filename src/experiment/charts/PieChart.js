@@ -43,7 +43,8 @@ export default class PieChart extends Chart
                     return 'translate(' + (arcCenter[0] +  this.experiment.sizes.centerX) + "," + (arcCenter[1] + this.experiment.sizes.centerY) + ")"
                 })
                 .attr('fill', this.labelColor)
-                .attr('font-size', this.labelSize)
+                .style("text-anchor", "middle")
+                .attr('font-size', 40)
 
     }
 

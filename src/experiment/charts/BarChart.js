@@ -45,7 +45,7 @@ export default class RadialBarChart extends Chart
             .attr('x', (i) => x(i) + x.bandwidth()/2 - 10) 
             .attr('y', 790)
             .text("*")
-            .attr('font-size', this.labelSize)
+            .attr('font-size', 40)
             .attr('fill', this.labelColor)
     }
 }

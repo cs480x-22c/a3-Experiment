@@ -37,7 +37,7 @@ export default class RadialBarChart extends Chart
             .attr('y', (i) => -(this._startRadius + this._arcSpacing * i + this._arcWidth * i - 10))
             .text("*")
             .attr('fill', this.labelColor)
-            .attr('font-size', this.labelSize)
+            .attr('font-size', 40)
             .attr("transform", "translate("+ this.experiment.sizes.centerX + "," + this.experiment.sizes.centerY + ")")
     }
     

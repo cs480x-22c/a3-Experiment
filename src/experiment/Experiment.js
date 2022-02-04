@@ -7,6 +7,7 @@ import ArrayUtils from "./utils/ArrayUtils.js"
 import RadialBarChart from "./charts/RadialBarChart.js"
 import BarChart from "./charts/BarChart.js"
 import PieChart from "./charts/PieChart.js"
+import Agreement from "./Agreement.js"
 
 let instance = null
 
@@ -19,15 +20,16 @@ export default class Experiment
             return instance
         }
         instance = this
-
+        
         this.svg = d3.select("#" + _svgID)
         
+        this.agreement = new Agreement('agreeBtn', 'agreement', 'main')
         this.sizes = new Sizes()
         this.arrayUtils = new ArrayUtils()
 
         this.userResults = new UserResults()
         this.dummyDataGenerator = new DummyDataGenerator(5, 10, 5, 100, 1)
-        this.trialManager = new TrialManager(10, [new PieChart()], "guessField", "submitGuess")
+        this.trialManager = new TrialManager(1, [new PieChart(), new RadialBarChart(), new BarChart()], "guessField", "submitGuess")
     }
 
 }

@@ -11,6 +11,7 @@ export default class Chart
         this.smallValLoc = 0
         this.experiment = new Experiment()
         this.labelColor = 'red'
+        this.labelSize = 40
     }
     
     getBigVal()

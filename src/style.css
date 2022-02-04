@@ -13,7 +13,7 @@ body
 
 #agreement {
     margin: 0 auto;
-    background-color: red;
+    background-color: white;
     text-align: center;
     width: 50%
 }
@@ -43,4 +43,9 @@ h2
     top: 50%;
     transform: translate(-50%, -50%);
     padding: 10px;
+}
+
+.hidden
+{
+    visibility: hidden;
 }

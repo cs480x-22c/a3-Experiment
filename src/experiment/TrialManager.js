@@ -50,8 +50,8 @@ export default class TrialManager
         }
         else
         {
-            this.experiment.userResults.printResults()
-            alert("Thank you for taking part in this experiment!")
+            let userScore = this.experiment.userResults.calculateUserScore()
+            alert(`Your score was ${userScore}% \nThank you for taking part in this experiment!`)
         }
     }
 
