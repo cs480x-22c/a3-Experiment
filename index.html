@@ -1,11 +1,57 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
+<!-- //working on setting up the starting page welcoming them to experiment -->
+<!-- Work In Progress; haven't had time to fully check it with a server -->
+<head>
+  
+  <style>
+    * {box-sizing: border-box; }
+    body {background-color: #F0F0F0; }
 
-<style>
+    #form {
+      background-color: #fff;
+      font-family: 'Times New Roman', Times, serif;
+      padding: 60px;
+      margin: 120px auto;
+      min-width: 300px;
+      width: 50%;     }
 
-</style>
+    h1 {text-align: center; }
+
+    input{
+      width: 100%;
+      border: 1px solid #ababab;
+      font-size: 15px;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 10px;
+    }
+
+    button:hover { opacity: 0.6; }
+
+    button{
+      border: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      padding: 10px 20px;
+      color: #fff;
+      background-color: #020ebd;
+      cursor: pointer;
+    }
+
+    .page{ display: none; }
+  </style>
+</head>
+
+<!-- <style>
+
+</style> -->
 
 <body>
+<!-- from what I've seen, I think it'll be best to make several class="page"
+and then one page is the intro where they agree to start, second is stating the two values
+and asking for their input on the percentage etc., and probably a third one saying thank you 
+and stating that it's the end? WIP -->
+
   <h1> Experiment </h1>
   <svg id="pie" width="500" height="500"></svg>
   <svg id="my_dataviz" width="500" height="500"></svg>
