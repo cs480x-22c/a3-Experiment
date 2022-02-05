@@ -6,7 +6,7 @@
 
 <body>
   <h1> Experiment </h1>
-  <!--
+<!--   
     Stacked Bar Chart
   -->
 
@@ -22,4 +22,28 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+      // set the dimensions and margins of the graph
+    var margin = { top: 5, right: 30, bottom: 45, left: 40 },
+        width = 900 - margin.left - margin.right,
+        height = 700 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+     //data
+     d3.csv("testData.csv").then(function (data) { 
+       //Pie Chart ---------------
+     }
+
+
+    
+  
+  
+
 </script>
