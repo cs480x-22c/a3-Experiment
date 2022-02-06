@@ -97,12 +97,6 @@
             document.getElementById("pie").hidden = false;
             pie.style("visibility", "visible");
             runPie();
-            if (angles[pair2[1]] > angles[pair2[0]]) {
-               document.getElementById("pie-a").value = 100 * (angles[pair2[0]] / angles[pair2[1]]);
-            }
-            else {
-                document.getElementById("pie-a").value = 100 * (angles[pair2[1]] / angles[pair2[0]]);
-            }
         }
         else {
             return false;
@@ -114,6 +108,7 @@
     var angles = [];
     var slices = 6;
     var pair2 = [];
+    var piePercent = 0;
     function runPie(event) {
         while (pair2.length < 2) {
             var addRandom = Math.floor(Math.random() * 6);
@@ -163,9 +158,16 @@
             .attr('cy', 300 + (Math.sin(Math.PI * (sum2 + (angles[pair2[1]] / 2)) / 180)) * (radius / 2))
             .attr('r', 6)
             .style('fill', 'yellow');
+            if (angles[pair2[1]] > angles[pair2[0]]) {
+                piePercent = 100 * (angles[pair2[0]] / angles[pair2[1]]);
+            }
+            else {
+                piePercent = 100 * (angles[pair2[1]] / angles[pair2[0]]);
+            }
     }
 
     function hidePie(event) {
+        document.getElementById("pie-a").value = piePercent
         if (document.getElementById("pie").value.length > 0) {
             document.getElementById("pie").hidden = true;
             document.getElementById("pieButton").hidden = true;
