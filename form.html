@@ -158,16 +158,15 @@
             .attr('r', 6)
             .style('fill', 'yellow');
         if (angles[pair2[1]] > angles[pair2[0]]) {
-            document.getElementById("rect-a").value = 100 * (angles[pair2[0]] / angles[pair2[1]]);
+            document.getElementById("pie-a").value = 100 * (angles[pair2[0]] / angles[pair2[1]]);
         }
         else {
-            document.getElementById("rect-a").value = 100 * (angles[pair2[1]] / angles[pair2[0]]);
+            document.getElementById("pie-a").value = 100 * (angles[pair2[1]] / angles[pair2[0]]);
         }
     }
 
     function hidePie(event) {
         if (document.getElementById("pie").value.length > 0) {
-            document.getElementById("pie-a").value = document.getElementById("pie").value;
             document.getElementById("pie").hidden = true;
             document.getElementById("pieButton").hidden = true;
             pie.selectAll("*").remove();
