@@ -1,0 +1,21 @@
+<object type="text/html" id="contain" data="form.html" width="1000" height="800"></object>
+<button id="again" onclick="reset();">Reset?</button>
+<button id="close" onclick="window.close()">Leave experiment</button>
+<script>
+    let runCount = 0;
+    increment();
+    function increment(event) {
+        document.title = runCount++;
+    }
+    function reset(event) {
+        document.getElementById("contain").remove();
+        document.getElementById("again").remove();
+        document.write('<object type="text/html" id="contain" data="form.html" width="1000" height="800"></object> <button id="again" onclick="reset()">Reset?</button>');
+        increment();
+    }
+</script>
+<br />
+<head>
+    The number of completed runs you've done this instance is tracked in the webpage title.
+    Do not reload the webpage unless you are keeping track of runs on your own!
+</head>
