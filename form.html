@@ -97,18 +97,24 @@
             document.getElementById("pie").hidden = false;
             pie.style("visibility", "visible");
             runPie();
+            if (angles[pair2[1]] > angles[pair2[0]]) {
+               document.getElementById("pie-a").value = 100 * (angles[pair2[0]] / angles[pair2[1]]);
+            }
+            else {
+                document.getElementById("pie-a").value = 100 * (angles[pair2[1]] / angles[pair2[0]]);
+            }
         }
         else {
             return false;
         }
     }
 
+    var pieNum = 0;
+    var radius = 150;
+    var angles = [];
+    var slices = 6;
+    var pair2 = [];
     function runPie(event) {
-        var pieNum = 0;
-        var radius = 150;
-        var angles = [];
-        var slices = 6;
-        var pair2 = [];
         while (pair2.length < 2) {
             var addRandom = Math.floor(Math.random() * 6);
             if (pair2.indexOf(addRandom) === -1) {
@@ -157,12 +163,6 @@
             .attr('cy', 300 + (Math.sin(Math.PI * (sum2 + (angles[pair2[1]] / 2)) / 180)) * (radius / 2))
             .attr('r', 6)
             .style('fill', 'yellow');
-        if (angles[pair2[1]] > angles[pair2[0]]) {
-            document.getElementById("pie-a").value = 100 * (angles[pair2[0]] / angles[pair2[1]]);
-        }
-        else {
-            document.getElementById("pie-a").value = 100 * (angles[pair2[1]] / angles[pair2[0]]);
-        }
     }
 
     function hidePie(event) {
