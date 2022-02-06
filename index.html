@@ -1,6 +1,5 @@
 <object type="text/html" id="contain" data="form.html" width="1000" height="800"></object>
 <button id="again" onclick="reset();">Reset?</button>
-<button id="close" onclick="window.close();">Leave experiment</button>
 <script>
     let runCount = 0;
     increment();
@@ -10,7 +9,7 @@
     function reset(event) {
         document.getElementById("contain").remove();
         document.getElementById("again").remove();
-        document.write('<object type="text/html" id="contain" data="form.html" width="1000" height="800"></object> <button id="again" onclick="reset()">Reset?</button> <button id="close" onclick="window.close();">Leave experiment</button>');
+        document.write('<object type="text/html" id="contain" data="form.html" width="1000" height="800"></object> <button id="again" onclick="reset()">Reset?</button>');
         increment();
     }
 </script>
