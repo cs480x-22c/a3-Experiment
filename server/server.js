@@ -21,22 +21,6 @@ const client = new mongo.MongoClient(mongoURI, {
 })
 let collection = null
 
-// async function run() {
-//   try {
-//     console.log('Trying to connect to database!')
-//     // Connect the client to the server
-//     await client.connect()
-//     console.log('Trying to connect to cluster!')
-//     // Establish and verify connection
-//     await client.db('Cluster0').command({ ping: 1 })
-//     console.log('Database connected')
-//   } finally {
-//     console.log('Closing client!')
-//     await client.close()
-//   }
-// }
-// run().catch(console.dir)
-
 client.connect().then(() => {
   return client.db('scores').collection('scores')
 }).then(__collection => {
@@ -71,8 +55,34 @@ app.post('/chart', async (req, res) => {
   res.sendStatus(200)
 })
 
-app.get('/results', (req, res) => {
-  // return results
+app.get('/results', async (req, res) => {
+  let types = ['bar', 'pie', 'sbar']
+  let data = {}
+
+  types.forEach(type => {
+    data[type] = new Array()
+  })
+
+  queries = types.map(type => {
+    return getCollection().find({chart: type}, {value: 1})
+  })
+
+  await Promise.all(queries).then(async (values) => {
+    await Promise.all(values.map(async (value) => {
+      const push = async () => {
+        let hasNext = await value.hasNext()
+        while(hasNext) {
+          let score = await value.next()
+          type = score.chart
+          data[type].push(score.value)
+
+          hasNext = await value.hasNext()
+        }
+      }
+      await push()
+    }))
+  })
+  res.send(data)
 })
 
 const listener = server.listen(process.env.PORT || 3001, () => {
