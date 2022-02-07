@@ -7,11 +7,11 @@
     window.onload = function () { container = document.getElementById("contain"); };
     var content = container.innerHTML;
     let count = 0;
-    function alertCount() {
+    function alertCount(event) {
         count++;
         alert(count);
     }
-    function reload() {
+    function reload(event) {
         container.innerHTML = content;
         alertCount();
     }
