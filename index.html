@@ -12,6 +12,8 @@
     var count = 0;
     function setTitle() {
         count++;
-        document.title = count;
+        if(document.title != count) {
+            document.title = count;
+        }
     }
 </script>
