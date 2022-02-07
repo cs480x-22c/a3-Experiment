@@ -32,7 +32,7 @@
         <input type="submit" id="submit" value="Submit" hidden="hidden">
     </div>
 </form>
-<svg width=800 height=600></svg>
+<svg width=800 height=600 hidden="hidden" id="svgElem"></svg>
 <script id="bars">
     var rect = d3.select("svg");
     var height = 540;
@@ -230,6 +230,7 @@
         }
     }
     function hide(event) {
+        document.getElementById("svgElem").hidden = false;
         rect.style("visibility", i == -1 ? "hidden" : "visible");
         i *= -1;
         document.getElementById("agree").hidden = true;
