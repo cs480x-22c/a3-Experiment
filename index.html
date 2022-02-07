@@ -9,8 +9,7 @@
     let runCount = 0;
     increment();
     function increment(event) {
-        runCount++;
-        document.getElementById("counter").innerHTML = runCount.toString;
+        document.getElementById("counter").innerHTML = ++runCount;
     }
     function reload() {
         container.innerHTML = content;
