@@ -4,7 +4,10 @@
 <script>
     let count = 0;
     var container;
-    window.onload = function () { container = document.getElementById("contain"); };
+    window.onload = function () {
+        container = document.getElementById("contain");
+        alert(link);
+    };
     var content = container.innerHTML;
     function alertCount(event) {
         count = count + 1;
