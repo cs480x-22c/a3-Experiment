@@ -23,9 +23,9 @@
             <object type="text/html" id="contain" data="experiment.mp4" width="640" height="480"></object>
         </div>
         <label for="input" hidden="hidden">What percent is the smaller marked section of the larger one?</label>
-        <input type="text" name="entry.1683219333" id="bar" hidden="hidden" onkeydown = "noreturnkey(1)">
-        <input type="text" name="entry.1142654644" id="pie" hidden="hidden" onkeydown = "noreturnkey(2)">
-        <input type="text" name="entry.1816638338" id="rect" hidden="hidden" onkeydown = "noreturnkey(3)">
+        <input type="text" name="entry.1683219333" id="bar" hidden="hidden" onkeydown="noreturnkey(1)">
+        <input type="text" name="entry.1142654644" id="pie" hidden="hidden" onkeydown="noreturnkey(2)">
+        <input type="text" name="entry.1816638338" id="rect" hidden="hidden" onkeydown="noreturnkey(3)">
         <input type="text" name="entry.227658662" id="bar-a" hidden="hidden">
         <input type="text" name="entry.994229496" id="pie-a" hidden="hidden">
         <input type="text" name="entry.619467145" id="rect-a" hidden="hidden">
@@ -34,21 +34,26 @@
 </form>
 <svg width=800 height=600 hidden="hidden" id="svgElem"></svg>
 <script id="bars">
-	function noreturnkey(input) {
-		var x = event.which || event.keyCode;
-		if (x == '13') {
-			if(input == 1) { 
-				hideBar();
-			}
-			if(input == 2) { 
-				hidePie();
-			}
-			if(input == 3) { 
-				hideRect();
-			}
-			event.preventDefault();
-		}
-	}
+    let link = "";
+    function setLink(event) {
+        link = window.location.href;
+        alert(link);
+    }
+    function noreturnkey(input) {
+        var x = event.which || event.keyCode;
+        if (x == '13') {
+            if (input == 1) {
+                hideBar();
+            }
+            if (input == 2) {
+                hidePie();
+            }
+            if (input == 3) {
+                hideRect();
+            }
+            event.preventDefault();
+        }
+    }
     var rect = d3.select("svg");
     var height = 540;
     var barWidth = 50;
@@ -113,8 +118,8 @@
             document.getElementById("pie").hidden = false;
             pie.style("visibility", "visible");
             runPie();
-	    document.getElementById("pie").focus();
-	    document.getElementById("pie").select();
+            document.getElementById("pie").focus();
+            document.getElementById("pie").select();
         }
         else {
             return false;
@@ -176,12 +181,12 @@
             .attr('cy', 300 + (Math.sin(Math.PI * (sum2 + (angles[pair2[1]] / 2)) / 180)) * (radius / 2))
             .attr('r', 6)
             .style('fill', 'yellow');
-            if (angles[pair2[1]] > angles[pair2[0]]) {
-                piePercent = 100 * (angles[pair2[0]] / angles[pair2[1]]);
-            }
-            else {
-                piePercent = 100 * (angles[pair2[1]] / angles[pair2[0]]);
-            }
+        if (angles[pair2[1]] > angles[pair2[0]]) {
+            piePercent = 100 * (angles[pair2[0]] / angles[pair2[1]]);
+        }
+        else {
+            piePercent = 100 * (angles[pair2[1]] / angles[pair2[0]]);
+        }
     }
 
     function hidePie(event) {
@@ -233,8 +238,8 @@
         else {
             return false;
         }
-	document.getElementById("rect").focus();
-	document.getElementById("rect").select();
+        document.getElementById("rect").focus();
+        document.getElementById("rect").select();
     }
     function hideRect(event) {
         if (document.getElementById("rect").value.length > 0) {
@@ -256,7 +261,7 @@
         document.getElementById("ftext").hidden = true;
         document.getElementById("bar").hidden = false;
         document.getElementById("barButton").hidden = false;
-	document.getElementById("bar").focus();
-	document.getElementById("bar").select();
+        document.getElementById("bar").focus();
+        document.getElementById("bar").select();
     }
 </script>
