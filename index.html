@@ -6,15 +6,10 @@
     var container;
     window.onload = function () { container = document.getElementById("contain"); };
     var content = container.innerHTML;
-    let counts=setInterval(updated);
-    let upto=0;
-    function updated(){
-        var count= document.getElementById("counter");
-        count.innerHTML = ++upto;
-    }
+    var count = 0;
     function reload() {
-        updated();
         container.innerHTML = content;
+        document.getElementById.select("counter") = count++;
     }
 </script>
 <br />
