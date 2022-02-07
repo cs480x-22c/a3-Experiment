@@ -1,15 +1,92 @@
-<style>
-  .webgl {
-    width: 0.5;
-  }
-</style>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="module">
+    import { generateChart, clearChart } from "/charts/script.js"
+
+    let data, chart, percentAnswer;
+    const comps = [1, 4] // The things to compare
+    const graphTypes = ['stackedBar3D', 'stackedBar', 'pie', 'pie3D']
+
+    //html elements
+    let inputObject = document.getElementById('ans')
+    let buttonObject = document.getElementById('button')
+    let msgObject = document.getElementById('msg')
+
+    buttonObject.onclick = function () { handleNextButton() }
+
+    //generateChart(data, comps, 'stackedBar3D')
+    handleNextButton(true)
+
+
+    function handleNextButton(first = false) {
+      if (!first) {
+        let guess = inputObject.value;
+        console.log()
+        if (isNaN(inputObject.value) || inputObject.value === '') {
+          msgObject.innerHTML = "please guess a number (1 - 100) before continuing"
+          return
+        }
+        else {
+          msgObject.innerHTML = " "
+        }
+
+        clearChart()
+      //append to csv array here
+      //sendtoCSVArray(chart, guess, percentAnswer)
+      }
+
+      //new data generation
+      data = Array.from({ length: 5 }, () => Math.floor(Math.random() * 100))
+      chart = Math.floor(Math.random() * 4)
+      percentAnswer = generateChart(data, comps, graphTypes[chart])
+      inputObject.value = ""
+    }
+  </script>
+  <style>
+    .right {
+      position: absolute;
+      bottom: 300px;
+      right: 60px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .button {
+      background-color: #bdbdbd;
+      border: 2px solid black;
+      color: black;
+      padding: 5px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
 
 <body>
   <canvas class="webgl"></canvas>
   <script type="module" src="charts/script.js"></script>
-  <h1> Experiment </h1>
+  <div class="right">
+    <p>
+    <p>What percentage does the smaller value represent of the larger value? </p>
+    <p>(The two selected values are marked with ●.)</p>
+    <!-- <Button
+        type="button"
+        class="button"
+      >Check Answer</button> -->
+    <form>
+      <label for="Answer">Answer:</label>
+      <input type="text" id="ans" name="ans" value="">
+      <label>%</label><br>
+    </form>
+    <button type="button" class="button" id="button">Next</button>
+    <p id="msg"> </p>
+  </div>
 </body>
 
-<script>
-
-</script>
+</html>

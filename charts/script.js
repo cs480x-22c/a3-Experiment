@@ -2,10 +2,10 @@
 // Find the latest version by visiting https://cdn.skypack.dev/three.
 
 import * as THREE from 'https://cdn.skypack.dev/three@0.127.0';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.127.0/examples/jsm/controls/OrbitControls.js';
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene();
+const chart = new THREE.Group(); //
 scene.background = new THREE.Color(0xffffff)
 
 //Light
@@ -24,13 +24,13 @@ const dotSelector = [
   new THREE.MeshBasicMaterial({ color: 0x000000 })
 ]
 
-function updateSizes(){
-  sizes.width = window.innerWidth/2
+function updateSizes() {
+  sizes.width = window.innerWidth / 2
   sizes.height = window.innerHeight
 }
 // Sizes
 const sizes = {
-  scaleFactor : 300
+  scaleFactor: 400
 }
 updateSizes()
 
@@ -41,7 +41,7 @@ const camera = new THREE.OrthographicCamera(
   sizes.width / - sizes.scaleFactor,
   sizes.width / sizes.scaleFactor,
   sizes.height / sizes.scaleFactor,
-  sizes.height / - sizes.scaleFactor, 1, 1000 );
+  sizes.height / - sizes.scaleFactor, 1, 1000);
 camera.position.z = 3
 scene.add(camera)
 
@@ -50,9 +50,6 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 
-const controls = new OrbitControls(camera, renderer.domElement)
-
-
 window.addEventListener('resize', () => {
   // Update sizes
   updateSizes()
@@ -60,9 +57,9 @@ window.addEventListener('resize', () => {
   // Update camera
   //camera.aspect = sizes.width / sizes.height
   camera.left = sizes.width / - sizes.scaleFactor
-  camera.right = sizes.width / - sizes.scaleFactor
-  camera.top = sizes.height /  500
-  camera.bottom = sizes.height / - 500
+  camera.right = sizes.width / sizes.scaleFactor
+  camera.top = sizes.height / sizes.scaleFactor
+  camera.bottom = sizes.height / - sizes.scaleFactor
   camera.updateProjectionMatrix()
 
   // Update renderer
@@ -80,11 +77,11 @@ const tick = () => {
   window.requestAnimationFrame(tick)
 }
 
-//dummy data
-const data = [43, 3, 67, 23, 95]
-const comps = [1, 4] // choose the things to compare
+// //dummy data
+// const data = [43, 3, 67, 23, 95]
+// const comps = [1, 4] // choose the things to compare
 
-generateChart(data, comps, 'pie3D')
+// generateChart(data, comps, 'pie3D')
 
 tick()
 
@@ -95,9 +92,9 @@ tick()
  * @param {one of four: 'pie', 'pie3D', 'stackedBar', 'stackedBar3D'} barType
  * @returns percent of smaller value of bigger value from selected vals of data
  */
-function generateChart(data, comps, barType) {
+export function generateChart(data, comps, barType) {
   let res;
-  switch(barType){
+  switch (barType) {
     case 'pie':
       res = generatePieChart(data, comps, false)
       break;
@@ -111,20 +108,27 @@ function generateChart(data, comps, barType) {
       res = generateStackedBarChart(data, comps, true)
       break;
     default:
-     console.log('unrecognized chart type');
-     break;
+      console.log('unrecognized chart type');
+      break;
   }
 
-  console.log(res)
   return res;
 
+}
+
+export function clearChart() {
+  chart.children.forEach((e) => {
+    e.geometry.dispose();
+    e.material.dispose();
+  })
+  chart.remove(...chart.children)
+  chart.rotation.set(0, 0, 0)
 }
 
 //Helper
 function generateStackedBarChart(data, comps, is3D) {
   const size = 1;
   const sum = data.reduce((a, b) => a + b)
-  const stackedBarChart = new THREE.Group();
 
   const width = 1 * size
   let heightStart = -1;
@@ -138,15 +142,15 @@ function generateStackedBarChart(data, comps, is3D) {
     if (comps.includes(index)) {
       const marker = new THREE.Mesh(...dotSelector)
       marker.position.set(0, height / 2 + heightStart, width / 2)
-      stackedBarChart.add(marker)
+      chart.add(marker)
     }
-    stackedBarChart.add(mesh)
+    chart.add(mesh)
     heightStart += height
 
   })
 
-  is3D ? stackedBarChart.rotation.set(.2, .4, 0) : null
-  scene.add(stackedBarChart);
+  is3D ? chart.rotation.set(.3, .7, 0) : null
+  scene.add(chart);
   const res = Math.min(data[comps[1]], data[comps[0]]) / Math.max(data[comps[1]], data[comps[0]]) * 100
   return res
 }
@@ -155,7 +159,6 @@ function generateStackedBarChart(data, comps, is3D) {
 function generatePieChart(data, comps, is3D) {
   const size = 1;
   const sum = data.reduce((a, b) => a + b)
-  const pieChart = new THREE.Group();
 
   const cRad = 1 * size
   const cHeight = 0.4 * size;
@@ -169,12 +172,12 @@ function generatePieChart(data, comps, is3D) {
     if (comps.includes(index)) {
       const marker = new THREE.Mesh(...dotSelector)
       marker.position.set(cRad * Math.sin(thetaStart + thetaLength / 2), cHeight * 0.5, cRad * Math.cos(thetaStart + thetaLength / 2))
-      pieChart.add(marker)
+      chart.add(marker)
     }
-    pieChart.add(mesh)
+    chart.add(mesh)
 
-    is3D ? pieChart.rotateX(.17) : pieChart.rotateX(Math.PI / 2)
-    scene.add(pieChart)
+    is3D ? chart.rotateX(.12) : chart.rotateX(Math.PI / 2)
+    scene.add(chart)
     thetaStart += thetaLength
 
   })
