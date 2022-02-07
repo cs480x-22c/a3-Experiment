@@ -34,6 +34,21 @@
 </form>
 <svg width=800 height=600 hidden="hidden" id="svgElem"></svg>
 <script id="bars">
+	function noreturnkey(input) {
+		var x = event.which || event.keyCode;
+		if (x == '13') {
+			if(input == 1) { 
+				hideBar();
+			}
+			if(input == 2) { 
+				hidePie();
+			}
+			if(input == 3) { 
+				hideRect();
+			}
+			event.preventDefault();
+		}
+	}
     var rect = d3.select("svg");
     var height = 540;
     var barWidth = 50;
