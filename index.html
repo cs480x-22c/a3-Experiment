@@ -2,11 +2,11 @@
 <br />
 <button id="again" onclick="reload();">Reset?</button>
 <script>
-    alert("Test");
+    let count = 0;
+    alert(count);
     var container;
     window.onload = function () { container = document.getElementById("contain"); };
     var content = container.innerHTML;
-    let count = 0;
     function alertCount(event) {
         count = count + 1;
         alert(count);
