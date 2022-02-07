@@ -113,6 +113,8 @@
             document.getElementById("pie").hidden = false;
             pie.style("visibility", "visible");
             runPie();
+	    document.getElementById("pie").focus();
+	    document.getElementById("pie").select();
         }
         else {
             return false;
@@ -231,6 +233,8 @@
         else {
             return false;
         }
+	document.getElementById("rect").focus();
+	document.getElementById("rect").select();
     }
     function hideRect(event) {
         if (document.getElementById("rect").value.length > 0) {
@@ -252,5 +256,7 @@
         document.getElementById("ftext").hidden = true;
         document.getElementById("bar").hidden = false;
         document.getElementById("barButton").hidden = false;
+	document.getElementById("bar").focus();
+	document.getElementById("bar").select();
     }
 </script>
