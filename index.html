@@ -7,13 +7,12 @@
     window.onload = function () { container = document.getElementById("contain"); };
     var content = container.innerHTML;
     let runCount = 0;
-    increment();
     function increment(event) {
         document.getElementById("counter").innerHTML = ++runCount;
     }
     function reload() {
-        container.innerHTML = content;
         increment();
+        container.innerHTML = content;
     }
 </script>
 <br />
