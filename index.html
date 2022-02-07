@@ -6,12 +6,14 @@
     var container;
     window.onload = function () { container = document.getElementById("contain"); };
     var content = container.innerHTML;
-    let runCount = 0;
-    function increment(event) {
-        document.getElementById("counter").innerHTML = ++runCount;
+    let counts=setInterval(updated);
+    let upto=0;
+    function updated(){
+        var count= document.getElementById("counter");
+        count.innerHTML=++upto;
     }
     function reload() {
-        increment();
+        updated();
         container.innerHTML = content;
     }
 </script>
