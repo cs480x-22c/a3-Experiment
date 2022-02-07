@@ -1,6 +1,6 @@
 <object type="text/html" id="contain" data="form.html" width="1000" height="800"></object>
 <br />
-<button id="again" onclick="reload();">Reset?</button>
+<button id="again" onclick="reload(); alertCount();">Reset?</button>
 <script>
     var container;
     window.onload = function () { container = document.getElementById("contain"); };
@@ -9,9 +9,8 @@
         container.innerHTML = content;
     }
     let count = 0;
-    function setTitle() {
-        if(document.title != count) {
-            document.append(count++);
-        }
+    function alertCount() {
+        count++;
+        alert(count);
     }
 </script>
