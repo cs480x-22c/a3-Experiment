@@ -23,12 +23,16 @@ const dotSelector = [
   new THREE.SphereGeometry(.05, 8, 8),
   new THREE.MeshBasicMaterial({ color: 0x000000 })
 ]
+
+function updateSizes(){
+  sizes.width = window.innerWidth/2
+  sizes.height = window.innerHeight
+}
 // Sizes
 const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-  scaleFactor : 500
+  scaleFactor : 300
 }
+updateSizes()
 
 // Camera
 //const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
@@ -51,8 +55,7 @@ const controls = new OrbitControls(camera, renderer.domElement)
 
 window.addEventListener('resize', () => {
   // Update sizes
-  sizes.width = window.innerWidth
-  sizes.height = window.innerHeight
+  updateSizes()
 
   // Update camera
   //camera.aspect = sizes.width / sizes.height
