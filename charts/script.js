@@ -37,10 +37,10 @@ updateSizes()
 // Camera
 //const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
 
-const camera = new THREE.OrthographicCamera( 
-  sizes.width / - sizes.scaleFactor, 
-  sizes.width / sizes.scaleFactor, 
-  sizes.height / sizes.scaleFactor, 
+const camera = new THREE.OrthographicCamera(
+  sizes.width / - sizes.scaleFactor,
+  sizes.width / sizes.scaleFactor,
+  sizes.height / sizes.scaleFactor,
   sizes.height / - sizes.scaleFactor, 1, 1000 );
 camera.position.z = 3
 scene.add(camera)
@@ -84,15 +84,15 @@ const tick = () => {
 const data = [43, 3, 67, 23, 95]
 const comps = [1, 4] // choose the things to compare
 
-generateChart(data, comps, 'stackedBar3D')
+generateChart(data, comps, 'pie3D')
 
 tick()
 
 /**
- * 
- * @param {array of five numbers, 0 - 100} data 
- * @param {array of two numbers (0 - 4), indices of selected values} comps 
- * @param {one of four: 'pie', 'pie3D', 'stackedBar', 'stackedBar3D'} barType 
+ *
+ * @param {array of five numbers, 0 - 100} data
+ * @param {array of two numbers (0 - 4), indices of selected values} comps
+ * @param {one of four: 'pie', 'pie3D', 'stackedBar', 'stackedBar3D'} barType
  * @returns percent of smaller value of bigger value from selected vals of data
  */
 function generateChart(data, comps, barType) {
@@ -110,7 +110,7 @@ function generateChart(data, comps, barType) {
     case 'stackedBar3D':
       res = generateStackedBarChart(data, comps, true)
       break;
-    default: 
+    default:
      console.log('unrecognized chart type');
      break;
   }
