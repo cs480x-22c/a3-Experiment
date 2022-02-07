@@ -2,7 +2,9 @@
 
 
 <style>
-
+  .chosen-rect {
+    fill: none;
+  }
 </style>
 
 <body>
@@ -11,6 +13,16 @@
     Stacked Bar Chart
   -->
   <div class="chart"></div>
+
+  <div>
+    <form>
+      <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
+        size.
+      </label>
+      <input type="text" id="fname" name="firstname" placeholder="Your guess..">
+      <input type="submit" value="Submit" class="submitBtn">
+    </form>
+  </div>
 
   <!--
     Regular Bar Chart
@@ -24,25 +36,40 @@
 
 <script>
 
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+
   var stackedBarData = []
+  let percentArr = []
   d3.csv("testData.csv", function (data) {
     for (let i = 0; i < data.length; i++) {
       if (data[i].chart == 2) {
         stackedBarData.push(data[i].value);
       }
     }
-    console.log(stackedBarData)
+
     const sampleData = [
-      { label: 'Test 0 which should not render', value: 0 },
-      { label: 'Group-1', value: stackedBarData[0] },
-      { label: 'Group-2', value: stackedBarData[1] },
-      { label: 'Test 0 AGAIN which should not render', value: 0 },
-      { label: 'Group-3', value: stackedBarData[2] },
-      { label: 'Group-4', value: stackedBarData[3] },
-      { label: 'Group-5', value: stackedBarData[4] },
-      { label: 'Group-6', value: stackedBarData[5] },
-      { label: 'Group-7', value: stackedBarData[6] },
+      { label: 'Group-1', value: parseInt(stackedBarData[0]), chosen: false },
+      { label: 'Group-2', value: parseInt(stackedBarData[1]), chosen: false },
+      { label: 'Group-3', value: parseInt(stackedBarData[2]), chosen: false },
+      { label: 'Group-4', value: parseInt(stackedBarData[3]), chosen: false },
+      { label: 'Group-5', value: parseInt(stackedBarData[4]), chosen: false },
+      { label: 'Group-6', value: parseInt(stackedBarData[5]), chosen: false },
+      { label: 'Group-7', value: parseInt(stackedBarData[6]), chosen: false },
     ]
+
+    let previous = -1
+    for (let i = 0; i < 2; i++) {
+      let tempNum = getRandomInt(7)
+      while (tempNum == previous) {
+        tempNum = getRandomInt(7)
+      }
+      sampleData[tempNum].chosen = true
+      previous = tempNum;
+    }
+
     // group data for chart and filter out zero values
 
     function groupData(data, total) {
@@ -61,7 +88,8 @@
           // want the cumulative to prior value (start of rect)
           cumulative: cumulative - d.value,
           label: d.label,
-          percent: percent(d.value)
+          percent: percent(d.value),
+          chosen: d.chosen
         }
       }).filter(d => d.value > 0)
       return _data
@@ -74,7 +102,7 @@
         width: 800,
         height: 200,
         barHeight: 100,
-        colors: ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#241D4D'],
+        colors: ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#1D412F', '#241D4D'],
         ...config
       }
       const { f, margin, width, height, barHeight, colors } = config
@@ -84,6 +112,8 @@
 
       const total = d3.sum(data, d => d.value)
       const _data = groupData(data, total)
+
+      console.log(_data)
 
       // set up scales for horizontal placement
       const xScale = d3.scaleLinear()
@@ -108,6 +138,8 @@
         .attr('height', barHeight)
         .attr('width', d => xScale(d.value))
         .style('fill', (d, i) => colors[i])
+        .style('cursor', 'pointer')
+
 
       // add values on bar
       selection.selectAll('.text-value')
@@ -117,7 +149,14 @@
         .attr('text-anchor', 'middle')
         .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
         .attr('y', (h / 2) + 5)
-        .text(d => d.value)
+        .text(d => {
+          if (d.chosen) {
+            return "This One";
+          } else {
+            "";
+          }
+        })
+        .style('display', 'none')
 
       // add some labels for percentages
       selection.selectAll('.text-percent')
@@ -128,6 +167,7 @@
         .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
         .attr('y', (h / 2) - (halfBarHeight * 1.1))
         .text(d => f(d.percent) + ' %')
+        .style('display', 'none')
 
       // add the labels
       selection.selectAll('.text-label')
@@ -138,7 +178,36 @@
         .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
         .attr('y', (h / 2) + (halfBarHeight * 1.1) + 20)
         .style('fill', (d, i) => colors[i])
-        .text(d => d.label)
+        .text(d => {
+          if (d.chosen) {
+            return "This One";
+          } else {
+            "";
+          }
+        })
+
+      d3.select('.submitBtn')
+        .data(_data)
+        .on('click', function (d) {
+          let observedValue = 0
+          if (!isNaN(parseInt(document.getElementById('fname').value))) {
+            observedValue = (parseInt(document.getElementById('fname').value))
+          } else {
+            alert("Please Input Valid Number")
+          }
+          for (let i = 0; i < _data.length; i++) {
+            if (_data[i].chosen) {
+              percentArr.push(_data[i].percent)
+            }
+          }
+
+          let trueValue = Math.max(...percentArr) / Math.min(...percentArr)
+          alert(`The correct answer is ${trueValue}\n
+                  The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`)
+          while (percentArr.length > 0) {
+            percentArr.pop()
+          }
+        })
     }
     // render chart
     stackedBar('.chart', sampleData)
