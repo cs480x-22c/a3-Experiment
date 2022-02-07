@@ -10,7 +10,7 @@
     increment();
     function increment(event) {
         runCount++;
-        document.title = runCount;
+        document.getElementById("counter").innerHTML = runCount;
     }
     function reload() {
         container.innerHTML = content;
@@ -22,3 +22,5 @@
     The number of completed runs you've done this instance is tracked in the webpage title.
     Do not reload the webpage unless you are keeping track of runs on your own!
 </head>
+<br />
+<div id="counter"></div>
