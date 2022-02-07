@@ -59,8 +59,8 @@ window.addEventListener('resize', () => {
 
   // Update camera
   //camera.aspect = sizes.width / sizes.height
-  camera.left = sizes.width / - 500
-  camera.right = sizes.width /  500
+  camera.left = sizes.width / - sizes.scaleFactor
+  camera.right = sizes.width / - sizes.scaleFactor
   camera.top = sizes.height /  500
   camera.bottom = sizes.height / - 500
   camera.updateProjectionMatrix()
