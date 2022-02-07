@@ -9,7 +9,8 @@
     let runCount = 0;
     increment();
     function increment(event) {
-        document.title = runCount++;
+        runCount++;
+        document.title = runCount;
     }
     function reload() {
         container.innerHTML = content;
