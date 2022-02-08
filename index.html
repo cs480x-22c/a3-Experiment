@@ -6,18 +6,24 @@
     import { generateChart, clearChart } from "/charts/script.js"
 
     let data, chart, percentAnswer;
+    let counter = 0;
+    let csvFileData = [];
     const comps = [1, 4] // The things to compare
     const graphTypes = ['stackedBar3D', 'stackedBar', 'pie', 'pie3D']
+
 
     //html elements
     let inputObject = document.getElementById('ans')
     let buttonObject = document.getElementById('button')
+    let downloadObject = document.getElementById('download')
     let msgObject = document.getElementById('msg')
 
     buttonObject.onclick = function () { handleNextButton() }
+    downloadObject.onclick = function () { download_csv_file() }
 
     //generateChart(data, comps, 'stackedBar3D')
     handleNextButton(true)
+
 
 
     function handleNextButton(first = false) {
@@ -33,16 +39,51 @@
         }
 
         clearChart()
-      //append to csv array here
-      //sendtoCSVArray(chart, guess, percentAnswer)
+        //append to csv array here
+
+
+        csvFileData.push([counter, graphTypes[chart], percentAnswer, guess ])
+        console.log(csvFileData)
+        //sendtoCSVArray(chart, guess, percentAnswer)
+        //create a user-defined function to download CSV file
+
+
       }
+
 
       //new data generation
       data = Array.from({ length: 5 }, () => Math.floor(Math.random() * 100))
       chart = Math.floor(Math.random() * 4)
       percentAnswer = generateChart(data, comps, graphTypes[chart])
       inputObject.value = ""
+
+      counter += 1; //increments counter after each trial
     }
+
+    function download_csv_file() {
+
+   //define the heading for each row of the data
+   let csv = 'Trial,Chart_Type,true_percentage,guessed_percentage\n';
+
+   //merge the data with CSV
+   csvFileData.forEach(function(row) {
+           csv += row.join(',');
+           csv += "\n";
+   });
+
+
+
+
+
+   let hiddenElement = document.createElement('a');
+   hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+   hiddenElement.target = '_blank';
+
+   //provide the name for the CSV file to be downloaded
+   hiddenElement.download = 'experiment_data.csv';
+   hiddenElement.click();
+
+}
   </script>
   <style>
     .right {
@@ -87,6 +128,10 @@
     <button type="button" class="button" id="button">Next</button>
     <p id="msg"> </p>
   </div>
+  <h3> Click the button to download the CSV file </h3>
+
+<!-- create an HTML button to download the CSV file on click -->
+<button id="download"> Download CSV</button>
 </body>
 
 </html>
