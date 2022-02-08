@@ -31,10 +31,12 @@
     function handleNextButton(first = false) {
       if (!first) {
         let guess = inputObject.value;
-        console.log()
         if (isNaN(inputObject.value) || inputObject.value === '') {
           msgObject.innerHTML = "please guess a number (1 - 100) before continuing"
           return
+        }
+        else if (counter > 5) {
+          msgObject.innerHTML = "You've finished 80 trials! Thank you. Scroll down, download the csv and send it to us!"
         }
         else {
           msgObject.innerHTML = " "
@@ -43,12 +45,10 @@
         clearChart()
         //append to csv array here
 
-        csvFileData.push([person_id, counter, graphTypes[chart], percentAnswer, guess ])
-        console.log(csvFileData)
+        csvFileData.push([person_id, counter, graphTypes[chart], percentAnswer, guess])
+        //console.log(csvFileData)
         //sendtoCSVArray(chart, guess, percentAnswer)
         //create a user-defined function to download CSV file
-
-
       }
 
 
