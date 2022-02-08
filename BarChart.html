@@ -15,7 +15,7 @@
 			width: 50px;
 			height: 10px; /* Gets overridden by D3 height below */
 			margin-right: 2px;
-			background-color: black;
+			background-color: grey;
 		}
 
 		.container {
@@ -37,7 +37,7 @@
 		<input type="text" class="input"></input>
 		<p class="input">   %</p>
 	</div>
-
+		<button type="submit">Submit</button>
 	<script type="text/javascript">
 
     console.log(d3);
@@ -45,8 +45,19 @@
   
 		// Random Dataset
 		var data = d3.range(10).map(function() {
-			return Math.random(100);
+			return Math.random(100) ;
 		});
+
+		point1 = data[Math.floor(Math.random(10) * 10)];
+		point2 = data[Math.floor((Math.random(10)) * 10)];
+
+		while (point1 == point2){
+			point2 = data[Math.floor((Math.random(10)) * 10)]
+		}
+
+		console.log(data);
+		console.log(point1);
+		console.log(point2);
 
 		// Display data
 		var svg = d3.select('#chartholder').selectAll('div')
@@ -54,10 +65,8 @@
 			.enter()
 			.append('div')
 			.attr('class', 'bar')
-			.style('height', function (d) {
-				return d * 400 + 'px';
-			});
-  
+			.style('height', function (d) { return d * 400 + 'px';})
+			.style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}});
 	</script>
 </body>
 </html>
