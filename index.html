@@ -1,13 +1,36 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<html>
+  <header>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="RandomPlots.js"></script>
+    <style>
+    </style>
+  </header>
+  <body>
+    <h1> Experiment </h1>
+    <div id="plot"></div>
+    <button onclick="nextPlot()">Next</button>
+    <script>
+      let rpg = new RandomPlots()
+      let sequence = [
+        [
+          'hsl(100, 30%, 20%)',
+          'hsl(202, 30%, 20%)'
+        ],
+        [
+        'hsl(150, 30%, 20%)',
+          'hsl(150, 50%, 20%)'
+        ],
+        [
+        'hsl(155, 2%, 20%)',
+          'hsl(155, 2%, 5%)'
+        ]
+      ]
 
-
-<style>
-</style>
-
-<body>
-  <h1> Experiment </h1>
-</body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+      let idx = 0
+      function nextPlot() {
+        rpg.createCircles(sequence[idx])
+        idx += 1
+      }
+    </script>
+  </body>  
+</html>
