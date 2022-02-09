@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"></script>
+
+	<script type="text/javascript" src="app.js"></script>
+
 	<style type="text/css">
 		#chartholder {
 			display: block;
@@ -45,12 +48,61 @@
 		<p class="input">   %</p>
 	</div>
 	<div class="btn">
-		<form id="form" onsubmit="return false;">
+			
+		<form id="form" method="post" action="/getresults">  
 			<button type="submit" onclick="calcInput()">Submit</button>
-			<button type="button" onclick="window.location.href='results.html'">Results</button> 
+			
 		</form>
+		<button type="button" onclick="window.location.href='results.html'" value="Get Results">Results</button> 
 	</div>
 	
 	
 </body>
 </html>
+
+<script>
+
+console.log(d3);
+// Random Dataset
+var data = d3.range(10).map(function() {
+    return Math.random(100) ;
+});
+
+var point1 = data[Math.floor(Math.random(10) * 10)];
+var point2 = data[Math.floor((Math.random(10)) * 10)];
+
+while (point1 == point2){
+    point2 = data[Math.floor((Math.random(10)) * 10)]
+}
+
+console.log(data);
+console.log(point1);
+console.log(point2);
+
+
+function generateGraph(){
+    // Display data
+    var svg = d3.select('#chartholder').selectAll('div')
+        .data(data)
+        .enter()
+        .append('div')
+        .attr('class', 'bar')
+        .style('height', function (d) { return d * 400 + 'px';})
+        .style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}});
+}
+
+//get percentage input
+var results = [];
+var percentage = Math.floor(100- (Math.min(point1, point2) / Math.max(point1, point2)) * 100);
+var trial = (Math.random(10) * 10);
+
+function calcInput() {
+    var input = document.getElementById("userInput").value;
+    results.push({name: "barchart1", input: input, value: percentage, id: trial});
+    console.log(results); 
+    console.log(results.length); 
+    window.localStorage.setItem("trial: ", JSON.stringify(results));
+    return results;
+}
+
+</script>
