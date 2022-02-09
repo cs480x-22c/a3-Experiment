@@ -46,6 +46,7 @@
 	<div class="btn">
 		<form id="form" onsubmit="return false;">
 			<button type="submit" onclick="getInput()">Submit</button>
+			<button type="button" onclick="window.location.href='results.html'">Results</button> 
 		</form>
 	</div>
 	
@@ -53,13 +54,6 @@
 
     console.log(d3);
 
-		//get percentage input
-		inputArr = [];
-		function getInput() {
-   			var input = document.getElementById("userInput").value;
-			inputArr.push(["barchart1", input]);
-			console.log(inputArr);
-		}
 		// Random Dataset
 		var data = d3.range(10).map(function() {
 			return Math.random(100) ;
@@ -85,6 +79,18 @@
 			.style('height', function (d) { return d * 400 + 'px';})
 			.style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}});
 		
+		
+		//get percentage input
+		Results = {};
+		var percentage = Math.floor(100- (Math.min(point1, point2) / Math.max(point1, point2)) * 100);
+		var trial = (Math.random(10) * 10);
+		function getInput() {
+   			var input = document.getElementById("userInput").value;
+			Results = {name: "barchart1", input: input, value: percentage, id: trial};
+			console.log(Results); 
+		}
+
+			
 	</script>
 </body>
 </html>
