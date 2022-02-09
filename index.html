@@ -197,17 +197,17 @@ function saveSubmit(){
 
   var cx = width/2;
   var cy = height/2;
-  var r = radius2-40;
+  var r = radius2-50;
   var a1 = data_ready[donut_dot1].startAngle;
   var b1 = data_ready[donut_dot1].endAngle;
   var c1 = (b1 + a1)/2; //need to fix, not halfway yet
-  var x1 = cx + r * Math.cos(c1)
-  var y1 = cy + r * Math.sin(c1)
+  var x1 = cx + (r * Math.sin(c1));
+  var y1 = cy - (r * Math.cos(c1));
   var a2 = data_ready[donut_dot2].startAngle;
   var b2 = data_ready[donut_dot2].endAngle;
   var c2 = (b2 + a2)/2;
-  var x2 = cx + r * Math.cos(c2)
-  var y2 = cy + r * Math.sin(c2)
+  var x2 = cx + (r * Math.sin(c2));
+  var y2 = cy - (r * Math.cos(c2));
   d3.select('#my_dataviz')
     .append('circle')
     .attr('cx', x1)
@@ -218,6 +218,7 @@ function saveSubmit(){
     .attr('cx', x2)
     .attr('cy', y2)
     .attr('r', 5);
+
 }
 
  // }
