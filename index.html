@@ -95,6 +95,7 @@ and stating that it's the end? WIP -->
 
   <svg id="pie" width="500" height="500"></svg>
   <svg id="my_dataviz" width="500" height="500"></svg>
+  <svg id="bargraph" width="500" height="500"></svg>
 </body>
 
 <script>
@@ -227,6 +228,76 @@ function saveSubmit(){
     .attr('r', 5);
 
 }
+
+var margin = {top: 30, right: 200, bottom: 70, left: 60},
+    svgWidth = 500 - margin.left - margin.right,
+    svgHeight = 400 - margin.top - margin.bottom;
+
+
+var svg3 = d3.select('#bargraph')  
+    .attr("width", svgWidth + margin.left + margin.right)
+    .attr("height", svgHeight + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+// y axis
+d3.select('#bargraph')
+   .append('line')
+   .attr('x1', 55)
+   .attr('x2', 55)
+   .attr('y1', 210)
+   .attr('y2', 335)
+   .attr('stroke', 'black')
+// x axis
+d3.select('#bargraph')
+   .append('line')
+   .attr('x1', 50)
+   .attr('x2', 270)
+   .attr('y1', 330)
+   .attr('y2', 330)
+   .attr('stroke', 'black')
+
+
+var dataset = []; //initialize data
+  for (i=0; i<5; i++){
+    var new_data = getRandomIntInclusive(0, 100);
+    dataset.push(new_data);
+}  
+
+var barPadding = 5;  
+var barWidth = 40;
+
+var barChart = svg3.selectAll("rect")  
+    .data(dataset)  
+    .enter()  
+    .append("rect")  
+    .attr("fill", "white")
+    .attr("stroke", "black")
+    .attr("y", function(d) {  
+        return svgHeight - d  
+    })  
+    .attr("height", function(d) {  
+        return d;  
+    })  
+    .attr("width", barWidth - barPadding)  
+    .attr("transform", function (d, i) {  
+         var translate = [barWidth * i, 0];  
+         return "translate("+ translate +")";  
+    })
+
+    .attr("y", function(d) {  
+        return svgHeight - d  
+    })
+
+    .attr("height", function(d) {  
+       return d;  
+    })
+
+    .attr("transform", function (d, i) {  
+       var xCoordinate = barWidth * i;  
+       return "translate("+ xCoordinate +")";  
+    });
+
 
  // }
 
