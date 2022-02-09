@@ -31,11 +31,11 @@
     function handleNextButton(first = false) {
       if (!first) {
         let guess = inputObject.value;
-        if (isNaN(inputObject.value) || inputObject.value === '') {
+        if (isNaN(inputObject.value) || inputObject.value === '' || inputObject.value > 100) {
           msgObject.innerHTML = "please guess a number (1 - 100) before continuing"
           return
         }
-        else if (counter > 5) {
+        else if (counter > 80) {
           msgObject.innerHTML = "You've finished 80 trials! Thank you. Scroll down, download the csv and send it to us!"
         }
         else {
@@ -59,6 +59,7 @@
       inputObject.value = ""
 
       counter += 1; //increments counter after each trial
+      msgObject.innerHTML = "Trials: " + counter + "/80"
     }
 
     function download_csv_file() {
@@ -117,10 +118,6 @@
     <p>
     <p>What percentage does the smaller value represent of the larger value? </p>
     <p>(The two selected values are marked with ●.)</p>
-    <!-- <Button
-        type="button"
-        class="button"
-      >Check Answer</button> -->
     <form>
       <label for="Answer">Answer:</label>
       <input type="text" id="ans" name="ans" value="">
