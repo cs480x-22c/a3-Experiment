@@ -53,13 +53,18 @@ and asking for their input on the percentage etc., and probably a third one sayi
 and stating that it's the end? WIP -->
 <form id="form" onsubmit="return false;">
 
-  <!-- Title page -->
+ <!-- Title page -->
   <div class="page">
     <h1>Experiment</h1>
     <p>Thank you for taking your time to participate in this experiment!</p>
     <p>In this experiment, you will be determining the size difference (in percentage) of two values of several charts. These charts include bar charts, pie charts, and donut charts.</p>
     <p>You only need to type your answer as a number, no percent sign is needed.</p>
     <p>Click "Start" to begin!</p>
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="startButton" onclick="start()">Start</button>
+      </div>
+    </div>
   </div>
 
   <!-- Question page -->
@@ -70,7 +75,12 @@ and stating that it's the end? WIP -->
     <p>Enter your guess below, what percentage is the smaller value to the larger value?</p>
     <p> <b>Example</b>:
        If the smaller value seems to be half of the larger value, then enter 50.</p>
-    <p input type='text' id="qAnswer"></p> 
+    <p input type='text' id="qAnswer"></p>
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="nextButton" onclick="next()">Next</button>
+      </div>
+  </div> 
   </div>
 
   <!-- Page after last question -->
@@ -82,13 +92,6 @@ and stating that it's the end? WIP -->
     <div style='float:right;'>
       <button type="button" id="saveSubmitButton" onclick="saveSubmit()">Submit</button>
     </div>
-  </div>
-  
-  <div style="overflow:auto;">
-      <div style="float:right;">
-        <button type="button" id="nextButton" onclick="next()">Next</button>
-        <button type="button" id="submitButton" onclick="submit()">Submit</button>
-      </div>
   </div>
 
 </form>
