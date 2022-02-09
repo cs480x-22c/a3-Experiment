@@ -13,36 +13,50 @@
 		.bar {
 			display: inline-block;
 			width: 50px;
-			height: 10px; /* Gets overridden by D3 height below */
+			height: 10px; 
 			margin-right: 2px;
 			background-color: grey;
 		}
 
 		.container {
-    		width:100%;
-    		text-align: center;
+       		text-align: center;
 			display: flex;
   			justify-content: center;
+			font-family: 'Quicksand', sans-serif;
 		}
 		.input {
     		display: inline-block;
 		}
+		.btn {
+			margin-top: 10px;
+			display: flex;
+  			justify-content: center;
+		}
 
 	</style>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="chartholder"></div>
-	<p class="container">Please input how much smaller you think the bar is from the larger one</p><br>
+	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
 	<div class="container">
-		<input type="text" class="input"></input>
+		<input type="text" class="input" id="userInput"></input>
 		<p class="input">   %</p>
 	</div>
-		<button type="submit">Submit</button>
+	<div class="btn">
+		<form id="form" onsubmit="return false;">
+			<button type="submit" onclick="getInput()">Submit</button>
+		</form>
+	</div>
+	
 	<script type="text/javascript">
 
     console.log(d3);
 
-  
+		function getInput() {
+   			 var input = document.getElementById("userInput").value;
+			console.log(input);
+		}
 		// Random Dataset
 		var data = d3.range(10).map(function() {
 			return Math.random(100) ;
@@ -67,6 +81,7 @@
 			.attr('class', 'bar')
 			.style('height', function (d) { return d * 400 + 'px';})
 			.style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}});
+		
 	</script>
 </body>
 </html>
