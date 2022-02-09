@@ -36,8 +36,9 @@
 	</style>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
-<body>
-	<div id="chartholder"></div>
+<script type="text/javascript" src="script.js"></script>
+<body onload="generateGraph()">
+	<div id="chartholder" ></div>
 	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
 	<div class="container">
 		<input type="text" class="input" id="userInput"></input>
@@ -45,52 +46,11 @@
 	</div>
 	<div class="btn">
 		<form id="form" onsubmit="return false;">
-			<button type="submit" onclick="getInput()">Submit</button>
+			<button type="submit" onclick="calcInput()">Submit</button>
 			<button type="button" onclick="window.location.href='results.html'">Results</button> 
 		</form>
 	</div>
 	
-	<script type="text/javascript">
-
-    console.log(d3);
-
-		// Random Dataset
-		var data = d3.range(10).map(function() {
-			return Math.random(100) ;
-		});
-
-		point1 = data[Math.floor(Math.random(10) * 10)];
-		point2 = data[Math.floor((Math.random(10)) * 10)];
-
-		while (point1 == point2){
-			point2 = data[Math.floor((Math.random(10)) * 10)]
-		}
-
-		console.log(data);
-		console.log(point1);
-		console.log(point2);
-
-		// Display data
-		var svg = d3.select('#chartholder').selectAll('div')
-			.data(data)
-			.enter()
-			.append('div')
-			.attr('class', 'bar')
-			.style('height', function (d) { return d * 400 + 'px';})
-			.style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}});
-		
-		
-		//get percentage input
-		Results = {};
-		var percentage = Math.floor(100- (Math.min(point1, point2) / Math.max(point1, point2)) * 100);
-		var trial = (Math.random(10) * 10);
-		function getInput() {
-   			var input = document.getElementById("userInput").value;
-			Results = {name: "barchart1", input: input, value: percentage, id: trial};
-			console.log(Results); 
-		}
-
-			
-	</script>
+	
 </body>
 </html>
