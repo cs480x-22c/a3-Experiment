@@ -36,19 +36,20 @@ function calcInput() {
     var input = document.getElementById("userInput").value;
     results.push({name: "barchart1", input: input, value: percentage, id: trial});
     console.log(results); 
+    window.localStorage.setItem("session:", JSON.stringify(results));
+    return results;
 }
 
 function sendInput() {
-    for(i =0; i<= results.length + 1; i++){
-        var obj = results[i];
-
+     obj =  window.localStorage.getItem('session:');
+ 
+ 
         console.log(obj);
-        var str = "ID:" + obj.id + "\nName: "
-             + obj.name + "\nValue:" + obj.value 
-             + "\nType: " + obj.type;
+        // var str = "ID:" + obj.id + "\nName: "
+        //      + obj.name + "\nValue:" + obj.value 
+        //      + "\nType: " + obj.type;
 
-        console.log(str);
+        // console.log(str);
 
-        document.getElementById('text').innerHTML = str;
+        document.getElementById('text').innerHTML = obj;
     }
-}
