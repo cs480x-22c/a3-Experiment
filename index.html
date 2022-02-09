@@ -84,10 +84,8 @@ and stating that it's the end? WIP -->
     </div>
   </div>
 
-
 </form>
 
-  <h1> Experiment </h1>
   <svg id="pie" width="500" height="500"></svg>
   <svg id="my_dataviz" width="500" height="500"></svg>
 </body>
@@ -100,7 +98,7 @@ and stating that it's the end? WIP -->
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the     minimum is inclusive
   }
-
+function saveSubmit(){
   //pie chart
   //function pie_chart() {
   var split = 5; //random number of splits for the chart
@@ -220,6 +218,7 @@ and stating that it's the end? WIP -->
     .attr('cx', x2)
     .attr('cy', y2)
     .attr('r', 5);
+}
 
  // }
 
