@@ -53,9 +53,12 @@
 
     console.log(d3);
 
+		//get percentage input
+		inputArr = [];
 		function getInput() {
-   			 var input = document.getElementById("userInput").value;
-			console.log(input);
+   			var input = document.getElementById("userInput").value;
+			inputArr.push(["barchart1", input]);
+			console.log(inputArr);
 		}
 		// Random Dataset
 		var data = d3.range(10).map(function() {
