@@ -99,6 +99,11 @@ and stating that it's the end? WIP -->
 </body>
 
 <script>
+
+  function submit(){
+    d3.select("my_dataviz").select("svg").remove();
+    //bar_chart();
+  }
   
   //functon to random number for number of splits
   function getRandomIntInclusive(min, max) {
@@ -108,6 +113,9 @@ and stating that it's the end? WIP -->
   }
 function saveSubmit(){
   //pie chart
+    var width = 450
+    height = 450
+    margin = 40
   //function pie_chart() {
   var split = 5; //random number of splits for the chart
   //random values between 0 and 100
@@ -116,11 +124,13 @@ function saveSubmit(){
     var new_data = getRandomIntInclusive(0, 100);
     data.push(new_data);
   }
-  var svg1 = d3.select("svg"),
-    width = svg1.attr("width"),
-    height = svg1.attr("height"),
-    radius1 = Math.min(width, height) / 2,
-    g = svg1.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  var svg1 = d3.select("#pie")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    radius1 = Math.min(width, height) / 2;
   var color = d3.scaleOrdinal(['#4daf4a','#377eb8','#ff7f00','#984ea3','#e41a1c']);
   var pie = d3.pie();
   
@@ -130,7 +140,7 @@ function saveSubmit(){
     .outerRadius(radius1);
               
   //Generate groups
-  var arcs = g.selectAll("arc")
+  var arcs = svg1.selectAll("arc")
     .data(pie(data))
     .enter()
     .append("g")
@@ -147,9 +157,7 @@ function saveSubmit(){
 
   //donut chart
   //function donut(){
-  var width = 450
-    height = 450
-    margin = 40
+
 
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
   var radius2 = Math.min(width, height) / 2 - margin
@@ -228,6 +236,7 @@ function saveSubmit(){
     .attr('r', 5);
 
 }
+
 
 var margin = {top: 30, right: 200, bottom: 70, left: 60},
     svgWidth = 500 - margin.left - margin.right,
