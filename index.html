@@ -6,8 +6,92 @@
 
 <body>
   <h1> Experiment </h1>
+
+  <div class="vis">
+  </div>
+
+
 </body>
 
 <script>
   console.log(d3); // test if d3 is loaded
+
+
+  height = 600;
+  width = 600;
+  graph_margin = ({ top: 100, right: 150, bottom: 200, left: 150 });
+  response_margin = ({ top: 75, right: 150, bottom: 50, left: 150 });
+
+  var svg = d3.select('.vis')
+    .append("svg")
+    .attr("id", "graph_section")
+    .attr("viewBox", [0, 0, width, height])
+    .property("value", []);
+
+  //background color
+  d3.select('#graph_section')
+    .append("rect")
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("fill", d3.schemeCategory10[7]);
+
+  //box for experiment bar graph
+  d3.select('#graph_section')
+    .append("rect")
+    .attr("x", graph_margin.left)
+    .attr("y", graph_margin.top)
+    .attr("width", width - graph_margin.right - graph_margin.left)
+    .attr("height", height - graph_margin.bottom - graph_margin.top)
+    .attr("fill", "white");
+
+
+  var graph_box_bottom = height - graph_margin.bottom;
+  var response_box_top = graph_box_bottom + response_margin.top;
+  var response_box_height = height - response_margin.bottom - response_box_top;
+  var response_box_width = width - response_margin.right - response_margin.left;
+
+  //box for responses
+  d3.select('#graph_section')
+    .append("rect")
+    .attr("id", "response_box")
+    .attr("x", graph_margin.left)
+    .attr("y", response_box_top)
+    .attr("width", response_box_width)
+    .attr("height",response_box_height)
+    .attr("fill", d3.schemeCategory10[9]);
+
+  var bar_number = 6;//change this value to match number of bars in graph
+  var button_interval = response_box_width / bar_number;
+  var button_x_margin = button_interval / 8;
+  var button_y_margin = response_box_height / 8;
+
+  for (let i = 0; i < (bar_number); i++) {
+    console.log(i); // test if d3 is loaded
+
+    d3.select('#graph_section')
+      .append('rect')
+      .attr("x", button_x_margin + (i) * button_interval + response_margin.left)
+      .attr("y", button_y_margin + response_box_top)
+      .attr("width", button_interval - 2 * button_x_margin)
+      .attr("height", response_box_height - 2 * button_y_margin)
+      .attr("fill", d3.schemeCategory10[5])
+      .on('click', function (evt, d) {
+        console.log(evt);
+        d3.select(this)
+          .transition()
+          .duration(750)
+          .ease(d3.easeLinear)
+          .attr('fill', d3.schemeCategory10[3]);
+      });
+
+    d3.select('#graph_section')
+      .append('text')
+      .attr("x", button_interval/2 + (i) * button_interval + response_margin.left)
+      .attr("y", response_box_height/2 + response_box_top)
+      .attr("dy", ".35em")
+      .text(i);
+
+  }
+
+
 </script>
