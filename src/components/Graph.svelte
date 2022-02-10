@@ -1,63 +1,62 @@
 <script>
-    import * as d3 from 'd3';
-    import { onMount } from 'svelte';
+	import * as d3 from 'd3';
+	import { onMount } from 'svelte';
+	let svg;
+	export let data;
+	export let comp1;
+	export let comp2;
+    export let hoverable = true;
 
-    let value = 8;
+	onMount(() => {
+		// Use onMount to ensure it only runs on a loaded page
+		svg = d3.select('.vis').append('svg').attr('viewBox', [-5, 0, 39, 120]);
 
-    let svg, rect, line;
-    var data = [75, 66, 81, 15, 18, 85];
-    var xCount = 5;
+		let groups = svg
+			.selectAll('group')
+			.data(data)
+			.enter()
+			.append('g')
+			.on('mouseover', function (d, i) {
+                if(hoverable) d3.select(this).selectAll('#guide').style('visibility', 'visible');
+			})
+			.on('mouseout', function (d, i) {
+				if(hoverable) d3.select(this).selectAll('#guide').style('visibility', 'hidden');
+			});
 
+		let bars = groups
+			.append('rect')
+			.attr('x', (d, i) => {
+				return i * 5;
+			})
+			.attr('y', function (d) {
+				return 100 - d;
+			})
+			.attr('width', 4)
+			.attr('height', function (d) {
+				return d;
+			})
+            .attr("fill", (d,i) => {
+                if(comp1 == i) return "#0000FF"
+                else if(comp2 == i) return "#FF0000"
+                else return "#FFFFFF"
+            })
+            .attr("stroke", "black")
+            .attr("stroke-", "black")
+			.style('z-index', 0);
 
-
-    onMount(() => {
-        // Use onMount to ensure it only runs on a loaded page
-        svg = d3.select('.vis').append('svg')
-            .attr("viewBox", [-15, 10, 120, 120])
-
-
-
-        svg.selectAll("rect")
-        .data(data)
-        .enter().append("rect")
-        .attr('x', function () {
-            xCount += 5
-            return xCount;
-        })
-        .attr('y', function (d){
-            return 100-d;
-        })
-        .attr('width', 4)
-        .attr('height', function (d) {return d;})
-        .on("mouseover", function(d,i){
-            //d3.select(line).enter.append('line')
-            svg.selectAll('line')
-                .data(data)
-                .enter().append('line').attr('x1', 10)
-                .attr('y1', function (d){
-                    return 100-d;
-                })
-                .attr('x2', 70)
-                .attr('y2', function (d){
-                    return 100-d;
-                })
-                .attr('stroke', 'red')
-            //d3.select(this).attr('fill','#0f00ff')
-        } )
-        .on("mouseout", function (d,i){
-            d3.selectAll("line").remove();
-            //d3.select(this).attr('fill', '#000000')
-        })
-    })
-
+		let lines = groups
+			.append('line')
+			.attr('id', 'guide')
+			.attr('x1', 0)
+			.attr('x2', 5 * data.length - 1)
+			.attr('y1', (d) => 100 - d)
+			.attr('y2', (d) => 100 - d)
+			.attr('stroke', 'red')
+			.style('visibility', 'hidden');
+	});
 </script>
 
-<input type="number" bind:value={value} />
-<div class="vis"></div>
-
+<div class="vis" />
 
 <style>
-    p {
-        color: red;
-    }
 </style>
