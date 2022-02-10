@@ -1,5 +1,5 @@
 const container = d3.select("#container");
-const path = "data.csv";
+const path = "data-collection/data.csv";
 let results = []; //store results
 let order; //random order to display charts
 let counter = 0; //what graph we are on
