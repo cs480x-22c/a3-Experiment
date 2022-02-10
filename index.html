@@ -26,11 +26,31 @@
         ]
       ]
 
-      let idx = 0
+      let s = 0
+      let idx = 1
       function nextPlot() {
-        rpg.createCircles(sequence[idx])
-        idx += 1
+        s = document.getElementById('numInput').value
+        if(s >= 0.01 && s <= 100.00) { //if s is valid, passes to sheets and gens next graph
+          console.log(s)
+
+          //PASS S TO GOOGLE SHEETS HERE
+
+          rpg.createCircles(sequence[idx])
+          idx += 1
+        } 
+
+        if(idx==29) { //if index maxes out, clears page and thanks user
+          document.write('THANK YOU!')
+        }
       }
+
     </script>
-  </body>  
+    <script>
+      rpg.createCircles(sequence[0]) //Loads first plot with page
+    </script>
+  </body>
+  <footer>
+    <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
+    Please input an estimate of the % difference between the plotted data points
+  </footer>  
 </html>
