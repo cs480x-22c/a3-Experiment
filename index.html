@@ -97,6 +97,7 @@ and stating that it's the end? WIP -->
   <div style="overflow:auto;">
     <div style='float:right;'>
       <button type="button" id="saveSubmitButton" onclick="saveSubmit()">Submit</button>
+      <button type="button" id="nextButton" onclick="next()">Next</button>
     </div>
   </div>
 
@@ -109,9 +110,38 @@ and stating that it's the end? WIP -->
 
 <script>
 
-  function submit(){
-    d3.select("my_dataviz").select("svg").remove();
-    //bar_chart();
+var order = [1,2,3];
+//shuffle the order each time
+function shuffleArray(array) {
+  let curId = array.length;
+  // There remain elements to shuffle
+  while (0 !== curId) {
+    // Pick a remaining element
+    let randId = Math.floor(Math.random() * curId);
+    curId -= 1;
+    // Swap it with the current element.
+    let tmp = array[curId];
+    array[curId] = array[randId];
+    array[randId] = tmp;
+  }
+  return array;
+}
+// Usage of shuffle
+order = shuffleArray(order);
+console.log(order);
+var count = 0; //count to know which function to use
+
+  function next(){
+    d3.select("#my_dataviz").selectAll("svg").remove();
+    var this_graph = order[count];
+    count++
+    if(this_graph==1){
+      pie_graph();
+    } else if (this_graph==2){
+      donut_graph();
+    } else {
+      bar_graph();
+    }
   }
   
   //functon to random number for number of splits
@@ -120,7 +150,7 @@ and stating that it's the end? WIP -->
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the     minimum is inclusive
   }
-function saveSubmit(){
+function pie_graph(){
   //pie chart
     var width = 450
     height = 450
@@ -133,7 +163,7 @@ function saveSubmit(){
     var new_data = getRandomIntInclusive(0, 100);
     data.push(new_data);
   }
-  var svg1 = d3.select("#pie")
+  var svg1 = d3.select("#my_dataviz")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -162,12 +192,13 @@ function saveSubmit(){
     .style("stroke-width", "2px")
     .style("opacity", 0.7)
     .attr("d", arc);
-//}
+}
 
   //donut chart
-  //function donut(){
-
-
+  function donut_graph(){
+    var width = 450
+    height = 450
+    margin = 40
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
   var radius2 = Math.min(width, height) / 2 - margin
 
@@ -246,20 +277,20 @@ function saveSubmit(){
 
 }
 
-
+function bar_graph(){
 var margin = {top: 30, right: 200, bottom: 70, left: 60},
     svgWidth = 500 - margin.left - margin.right,
     svgHeight = 400 - margin.top - margin.bottom;
 
 
-var svg3 = d3.select('#bargraph')  
+var svg3 = d3.select('#my_dataviz')  
     .attr("width", svgWidth + margin.left + margin.right)
     .attr("height", svgHeight + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 // y axis
-d3.select('#bargraph')
+d3.select('#my_dataviz')
    .append('line')
    .attr('x1', 55)
    .attr('x2', 55)
@@ -267,7 +298,7 @@ d3.select('#bargraph')
    .attr('y2', 335)
    .attr('stroke', 'black')
 // x axis
-d3.select('#bargraph')
+d3.select('#my_dataviz')
    .append('line')
    .attr('x1', 50)
    .attr('x2', 270)
@@ -317,7 +348,7 @@ var barChart = svg3.selectAll("rect")
     });
 
 
- // }
+ }
 
 </script>
 
