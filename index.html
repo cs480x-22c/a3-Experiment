@@ -2,6 +2,7 @@
   <header>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="RandomPlots.js"></script>
+    <script src="backend.js"></script>
     <style>
     </style>
   </header>
@@ -10,55 +11,111 @@
     <div id="plot"></div>
     <button onclick="nextPlot()">Next</button>
     <script>
+
+      //----------------------------------------------------------------------- Set-Up
+
       let rpg = new RandomPlots()
+      const userID = Math.floor(Math.random()*1000000);
+      var r1 = Math.floor(Math.random()*100);
+      var r2 = 100-r1;
       let sequence = [
-        [
+        [ //hue is different
           'hsl(100, 30%, 20%)',
           'hsl(202, 30%, 20%)'
         ],
-        [
-        'hsl(150, 30%, 20%)',
+        [ //saturation is different
+          'hsl(150, 30%, 20%)',
           'hsl(150, 50%, 20%)'
         ],
-        [
-        'hsl(155, 2%, 20%)',
+        [ //lightness is different
+          'hsl(155, 2%, 20%)',
           'hsl(155, 2%, 5%)'
         ]
       ]
+      sequence[0].r1 = r1;
+      sequence[0].r2 = r2;
 
-      // Example of piechart creation
-      let data = {
-        'A': 10,
-        'B': 20,
-        'C': 30
+      //---------------------------------------------------------------------- Sending Data
+
+      function sendData(payload) {
+        var formBody = [];
+        for (var property in details) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+    
+        fetch('https://docs.google.com/forms/u/4/d/e/1FAIpQLSe9BLtXqwfV94_f-feQM6vsAeIYTcbPXhwGF2-WQy-RVgPFcQ/formResponse', {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+            body: formBody
+        })
       }
-      rpg.createPieChart(data)
+
+      var details = {
+        'entry.1362470865': 'userID',
+        'entry.1174877292': 'testType',
+        'entry.357989325': 'true percentage',
+        'entry.138102301': 'response percentage'
+      };
+
+      //---------------------------------------------------------------------- Button Press/Next Graph Gen
 
       let s = 0
       let idx = 1
+      let rot = 1
+      let prev = 0
       function nextPlot() {
         s = document.getElementById('numInput').value
         if(s >= 0.01 && s <= 100.00) { //if s is valid, passes to sheets and gens next graph
-          console.log(s)
+          //Write to sheets but the code is messy... kept breaking when I tried to clean it. I gave up.
+          var testType = "";
+          if(prev == 0) testType = "hue";
+          if(prev == 1) testType = "saturation";
+          if(prev == 2) testType = "luminance";
+          var truePercentage = (Math.abs(sequence[prev].r1-sequence[prev].r2))
+          details['entry.1362470865'] = userID,
+          details['entry.1174877292'] = testType,
+          details['entry.357989325'] = truePercentage,
+          details['entry.138102301'] = s
+          sendData(details);
 
-          //PASS S TO GOOGLE SHEETS HERE
+          //Update UI
+          document.getElementById('numInput').value = "";
+          r1 = Math.floor(Math.random()*100);
+          r2 = 100-r1;
+          sequence[rot].r1 = r1;
+          sequence[rot].r2 = r2;
+          rpg.createPieChart(sequence[rot])
 
-          rpg.createCircles(sequence[idx])
+          //Josh's Super-Lazy Indexing Extrodinaire
           idx += 1
+          rot += 1
+          prev += 1
+          if(rot == 3)
+            rot = 0
+          if(prev == 3)
+            prev = 0
         } 
 
-        if(idx==29) { //if index maxes out, clears page and thanks user
+        //End condition for survey
+        if(idx==30) { //if index maxes out, clears page and thanks user
           document.write('THANK YOU!')
         }
       }
 
+      //-------------------------------------------------------------------------- Nada mas.
+
     </script>
     <script>
-      rpg.createCircles(sequence[0]) //Loads first plot with page
+      rpg.createPieChart(sequence[0]) //Loads first plot with page
     </script>
   </body>
   <footer>
     <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
-    Please input an estimate of the % difference between the plotted data points
+    Please input an estimate of the difference between the % areas of plotted data points
   </footer>  
 </html>
