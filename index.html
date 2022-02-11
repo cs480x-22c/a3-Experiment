@@ -103,9 +103,7 @@ and stating that it's the end? WIP -->
 
 </form>
 
-  <svg id="pie" width="500" height="500"></svg>
   <svg id="my_dataviz" width="500" height="500"></svg>
-  <svg id="bargraph" width="500" height="500"></svg>
 </body>
 
 <script>
@@ -128,7 +126,6 @@ function shuffleArray(array) {
 }
 // Usage of shuffle
 order = shuffleArray(order);
-console.log(order);
 var count = 0; //count to know which function to use
 
   function next(){
@@ -151,47 +148,88 @@ var count = 0; //count to know which function to use
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the     minimum is inclusive
   }
 function pie_graph(){
-  //pie chart
-    var width = 450
+  //creating random pie graph
+ var width = 450
     height = 450
     margin = 40
-  //function pie_chart() {
-  var split = 5; //random number of splits for the chart
-  //random values between 0 and 100
-  var data = []; //initialize data
-  for (i=0; i<split; i++){
-    var new_data = getRandomIntInclusive(0, 100);
-    data.push(new_data);
-  }
-  var svg1 = d3.select("#my_dataviz")
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+  var radius2 = Math.min(width, height) / 2 - margin
+
+  // append the svg object to the div called 'my_dataviz'
+  var svg2 = d3.select("#my_dataviz")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-    radius1 = Math.min(width, height) / 2;
-  var color = d3.scaleOrdinal(['#4daf4a','#377eb8','#ff7f00','#984ea3','#e41a1c']);
-  var pie = d3.pie();
-  
-  // Generate the arcs
-  var arc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(radius1);
-              
-  //Generate groups
-  var arcs = svg1.selectAll("arc")
-    .data(pie(data))
-    .enter()
-    .append("g")
-    .attr("class", "arc")
 
-  //Draw arc paths
-  arcs.append("path")
+  //Create dummy data
+  //random values between 0 and 100
+  var data_donut = []; //initialize data
+  var split = 5;
+  for (i=0; i<split; i++){
+    var new_data = getRandomIntInclusive(0, 100);
+    data_donut.push(new_data);
+  }
+
+  //set the color scale
+  
+  // Compute the position of each group on the pie:
+  var pie = d3.pie()
+    .value(function(d) {return d.value; })
+  var data_ready = pie(d3.entries(data_donut));
+  console.log(data_ready);
+
+  //Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  svg2.selectAll('whatever')
+    .data(data_ready)
+    .enter()
+    .append('path')
+    .attr('d', d3.arc()
+      .innerRadius(0)         // This is the size of the donut hole
+      .outerRadius(radius2))
     .attr('fill', 'white')
     .attr("stroke", "black")
     .style("stroke-width", "2px")
     .style("opacity", 0.7)
-    .attr("d", arc);
+  
+  //add dots to two of them randomly
+  var donut_dot1 = getRandomIntInclusive(0,4);
+  var donut_count = 0; //used to make sure not same slice
+  while(donut_count<1){
+    var rand = getRandomIntInclusive(0,4);
+    if (rand == donut_dot1){} //do nothing
+    else{
+      var donut_dot2 = rand;
+      donut_count++;
+    }
+  }
+
+  var cx = width/2;
+  var cy = height/2;
+  var r = radius2-70;
+  var a1 = data_ready[donut_dot1].startAngle;
+  var b1 = data_ready[donut_dot1].endAngle;
+  var c1 = (b1 + a1)/2; //need to fix, not halfway yet
+  var x1 = cx + (r * Math.sin(c1));
+  var y1 = cy - (r * Math.cos(c1));
+  var a2 = data_ready[donut_dot2].startAngle;
+  var b2 = data_ready[donut_dot2].endAngle;
+  var c2 = (b2 + a2)/2;
+  var x2 = cx + (r * Math.sin(c2));
+  var y2 = cy - (r * Math.cos(c2));
+  d3.select('#my_dataviz')
+    .append("svg")
+    .append('circle')
+    .attr('cx', x1)
+    .attr('cy', y1)
+    .attr('r', 5);
+  d3.select('#my_dataviz')
+    .append("svg")
+    .append('circle')
+    .attr('cx', x2)
+    .attr('cy', y2)
+    .attr('r', 5);
 }
 
   //donut chart
@@ -213,6 +251,7 @@ function pie_graph(){
   //Create dummy data
   //random values between 0 and 100
   var data_donut = []; //initialize data
+  var split = 5;
   for (i=0; i<split; i++){
     var new_data = getRandomIntInclusive(0, 100);
     data_donut.push(new_data);
@@ -223,7 +262,7 @@ function pie_graph(){
   // Compute the position of each group on the pie:
   var pie = d3.pie()
     .value(function(d) {return d.value; })
-  var data_ready = pie(d3.entries(data_donut))
+  var data_ready = pie(d3.entries(data_donut));
   console.log(data_ready);
 
   //Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
@@ -237,7 +276,7 @@ function pie_graph(){
     .attr('fill', 'white')
     .attr("stroke", "black")
     .style("stroke-width", "2px")
-    .style("opacity", 0.7)
+    .style("opacity", 0.7);
   
   //add dots to two of them randomly
   var donut_dot1 = getRandomIntInclusive(0,4);
@@ -265,11 +304,13 @@ function pie_graph(){
   var x2 = cx + (r * Math.sin(c2));
   var y2 = cy - (r * Math.cos(c2));
   d3.select('#my_dataviz')
+    .append("svg")
     .append('circle')
     .attr('cx', x1)
     .attr('cy', y1)
     .attr('r', 5);
   d3.select('#my_dataviz')
+    .append("svg")
     .append('circle')
     .attr('cx', x2)
     .attr('cy', y2)
@@ -284,13 +325,15 @@ var margin = {top: 30, right: 200, bottom: 70, left: 60},
 
 
 var svg3 = d3.select('#my_dataviz')  
+    .append("svg")
     .attr("width", svgWidth + margin.left + margin.right)
     .attr("height", svgHeight + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 // y axis
-d3.select('#my_dataviz')
+d3.select('#my_dataviz') 
+    .append("svg")
    .append('line')
    .attr('x1', 55)
    .attr('x2', 55)
@@ -299,6 +342,7 @@ d3.select('#my_dataviz')
    .attr('stroke', 'black')
 // x axis
 d3.select('#my_dataviz')
+    .append("svg")
    .append('line')
    .attr('x1', 50)
    .attr('x2', 450)
@@ -333,20 +377,16 @@ var barChart = svg3.selectAll("rect")
          var translate = [barWidth * i, 0];  
          return "translate("+ translate +")";  
     })
-
     .attr("y", function(d) {  
         return svgHeight - d  
     })
-
     .attr("height", function(d) {  
        return d;  
     })
-
     .attr("transform", function (d, i) {  
        var xCoordinate = barWidth * i;  
        return "translate("+ xCoordinate +")";  
     });
-
 
  }
 
