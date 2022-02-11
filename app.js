@@ -1,7 +1,10 @@
 // Requiring module
 var express = require('express');
 const path = require('path');
+
 const router = express.Router();
+
+console.log('directory-name: ', __dirname);
 
 // Creating express object
 var app = express();
@@ -9,7 +12,7 @@ var app = express();
 // Port Number
 var PORT = process.env.PORT ||3000;
 
-app.use(express.static(__dirname + '/a3-Experiment'));
+app.use(express.static(__dirname));
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -44,12 +47,12 @@ router.get("/", (req, res) => {
    });
 
    router.get("/bc", (req, res) => {
-    res.sendFile(path.join(__dirname + "/BarChart.html"));
+    res.sendFile(path.join(__dirname, "/BarChart.html"));
    });
 
-   router.get("/pg", (req, res) => {
-    res.sendFile(path.join(__dirname + "/PieGraph.html"));
-   });
+   router.get("/pie", (req, res) => {
+    res.sendFile(path.join(__dirname, "/PieGraph.html"));
+     });
 
 
    router.get('/results', function(req, res) {
