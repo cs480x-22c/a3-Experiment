@@ -1,6 +1,7 @@
 // Requiring module
 var express = require('express');
-
+const path = require('path');
+const router = express.Router();
  
 // Creating express object
 var app = express();
@@ -26,25 +27,36 @@ var nameSchema = new mongoose.Schema({
 var User = mongoose.model("User", nameSchema);
 
 // Server Setup
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index1.html");
+router.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname + "/index1.html"));
    });
 
- app.post("/getresults", (req, res) => {
+ app.post("/addResults", (req, res) => {
     var myData = new User(req.body);
     myData.save()
     .then(item => {
-    res.send("item saved to database");
+        res.send("data saved"); 
     })
     .catch(err => {
     res.status(400).send("unable to save to database");
     });
    });
 
-   
- app.use("/", (req, res) => {
-     res.sendFile(__dirname + "/BarChart.html");    
+   router.get("/bc", (req, res) => {
+    res.sendFile(path.join(__dirname + "/BarChart.html"));
    });
+
+   router.get("/pg", (req, res) => {
+    res.sendFile(path.join(__dirname + "/PieGraph.html"));
+   });
+
+
+   router.get('/results', function(req, res) {
+    res.sendFile(path.join(__dirname, '/results.html'));
+  });
+  
+   
+  app.use('/', router);
 
    app.listen(PORT, () => {
     console.log("Server listening on port " + PORT);

@@ -35,8 +35,7 @@ var trial = (Math.random(10) * 10);
 function calcInput() {
     var input = document.getElementById("userInput").value;
     results.push({name: "barchart1", input: input, value: percentage, id: trial});
-    console.log(results); 
-    console.log(results.length); 
+    console.log(results);  
     window.localStorage.setItem("trial: ", JSON.stringify(results));
     return results;
 }
@@ -55,6 +54,5 @@ function sendInput() {
   let liLast = document.createElement('li');
   ol.append(liLast);
   liLast.innerHTML = obj;
- 
 
     }

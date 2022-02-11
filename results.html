@@ -1,5 +1,11 @@
 <!DOCTYPE html>
+<script type="text/javascript" src="app.js"></script>
+<meta name="viewport" content="width=device-width" charset="utf-8">
+   
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+
 <style>
+	
 	#container {
 		width:100%;
 		text-align: center;
@@ -10,20 +16,34 @@
 	}
 </style>
 
-<html>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+<html lang="en">
+<title>Results</title>   
+<body onload="sendInput()" method>
 
-<body onload="sendInput()">
 <div id="container">
   <h1>Results</h1><br>
   <div id="text"></div>
   <ol id="ol">
     
   </ol>
-  <button type="button" onclick="window.location.href='index1.html'">Start Over</button> 
-</div>
+  <a href="/">Start Over</a></div>
 </body>
+
+<script> 
+
+function sendInput() {
+    
+    obj =  window.localStorage.getItem("trial: ");
+    console.log(obj);
+        // var str = "ID:" + obj[0].id + "\nName: "
+        //       + obj.name + "\nValue:" + obj.value 
+        //       + "\nType: " + obj.type;
+
+        //  console.log(str);
+
+        
+  let liLast = document.createElement('li');
+  ol.append(liLast);
+  liLast.innerHTML = obj;}
+</script>
 </html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"  crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width" charset="utf-8">
+	<script type="text/javascript" src="app.js"></script>
+	<style type="text/css">
+		.container {
+       		text-align: center;
+			display: flex;
+  			justify-content: center;
+			font-family: 'Quicksand', sans-serif;
+		}
+		.input {
+    		display: inline-block;
+		}
+		.btn {
+			margin-top: 10px;
+			display: flex;
+  			justify-content: center;
+		}
+
+	</style>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+</head>
+<title>BarChart</title>  
+<body onload="generateGraph()">
+	<svg width="500" height="400"></svg>
+	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
+	<div class="container">
+		<input type="text" class="input" id="userInput" title="input"></input>
+		<p class="input">   %</p>
+	</div>
+
+	<div class="btn">
+		<form id="form" method="post" action="/addResults">  
+			<button type="submit" onclick="calcInput()">Submit</button>
+		</form>
+		<form id="form1" method="get" action="/results">
+		<a href="/results">Results</a>
+		</form>
+	</div>
+		
+</body>
+</html>
+
+<script>
+
+console.log(d3);
+// Random Dataset
+var data = [
+	{num: 1, val: 33},
+	{num: 2, val: 16},
+	{num: 3, val: 20},
+	{num: 4, val: 31},
+	{num: 5, val: 10}
+];
+
+
+// var point1 = data.Math.floor(Math.random(5) * 10);
+// var point2 = data.Math.floor((Math.random(5)) * 10);
+
+// while (point1 == point2){
+//     point2 = data[Math.floor((Math.random(5)) * 10)]
+// }
+
+console.log(data);
+// console.log(point1);
+// console.log(point2);
+
+function generateGraph(){
+    // Display data
+	var svg = d3.select("svg"),
+            width = svg.attr("width"),
+            height = svg.attr("height"),
+            radius = 200;
+
+
+	var ordScale = d3.scaleOrdinal()
+	    .domain(data)
+        .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72']);
+
+	var pie = d3.pie().value(function(d) { 
+		return d.share; 
+    });
+
+    var arc = svg.selectAll("arc")
+        .data(pie(data))
+        .enter();
+
+	var path = d3.arc()
+	    .outerRadius(radius)
+        .innerRadius(0);
+
+    arc.append("path")
+        .attr("d", path)
+        .attr("fill", function(d) { return ordScale(d.data.name); });
+
+	var label = d3.arc()
+        .outerRadius(radius)
+        .innerRadius(0);
+            
+    arc.append("text")
+        .attr("transform", function(d) { 
+        return "translate(" + label.centroid(d) + ")"; 
+    })
+        .text(function(d) { return d.data.num; });
+ }
+</script>

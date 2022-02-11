@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width" charset="utf-8">
+
 <style>
 	#container {
 		width:100%;
@@ -9,22 +11,22 @@
 		font-family: 'Quicksand', sans-serif;
 	}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v7.min.js"  charset="utf-8" crossorigin="anonymous"></script>
+<html lang="en">
+	<title>Home Page</title>  
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet"charset="utf-8" crossorigin="anonymous">
 <script type="text/javascript" src="app.js"></script>
-
-<html>
-	
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 <div id="container">
   <h1>Experiment</h1><br>
   <p> In this experiment, you will be asked to judge the size difference between two points on a graph</p><br>
   <p> Your input should represent the percentage of size of the smaller point from the larger point</p><br>
   <p> For example, the smaller circle here is 50% of the size of the larger circle</p><br>
   <canvas id="circles" width="100" height="100"></canvas>
-  <canvas id="circles1" width="100" height="100"></canvas><br> 
- 	 <button type="button" onclick="window.location.href='BarChart.html'">Start</button> 
 
-	</div>
+  <canvas id="circles1" width="100" height="100"></canvas><br> 
+  <a href="/bc">Start</a>
+
+</div>
 </body>
 </html>
 

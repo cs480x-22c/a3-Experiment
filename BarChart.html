@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang ="en">
 <head>
-	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"></script>
+	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"  crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width" charset="utf-8">
 
 	<script type="text/javascript" src="app.js"></script>
-
 	<style type="text/css">
 		#chartholder {
 			display: block;
@@ -37,23 +37,28 @@
 		}
 
 	</style>
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
 </head>
-<script type="text/javascript" src="script.js"></script>
+<title>BarChart</title>  
+<script type="text/javascript" src=" script.js"></script>
 <body onload="generateGraph()">
 	<div id="chartholder" ></div>
 	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
 	<div class="container">
-		<input type="text" class="input" id="userInput"></input>
+		<input type="text" class="input" id="userInput" title="input"></input>
 		<p class="input">   %</p>
 	</div>
+
 	<div class="btn">
-			
-		<form id="form" method="post" action="/getresults">  
+		<form id="form" method="post" action="/addResults">  
 			<button type="submit" onclick="calcInput()">Submit</button>
-			
 		</form>
-		<button type="button" onclick="window.location.href='results.html'" value="Get Results">Results</button> 
+	
+		<a href="/pg">Next</a>
+		
+		<form id="form1" method="get" action="/results">
+			<a href="/results">Results</a>
+		</form>
 	</div>
 	
 	
@@ -98,7 +103,7 @@ var trial = (Math.random(10) * 10);
 
 function calcInput() {
     var input = document.getElementById("userInput").value;
-    results.push({name: "barchart1", input: input, value: percentage, id: trial});
+    results.push({name: "piegraph", input: input, value: percentage, id: trial});
     console.log(results); 
     console.log(results.length); 
     window.localStorage.setItem("trial: ", JSON.stringify(results));
