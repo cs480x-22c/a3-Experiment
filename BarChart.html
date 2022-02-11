@@ -40,7 +40,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
 </head>
 <title>BarChart</title>  
-<script type="text/javascript" src=" script.js"></script>
+
 <body onload="generateGraph()">
 	<div id="chartholder" ></div>
 	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
@@ -54,7 +54,9 @@
 			<button type="submit" onclick="calcInput()">Submit</button>
 		</form>
 	
-		<a href="/pg">Next</a>
+		<form id="form2" method="get" action="/pg">
+			<a href="/pg">Next</a>
+		</form>
 		
 		<form id="form1" method="get" action="/results">
 			<a href="/results">Results</a>

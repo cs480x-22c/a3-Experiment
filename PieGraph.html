@@ -3,7 +3,9 @@
 <head>
 	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"  crossorigin="anonymous"></script>
 	<meta name="viewport" content="width=device-width" charset="utf-8">
+
 	<script type="text/javascript" src="app.js"></script>
+
 	<style type="text/css">
 		.container {
        		text-align: center;
@@ -21,17 +23,18 @@
 		}
 
 	</style>
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+
 </head>
-<title>BarChart</title>  
-<body onload="generateGraph()">
+<title>PieGraph</title>  
+<body onload="generatePieGraph()">
 	<svg width="500" height="400"></svg>
-	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
+	<p class="container">Please input how much smaller you think the indicated slice is from the larger one</p><br>
 	<div class="container">
 		<input type="text" class="input" id="userInput" title="input"></input>
 		<p class="input">   %</p>
 	</div>
-
 	<div class="btn">
 		<form id="form" method="post" action="/addResults">  
 			<button type="submit" onclick="calcInput()">Submit</button>
@@ -49,7 +52,7 @@
 console.log(d3);
 // Random Dataset
 var data = [
-	{num: 1, val: 33},
+	{num: 1, val: 23},
 	{num: 2, val: 16},
 	{num: 3, val: 20},
 	{num: 4, val: 31},
@@ -68,7 +71,7 @@ console.log(data);
 // console.log(point1);
 // console.log(point2);
 
-function generateGraph(){
+function generatePieGraph(){
     // Display data
 	var svg = d3.select("svg"),
             width = svg.attr("width"),

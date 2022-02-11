@@ -2,13 +2,14 @@
 var express = require('express');
 const path = require('path');
 const router = express.Router();
- 
+
 // Creating express object
 var app = express();
  
 // Port Number
 var PORT = process.env.PORT ||3000;
 
+app.use(express.static(__dirname + '/a3-Experiment'));
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
