@@ -294,14 +294,14 @@ d3.select('#my_dataviz')
    .append('line')
    .attr('x1', 55)
    .attr('x2', 55)
-   .attr('y1', 210)
+   .attr('y1', 70)
    .attr('y2', 335)
    .attr('stroke', 'black')
 // x axis
 d3.select('#my_dataviz')
    .append('line')
    .attr('x1', 50)
-   .attr('x2', 270)
+   .attr('x2', 450)
    .attr('y1', 330)
    .attr('y2', 330)
    .attr('stroke', 'black')
@@ -313,8 +313,8 @@ var dataset = []; //initialize data
     dataset.push(new_data);
 }  
 
-var barPadding = 5;  
-var barWidth = 40;
+var barPadding = 10;  
+var barWidth = 80;
 
 var barChart = svg3.selectAll("rect")  
     .data(dataset)  
