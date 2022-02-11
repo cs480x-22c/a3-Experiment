@@ -91,22 +91,52 @@ and stating that it's the end? WIP -->
 
   <!-- Page after last question -->
   <div class="page">
-    <h1> Thank you for participating in our experiment!</h1>
+    <h1> Thank you for participating in our experiment! Your answers are the only thing that will be recorded.</h1>
   </div>
 
   <div style="overflow:auto;">
     <div style='float:right;'>
       <button type="button" id="saveSubmitButton" onclick="saveSubmit()">Submit</button>
-      <button type="button" id="nextButton" onclick="next()">Next</button>
     </div>
   </div>
 
 </form>
 
   <svg id="my_dataviz" width="500" height="500"></svg>
-</body>
+
 
 <script>
+
+// Some setup stuff
+console.log(d3);
+var tracker = 0; // Tracking pages
+var trialDisplay = 60; // Having 60 trials for each expmt (20 of each vis)
+var thisPage = 0;
+var lastPage = 2; // Title page, then pages for trials, then final page for "thank you" and submission
+
+document.getElementById("nextButton").innerHTML = "Start" //working on start button
+
+// Display the pages and buttons
+function display() {
+  var pg = document.getElementsByClassName("page");
+  page[thisPage].style.display = 'block';
+
+  if (thisPage == lastPage) {
+    document.getElementById("nextButton").innerHTML = 'Download trial results';
+  }
+    else if (tracker == trialDisplay) {
+      document.getElementById("nextButton").innerHTML = 'Finish and save results';
+    }
+    else if (thisPage > 0) {
+      document.getElementById("nextButton").innerHTML = 'Next';
+      // calling function to display random graph here i.e. displayTrialGraph();
+      // next(); maybe? TBD
+    }
+  document.getElementById('qHeader').innerHTML = 'Question ' + tracker + " " + trialDisplay; // Show participant the trial they're on
+}
+// Working on function for pressing buttons, but I've seen ones that call a separate function that deals with pushing data to a CSV,
+// so I'll wait until we get further on data collection.
+
 
 var order = [1,2,3];
 //shuffle the order each time
@@ -391,6 +421,8 @@ var barChart = svg3.selectAll("rect")
  }
 
 </script>
+
+</body>
 
 
 
