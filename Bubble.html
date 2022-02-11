@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"  crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width" charset="utf-8">
+
+	<script type="text/javascript" src="app.js"></script>
+
+	<style type="text/css">
+		.container {
+       		text-align: center;
+			display: flex;
+  			justify-content: center;
+			font-family: 'Quicksand', sans-serif;
+		}
+		.input {
+    		display: inline-block;
+		}
+		.btn {
+			margin-top: 10px;
+			display: flex;
+  			justify-content: center;
+		}
+		.graph{
+			display: block;
+			height: 400px;
+			width: 600px;
+			margin-left: auto;
+ 		    margin-right: auto;
+		}
+
+	</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+
+</head>
+<title>PieGraph</title>  
+<body onload="generateBubble()">
+	<svg class="graph" width="500" height="400"></svg>
+	<p class="container">Please input how much smaller you think the indicated point is from the larger one</p><br>
+	<div class="container">
+		<input type="text" class="input" id="userInput" title="input"></input>
+		<p class="input">   %</p>
+	</div>
+	<div class="btn">
+		<form id="form" method="post" action="/addResults">  
+			<button type="submit" onclick="calcInput()">Submit</button>
+		</form>
+		
+		<form id="form1" method="get" action="/results">
+			<a href="/results">Results</a>
+		</form>
+	</div>
+		
+</body>
+</html>
+
+<script>
+
+console.log(d3);
+// Random Dataset
+var data = [
+	{num: 1, val1:  Math.random() * 100, val2: Math.random() * 100 /4},
+	{num: 2, val1:  Math.random() * 100, val2: Math.random() * 100 /4},
+	{num: 3, val1:  Math.random() * 100, val2: Math.random() * 100 /4},
+	{num: 4, val1:  Math.random() * 100, val2: Math.random() * 100 /4},
+	{num: 5, val1:  Math.random() * 100, val2: Math.random() * 100 /4}
+];
+
+
+// var point1 = data.Math.floor(Math.random(5) * 10);
+// var point2 = data.Math.floor((Math.random(5)) * 10);
+
+// while (point1 == point2){
+//     point2 = data[Math.floor((Math.random(5)) * 10)]
+// }
+
+console.log(data);
+// console.log(point1);
+// console.log(point2);
+
+function generateBubble(){
+	// set the dimensions and margins of the graph
+var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width = 500 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("svg")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+		    // Add X axis
+  var x = d3.scaleLinear()
+    .domain([1, 5])
+    .range([ 0, width ]);
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickValues([]));
+
+  // Add Y axis
+  var y = d3.scaleLinear()
+    .domain([0, 100])
+    .range([ height, 0]);
+  svg.append("g")
+    .call(d3.axisLeft(y).tickValues([]));
+
+	
+  // Add a scale for bubble size
+  var z = d3.scaleLinear()
+    .domain([0, 100])
+    .range([ 1, 40]);
+
+  // Add dots
+  svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+      .attr("cx", function (d) { return x(d.num); } )
+      .attr("cy", function (d) { return y(d.val1); } )
+      .attr("r", function (d) { return d.val2; } )
+      .style("fill", "none")
+      .attr("stroke", "black")
+
+}
+</script>

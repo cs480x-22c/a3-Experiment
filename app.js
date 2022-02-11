@@ -54,6 +54,10 @@ router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/PieGraph.html"));
      });
 
+     router.get("/bb", (req, res) => {
+        res.sendFile(path.join(__dirname, "/Bubble.html"));
+         });
+
 
    router.get('/results', function(req, res) {
     res.sendFile(path.join(__dirname, '/results.html'));
