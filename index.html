@@ -20,20 +20,37 @@
       var r2 = 100-r1;
       let sequence = [
         [ //hue is different
-          'hsl(100, 30%, 20%)',
-          'hsl(202, 30%, 20%)'
+          {
+            'value': r1,
+            'color': 'hsl(100, 30%, 20%)'
+          },
+          {
+            'value': r2,
+            'color': 'hsl(202, 30%, 20%)'
+          }
         ],
         [ //saturation is different
-          'hsl(150, 30%, 20%)',
-          'hsl(150, 50%, 20%)'
+          {
+            'value': r1,
+            'color': 'hsl(150, 30%, 20%)'
+          },
+          {
+            'value': r2,
+            'color': 'hsl(150, 50%, 20%)'
+          }   
         ],
         [ //lightness is different
-          'hsl(155, 2%, 20%)',
-          'hsl(155, 2%, 5%)'
+          {
+            'value': r1,
+            'color': 'hsl(155, 2%, 20%)'
+          },
+          {
+            'value': r2,
+            'color': 'hsl(155, 2%, 5%)'
+          }   
         ]
       ]
-      sequence[0].r1 = r1;
-      sequence[0].r2 = r2;
+      
 
       //---------------------------------------------------------------------- Sending Data
 
@@ -76,7 +93,7 @@
           if(prev == 0) testType = "hue";
           if(prev == 1) testType = "saturation";
           if(prev == 2) testType = "luminance";
-          var truePercentage = (Math.abs(sequence[prev].r1-sequence[prev].r2))
+          var truePercentage = (Math.abs(sequence[prev][0]['value']-sequence[prev][1]['value']))
           details['entry.1362470865'] = userID,
           details['entry.1174877292'] = testType,
           details['entry.357989325'] = truePercentage,
@@ -87,8 +104,8 @@
           document.getElementById('numInput').value = "";
           r1 = Math.floor(Math.random()*100);
           r2 = 100-r1;
-          sequence[rot].r1 = r1;
-          sequence[rot].r2 = r2;
+          sequence[rot][0]['value'] = r1;
+          sequence[rot][1]['value'] = r2;
           rpg.createPieChart(sequence[rot])
 
           //Josh's Super-Lazy Indexing Extrodinaire
@@ -116,6 +133,6 @@
   </body>
   <footer>
     <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
-    Please input an estimate of the difference between the % areas of plotted data points
+    Please input an estimate of the difference between the areas (ex. 75% vs 25% --> 50)
   </footer>  
 </html>
