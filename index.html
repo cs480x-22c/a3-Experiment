@@ -5,6 +5,17 @@
   .chosen-rect {
     fill: none;
   }
+
+  .submitBtn_stackedBar {
+    width: 60px;
+    height: 20px;
+    position: relative;
+  }
+
+  .rect-stacked {
+    stroke-width: 2px;
+    stroke: black;
+  }
 </style>
 
 <body>
@@ -12,24 +23,48 @@
   <!--   
     Stacked Bar Chart
   -->
-  <div class="chart"></div>
+  <div id="stackedbar_1"></div>
   <div>
-    <form id = "stackedbar_form" onsubmit="return false;">
+    <form id="stackedbar_form1" onsubmit="return false;">
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="fname" name="firstname" placeholder="Your guess..">
-      <input type="submit" value="Submit" class="submitBtn_stackedbar">
+      <input type="text" id="stackedbar_submission1" name="stackedbar_submission" placeholder="Your guess..">
+      <button type="submit" value="Submit" class="submitBtn_stackedbar" id="submitBtn_stackedbar1"
+        onclick="submitBtnStackedBar('1')">Submit</button>
     </form>
   </div>
-  <div id="my_dataviz"></div>
+  <div id="stackedbar_2"></div>
   <div>
-    <form>
+    <form id="stackedbar_form2" onsubmit="return false;">
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="fname" name="firstname" placeholder="Your guess..">
-      <input type="submit" value="Submit" class="submitBtn">
+      <input type="text" id="stackedbar_submission2" name="stackedbar_submission" placeholder="Your guess..">
+      <button type="submit" value="Submit" class="submitBtn_stackedbar" id="submitBtn_stackedbar2"
+        onclick="submitBtnStackedBar('2')">Submit</button>
+    </form>
+  </div>
+  <div id="piechart_3"></div>
+  <div>
+    <form id="piechart_form3" onsubmit="return false;">
+      <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
+        size.
+      </label>
+      <input type="text" id="piechart_submission3" name="piechart_submission" placeholder="Your guess..">
+      <button type="submit" value="Submit" class="submitBtn_piechart" id="submitBtn_piechart3"
+        onclick="submitBtnPieChart('3')">Submit</button>
+    </form>
+  </div>
+  <div id="piechart_4"></div>
+  <div>
+    <form id="piechart_form4" onsubmit="return false;">
+      <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
+        size.
+      </label>
+      <input type="text" id="piechart_submission4" name="piechart_submission" placeholder="Your guess..">
+      <button type="submit" value="Submit" class="submitBtn_piechart" id="submitBtn_piechart4"
+        onclick="submitBtnPieChart('4')">Submit</button>
     </form>
   </div>
 
@@ -45,274 +80,344 @@
 </body>
 
 <script>
+  for (let i = 1; i < 3; i++) {
+    let bind = '#stackedbar_' + i;
+    makeStackedBar(bind, i)
+  }
 
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+  for (let i = 3; i < 5; i++) {
+    let bind = '#piechart_' + i;
+    makePieChart(bind, i)
   }
 
 
-  var stackedBarData = []
-  let percentArr = []
-  d3.csv("testData.csv", function (data) {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].chart == 2) {
-        stackedBarData.push(data[i].value);
-      }
-    }
 
-    const sampleData = [
-      { label: 'Group-1', value: parseInt(stackedBarData[0]), chosen: false },
-      { label: 'Group-2', value: parseInt(stackedBarData[1]), chosen: false },
-      { label: 'Group-3', value: parseInt(stackedBarData[2]), chosen: false },
-      { label: 'Group-4', value: parseInt(stackedBarData[3]), chosen: false },
-      { label: 'Group-5', value: parseInt(stackedBarData[4]), chosen: false },
-      { label: 'Group-6', value: parseInt(stackedBarData[5]), chosen: false },
-      { label: 'Group-7', value: parseInt(stackedBarData[6]), chosen: false },
-    ]
 
-    let previous = -1
-    for (let i = 0; i < 2; i++) {
-      let tempNum = getRandomInt(7)
-      while (tempNum == previous) {
-        tempNum = getRandomInt(7)
-      }
-      sampleData[tempNum].chosen = true
-      previous = tempNum;
-    }
 
-    // group data for chart and filter out zero values
-
-    function groupData(data, total) {
-      // use scale to get percent values
-      const percent = d3.scaleLinear()
-        .domain([0, total])
-        .range([0, 100])
-      // filter out data that has zero values
-      // also get mapping for next placement
-      // (save having to format data for d3 stack)
-      let cumulative = 0
-      const _data = data.map(d => {
-        cumulative += d.value
-        return {
-          value: d.value,
-          // want the cumulative to prior value (start of rect)
-          cumulative: cumulative - d.value,
-          label: d.label,
-          percent: percent(d.value),
-          chosen: d.chosen
+  function makeStackedBar(bind, chartNum) {
+    var stackedBarData = []
+    let percentArr = []
+    d3.csv("testData.csv", function (data) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].chart == chartNum) {
+          stackedBarData.push({
+            value: data[i].value,
+            chosen: data[i].selected
+          });
         }
-      }).filter(d => d.value > 0)
-      return _data
-    }
-
-    function stackedBar(bind, data, config) {
-      config = {
-        f: d3.format('.1f'),
-        margin: { top: 20, right: 10, bottom: 20, left: 10 },
-        width: 800,
-        height: 200,
-        barHeight: 100,
-        colors: ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#1D412F', '#241D4D'],
-        ...config
       }
-      const { f, margin, width, height, barHeight, colors } = config
-      const w = width - margin.left - margin.right
-      const h = height - margin.top - margin.bottom
-      const halfBarHeight = barHeight / 2
 
-      const total = d3.sum(data, d => d.value)
-      const _data = groupData(data, total)
+      const sampleData = [
+        { label: 'Group-1', value: parseInt(stackedBarData[0].value), chosen: false },
+        { label: 'Group-2', value: parseInt(stackedBarData[1].value), chosen: false },
+        { label: 'Group-3', value: parseInt(stackedBarData[2].value), chosen: false },
+        { label: 'Group-4', value: parseInt(stackedBarData[3].value), chosen: false },
+        { label: 'Group-5', value: parseInt(stackedBarData[4].value), chosen: false },
+        { label: 'Group-6', value: parseInt(stackedBarData[5].value), chosen: false },
+        { label: 'Group-7', value: parseInt(stackedBarData[6].value), chosen: false },
+      ]
+      let previous = -1
+      for (let i = 0; i < stackedBarData.length; i++) {
+        if (stackedBarData[i].chosen == "true") {
+          sampleData[i].chosen = true
+        }
+      }
 
-      console.log(_data)
+      // group data for chart and filter out zero values
 
-      // set up scales for horizontal placement
-      const xScale = d3.scaleLinear()
-        .domain([0, total])
-        .range([0, w])
-
-      // create svg in passed in div
-      const selection = d3.select(bind)
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')', 'rotate(-10 50 100)')
-
-      // stack rect for each data value
-      selection.selectAll('rect')
-        .data(_data)
-        .enter().append('rect')
-        .attr('class', 'rect-stacked')
-        .attr('x', d => xScale(d.cumulative))
-        .attr('y', h / 2 - halfBarHeight)
-        .attr('height', barHeight)
-        .attr('width', d => xScale(d.value))
-        .style('fill', (d, i) => colors[i])
-        .style('cursor', 'pointer')
-
-
-      // add values on bar
-      selection.selectAll('.text-value')
-        .data(_data)
-        .enter().append('text')
-        .attr('class', 'text-value')
-        .attr('text-anchor', 'middle')
-        .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
-        .attr('y', (h / 2) + 5)
-        .text(d => {
-          if (d.chosen) {
-            return "This One";
-          } else {
-            "";
+      function groupData(data, total) {
+        // use scale to get percent values
+        const percent = d3.scaleLinear()
+          .domain([0, total])
+          .range([0, 100])
+        // filter out data that has zero values
+        // also get mapping for next placement
+        // (save having to format data for d3 stack)
+        let cumulative = 0
+        const _data = data.map(d => {
+          cumulative += d.value
+          return {
+            value: d.value,
+            // want the cumulative to prior value (start of rect)
+            cumulative: cumulative - d.value,
+            label: d.label,
+            percent: percent(d.value),
+            chosen: d.chosen
           }
-        })
-        .style('display', 'none')
+        }).filter(d => d.value > 0)
+        return _data
+      }
 
-      // add some labels for percentages
-      selection.selectAll('.text-percent')
-        .data(_data)
-        .enter().append('text')
-        .attr('class', 'text-percent')
-        .attr('text-anchor', 'middle')
-        .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
-        .attr('y', (h / 2) - (halfBarHeight * 1.1))
-        .text(d => f(d.percent) + ' %')
-        .style('display', 'none')
+      function stackedBar(bind, data, config) {
+        let selectedColors = []
+        if(chartNum == 1) {
+          selectedColors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#1D412F', '#241D4D']
+        }
+        if(chartNum == 2) {
+          selectedColors = ['#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4']
+        }
+        //['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#1D412F', '#241D4D']
+        config = {
+          f: d3.format('.1f'),
+          margin: { top: 20, right: 10, bottom: 20, left: 10 },
+          width: 800,
+          height: 200,
+          barHeight: 100,
+          colors: selectedColors,
+          ...config
+        }
+        const { f, margin, width, height, barHeight, colors } = config
+        const w = width - margin.left - margin.right
+        const h = height - margin.top - margin.bottom
+        const halfBarHeight = barHeight / 2
 
-      // add the labels
-      selection.selectAll('.text-label')
-        .data(_data)
-        .enter().append('text')
-        .attr('class', 'text-label')
-        .attr('text-anchor', 'middle')
-        .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
-        .attr('y', (h / 2) + (halfBarHeight * 1.1) + 20)
-        .style('fill', (d, i) => colors[i])
-        .text(d => {
-          if (d.chosen) {
-            return "This One";
-          } else {
-            "";
-          }
-        })
+        const total = d3.sum(data, d => d.value)
+        const _data = groupData(data, total)
 
-      d3.select('.submitBtn_stackedbar')
-        .data(_data)
-        .on('click', function (d) {
-          let observedValue = 0
-          if (!isNaN(parseInt(document.getElementById('fname').value))) {
-            observedValue = (parseInt(document.getElementById('fname').value))
-          } else {
-            alert("Please Input Valid Number")
-          }
-          for (let i = 0; i < _data.length; i++) {
-            if (_data[i].chosen) {
-              percentArr.push(_data[i].percent)
+
+        // set up scales for horizontal placement
+        const xScale = d3.scaleLinear()
+          .domain([0, total])
+          .range([0, w])
+
+        // create svg in passed in div
+        const selection = d3.select(bind)
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')', 'rotate(-10 50 100)')
+
+        // stack rect for each data value
+        selection.selectAll('rect')
+          .data(_data)
+          .enter().append('rect')
+          .attr('class', 'rect-stacked')
+          .attr('x', d => xScale(d.cumulative))
+          .attr('y', h / 2 - halfBarHeight)
+          .attr('height', barHeight)
+          .attr('width', d => xScale(d.value))
+          .style('fill', (d, i) => colors[i])
+          .style('cursor', 'pointer')
+
+
+        // add values on bar
+        selection.selectAll('.text-value')
+          .data(_data)
+          .enter().append('text')
+          .attr('class', 'text-value')
+          .attr('text-anchor', 'middle')
+          .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
+          .attr('y', (h / 2) + 5)
+          .text(d => {
+            if (d.chosen) {
+              return "This One";
+            } else {
+              "";
             }
-          }
+          })
+          .style('display', 'none')
 
-          let trueValue = Math.max(...percentArr) / Math.min(...percentArr)
-          alert(`The correct answer is ${trueValue}\n
-                  The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`)
-          while (percentArr.length > 0) {
-            percentArr.pop()
-          }
-          document.getElementsByClassName('chart')[0].style.display = 'none'
-          document.getElementById('stackedbar_form').style.display = 'none'
-        })
-    }
-    // render chart
-    stackedBar('.chart', sampleData)
-  });
+        // add some labels for percentages
+        selection.selectAll('.text-percent')
+          .data(_data)
+          .enter().append('text')
+          .attr('class', 'text-percent')
+          .attr('text-anchor', 'middle')
+          .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
+          .attr('y', (h / 2) - (halfBarHeight * 1.1))
+          .text(d => f(d.percent) + ' %')
+          .style('display', 'none')
+
+        // add the labels
+        selection.selectAll('.text-label')
+          .data(_data)
+          .enter().append('text')
+          .attr('class', 'text-label')
+          .attr('text-anchor', 'middle')
+          .attr('x', d => xScale(d.cumulative) + (xScale(d.value) / 2))
+          .attr('y', (h / 2) + (halfBarHeight * 1.1) + 20)
+          .style('fill', (d, i) => "black")
+          .style('font-size', "30px")
+          .text(d => {
+            if (d.chosen) {
+              return "*";
+            } else {
+              "";
+            }
+          })
+
+        d3.select('.submitBtn_stackedbar')
+          .data(_data)
+          .on('click', function (d) {
+
+            // let observedValue = 0
+            // let num = bind.split('_')[1]
+            // if (!isNaN(parseInt(document.getElementById('stackedbar_submission' + num).value))) {
+            //   observedValue = (parseInt(document.getElementById('stackedbar_submission' + num).value))
+            // } else {
+            //   alert("Please Input Valid Number")
+            // }
+            // for (let i = 0; i < _data.length; i++) {
+            //   if (_data[i].chosen) {
+            //     percentArr.push(_data[i].percent)
+            //   }
+            // }
+
+            // let trueValue = Math.max(...percentArr) / Math.min(...percentArr)
+            // alert(`The correct answer is ${trueValue}\n
+            //       The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`)
+            // while (percentArr.length > 0) {
+            //   percentArr.pop()
+            // }
+            // document.getElementsByClassName(bind)[0].style.display = 'none'
+            // document.getElementById('stackedbar_form' + num).style.display = 'none'
+          })
+      }
+      // render chart
+      stackedBar(bind, sampleData)
+    });
+  }
 
 
   console.log(d3); // test if d3 is loaded
-  // set the dimensions and margins of the graph
-  var width = 450
-  height = 450
-  margin = 40;
 
-  // append the svg object to the body of the page
-  var svg = d3.select("#my_dataviz")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  function makePieChart(bind, chartNum) {
+    // set the dimensions and margins of the graph
+    var width = 450
+    height = 450
+    margin = 40;
 
-  //data
-  d3.csv("testData.csv", function (data) {
-    //Pie Chart --------------- [1] Color, [2] Greyscale
+    // append the svg object to the body of the page
+    var svg = d3.select(bind)
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    if (data[1].chart == 1 || data[1].chart == 2) {
-      pieChart(data);
-    };
+    //data
+    d3.csv("testData.csv", function (data) {
+      //Pie Chart --------------- [1] Color, [2] Greyscale
+      let pieChartData = []
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].chart == chartNum) {
+          pieChartData.push({
+            chart: data[i].chart,
+            value: data[i].value,
+            selected: data[i].selected
+          })
+        }
+      }
+      console.log(pieChartData)
+      function pieChart(data) {
+        
+        //compute radius for pie chart
+        var radius = Math.min(width, height) / 2 - margin;
 
-  });
+        //get the colors to fill the entries
+        var color = d3.scaleOrdinal()
+          .domain(data)
+          .range(["#fbb4ae", "#b3cde3", "#ccebc5", "#decbe4", "#fed9a6", "#ffffcc", "#e5d8bd", "#fddaec", "#f2f2f2"]);
 
-  function pieChart(data) {
+        var pieColor = d3.pie()
+          .value(function (d) { return d.value.value });
 
-    //compute radius for pie chart
-    var radius = Math.min(width, height) / 2 - margin;
+        //calculate the arc of each entry
+        var arcGenerator = d3.arc()
+          .innerRadius(0)
+          .outerRadius(radius)
 
-    //get the colors to fill the entries
-    var color = d3.scaleOrdinal()
-      .domain(data)
-      .range(["#fbb4ae", "#b3cde3", "#ccebc5", "#decbe4", "#fed9a6", "#ffffcc", "#e5d8bd", "#fddaec", "#f2f2f2"]);
+        //format the data
+        var data_ready = pieColor(d3.entries(data));
 
-    var pieColor = d3.pie()
-      .value(function (d) { return d.value.value });
+        //append to svg
+        svg
+          .selectAll('#pie')
+          .data(data_ready)
+          .enter()
+          .append('path')
+          .attr('d', d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+          )
+          .attr('fill', function (d) {
+            if (d.data.value.chart == 3) {
+              if (d.data.value.selected == "true") {
+                return ("red");
+              } else {
+                return (color(d.data.key));
+              };
+            } else {
+              return "#949494";
+            };
+          })
+          .attr("stroke", "black")
+          .style("stroke-width", "2px")
+          .style("opacity", 0.7);
 
-    //calculate the arc of each entry
-    var arcGenerator = d3.arc()
-      .innerRadius(0)
-      .outerRadius(radius)
+        //append text to svg
+        svg
+          .selectAll('#slices')
+          .data(data_ready)
+          .enter()
+          .append('text')
+          .text(function (d) {
+            //&& d.data.value.chart == 3
+            if (d.data.value.selected == "true") {
+              return ("*");
+            };
+          })
+          .attr("transform", function (d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
+          .style("text-anchor", "middle")
+          .style("font-size", 25);
+      };
+      pieChart(pieChartData)
+    });
+  }
 
-    //format the data
-    var data_ready = pieColor(d3.entries(data));
+  function submitBtnStackedBar(num) {
+    d3.csv("./testData.csv", function (data) {
+      let observedValue = document.getElementById('stackedbar_submission' + num).value
+      let stackedbar_values = []
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].chart == num) {
+          if (data[i].selected == "true") {
+            stackedbar_values.push(data[i].value)
+          }
+        }
+      }
+      console.log(stackedbar_values)
+      let trueValue = Math.max(...stackedbar_values) / Math.min(...stackedbar_values)
+      let error = Math.abs(trueValue - observedValue) / trueValue
+      alert(`The correct answer is ${trueValue}\n
+           The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
+      document.getElementById('stackedbar_' + num).style.display = 'none'
+      document.getElementById('stackedbar_form' + num).style.display = 'none'
+    })
+  }
 
-    //append to svg
-    svg
-      .selectAll('#pie')
-      .data(data_ready)
-      .enter()
-      .append('path')
-      .attr('d', d3.arc()
-        .innerRadius(0)
-        .outerRadius(radius)
-      )
-      .attr('fill', function (d) {
-        if (d.data.value.chart == 1) {
-          if (d.data.value.selected == "true") {
-            return ("red");
-          } else {
-            return (color(d.data.key));
-          };
-        } else {
-          return "#949494";
-        };
-      })
-      .attr("stroke", "black")
-      .style("stroke-width", "2px")
-      .style("opacity", 0.7);
+  function submitBtnPieChart(num) {
+    d3.csv("./testData.csv", function (data) {
+      let observedValue = document.getElementById('piechart_submission' + num).value
+      let piechart_values = []
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].chart == num) {
+          if (data[i].selected == "true") {
+            piechart_values.push(data[i].value)
+          }
+        }
+      }
+      console.log(piechart_values)
+      let trueValue = Math.max(...piechart_values) / Math.min(...piechart_values)
+      let error = Math.abs(trueValue - observedValue) / trueValue
+      alert(`The correct answer is ${trueValue}\n
+           The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
+      document.getElementById('piechart_' + num).style.display = 'none'
+      document.getElementById('piechart_form' + num).style.display = 'none'
+    })
+  }
 
-    //append text to svg
-    svg
-      .selectAll('#slices')
-      .data(data_ready)
-      .enter()
-      .append('text')
-      .text(function (d) {
-        if (d.data.value.selected == "true" && d.data.value.chart == 2) {
-          return ("*");
-        };
-      })
-      .attr("transform", function (d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
-      .style("text-anchor", "middle")
-      .style("font-size", 25);
-
-  };
-
-
+  
 
 </script>
