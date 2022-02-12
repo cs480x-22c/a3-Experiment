@@ -1,6 +1,5 @@
 <script>
-    import ExampleComponent from "../components/ExampleComponent.svelte";
-    
+    import Graph from "../components/Graph.svelte"
 </script>
 
 
@@ -8,4 +7,4 @@
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
 
-<ExampleComponent />
+<Graph />

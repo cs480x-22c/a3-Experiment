@@ -16,11 +16,13 @@
   <div class="vis" , id="test">
   </div>
   <p>
-    <label for="nValue" style="display: inline-block; width: 240px; text-align: right">
+    <label for="nValue" style="display: inline-block; width: 240px; text-align: center">
       What percent is A of B? <span id="nValue-value"></span>
     </label>
     <input type="number" min="0" max="100" step="1" value="0" id="nValue">
   </p>
+  <div class="vis" , id="buttons">
+  </div>
   <div class="vis" , id="results">
   </div>
 
@@ -30,7 +32,7 @@
 <script>
   console.log(d3); // test if d3 is loaded
 
-
+  var resutls_displayed = false;
   height = 600;
   width = 600;
   graph_margin = ({ top: 100, right: 100, bottom: 200, left: 100 });
@@ -124,8 +126,9 @@
     .attr('stroke', 'black')
     .attr("fill", d3.schemeCategory10[5])
     .on('click', function (evt, d) {
-
-      d3.select('#results')
+      if(resutls_displayed == false){
+        resutls_displayed = true;
+        d3.select('#results')
         .append("svg")
         .attr("id", "results_section")
         .attr("viewBox", [0, height, width, height * 2])
@@ -147,6 +150,8 @@
         .attr("height", height - graph_margin.bottom - graph_margin.top)
         .attr('stroke', 'black')
         .attr("fill", "white");
+      }
+      
 
     });
 
