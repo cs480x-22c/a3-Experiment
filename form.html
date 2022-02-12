@@ -76,7 +76,7 @@
                 .attr('fill', 'black');
             rect.append('circle')
                 .attr('cx', ((barCount + barWidth) * i) + (barWidth / 2))
-                .attr('cy', (height - pairHeight) + (pairHeight / 2))
+                .attr('cy', height - 10)
                 .attr('r', barWidth / 8)
                 .attr('fill', 'yellow');
         }
@@ -89,7 +89,7 @@
                 .attr('fill', 'black');
             rect.append('circle')
                 .attr('cx', ((barCount + barWidth) * i) + (barWidth / 2))
-                .attr('cy', height - (pairHeight * fract) / 2)
+                .attr('cy', height - 10)
                 .attr('r', barWidth / 8)
                 .attr('fill', 'yellow');
         }
