@@ -13,7 +13,7 @@ class RandomPlots {
 
     initializeView() {
         d3.select('#content')
-        .selectAll("*").remove()
+        .selectAll('*').remove()
         
         d3.select('#content')
         .append('rect')
@@ -23,7 +23,37 @@ class RandomPlots {
         .attr('z-index', -1)
     }
 
-    createBarChart() {
+    createBarChart(data) {
+        this.initializeView()
+
+        console.log(data);
+
+        // x axis
+        var x = d3.scaleBand()
+                    .range([0, this.width])
+                    .domain(data.map(function(d) { return d.Names }))
+                    .padding(0.5)
+        svg.append('g')
+            .attr('transform', 'translate(0,' + this.height + ')')
+            .call(d3.axisBottom(x))
+            .selectAll('text')
+                .attr('transform', 'translate(-10,0)rotate(-45)')
+                .style('text-anchor', 'end');
+
+        // y axis
+        var y = d3.scaleLinear().domain([0, this.height]).range()
+        svg.append('g').call(d3.axisLeft(y))
+
+        // make da bars
+        d3.select('#content')
+            .selectAll('None')
+            .data(data)
+            .append('rect')
+            .attr('x', function(d) { return x(d.xValues) })
+            .attr('y', function(d) { return y(d.yValues) })
+            .attr('width')
+            .attr('height')
+            .attr('fill', '#4c34eb')
     }
 
 
@@ -36,7 +66,7 @@ class RandomPlots {
         var pieData = d3.pie().value( d=>d.value)(data);
         console.log(pieData)
 
-        d3.select('#content').selectAll("None")
+        d3.select('#content').selectAll('None')
         .data(pieData)
         .enter()
         .append('path')
@@ -45,10 +75,10 @@ class RandomPlots {
             .outerRadius(this.width  * 0.3)
         )
         .attr('fill', function(d){ return(d.data.color) })
-        .attr("stroke", "black")
-        .style("stroke-width", "2px")
-        .style("opacity", 0.7)    
-        .attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")");
+        .attr('stroke', 'black')
+        .style('stroke-width', '2px')
+        .style('opacity', 0.7)    
+        .attr('transform', 'translate(' + this.width / 2 + ',' + this.height / 2 + ')');
     }
 
     createCircles(data) {
