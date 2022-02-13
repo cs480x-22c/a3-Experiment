@@ -130,7 +130,7 @@ function display() {
     else if (thisPage > 0) {
       document.getElementById("nextButton").innerHTML = 'Next';
       // calling function to display random graph here i.e. displayTrialGraph();
-       next(); //maybe? TBD
+      // next(); //maybe? TBD
     }
   document.getElementById('qHeader').innerHTML = 'Question ' + tracker + " " + trialDisplay; // Show participant the trial they're on
 }
@@ -159,16 +159,19 @@ order = shuffleArray(order);
 var count = 0; //count to know which function to use
 
   function next(){
-    d3.select("#my_dataviz").selectAll("svg").remove();
-    var this_graph = order[count];
-    count++
-    if(this_graph==1){
+    if (count<20){
+       d3.select("#my_dataviz").selectAll("svg").remove();
+      var this_graph = getRandomIntInclusive(1, 3); //get random number 1-3
+       if(this_graph==1){
       pie_graph();
     } else if (this_graph==2){
       donut_graph();
     } else if (this_graph==3){
       bar_graph();
-    }else {
+    }
+    count++;
+    }
+   else {
       d3.select("#my_dataviz").selectAll("svg").remove();
       window.alert("Thank you for participating in our experiment! Your answers are the only thing that will be recorded.");
     }
@@ -400,7 +403,7 @@ var barChart = svg3.selectAll("rect")
     .attr("fill", "white")
     .attr("stroke", "black")
     .attr("y", function(d) {  
-        return svgHeight - d  
+        return svgHeight - d
     })  
     .attr("height", function(d) {  
         return d;  
@@ -410,16 +413,65 @@ var barChart = svg3.selectAll("rect")
          var translate = [barWidth * i, 0];  
          return "translate("+ translate +")";  
     })
-    .attr("y", function(d) {  
-        return svgHeight - d  
-    })
-    .attr("height", function(d) {  
-       return d;  
-    })
     .attr("transform", function (d, i) {  
        var xCoordinate = barWidth * i;  
        return "translate("+ xCoordinate +")";  
     });
+    
+    //add dots to two of them randomly
+  var bar_dot1 = getRandomIntInclusive(0,4);
+  var bar_count = 0; //used to make sure not same slice
+  while(bar_count<1){
+    var rand = getRandomIntInclusive(0,4);
+    if (rand == bar_dot1){} //do nothing
+    else{
+      var bar_dot2 = rand;
+      bar_count++;
+    }
+  }
+  
+  function get_start(index){
+    if (index==0){
+      var start = 50+barPadding;
+      return start;
+    } else if (index==1){
+      var start = 50+barPadding + barWidth;
+      return start;
+    } else if (index==2){
+      var start = 50+barPadding + (2*barWidth);
+      return start;
+    } else if (index==3){
+      var start = 50+barPadding + (3*barWidth);
+      return start;
+    } else if (index==4){
+      var start = 50+barPadding + (4*barWidth);
+      return start;
+    }
+  }
+
+  console.log("1: "+dataset[bar_dot1]);
+  console.log("2: "+dataset[bar_dot2]);
+
+  var bar_width = barWidth - barPadding;
+  var height1 = 330 - (dataset[bar_dot1]/2);
+  var height2 = 330 - (dataset[bar_dot2]/2);
+  var x_start1 = get_start(bar_dot1);
+  var x_start2 = get_start(bar_dot2);
+  var x_end1 = x_start1 + (bar_width/2);
+  var x_end2 = x_start2 + (bar_width/2);
+
+  d3.select('#my_dataviz')
+    .append("svg")
+    .append('circle')
+    .attr('cx', x_end1)
+    .attr('cy', height1)
+    .attr('r', 5);
+  d3.select('#my_dataviz')
+    .append("svg")
+    .append('circle')
+    .attr('cx', x_end2)
+    .attr('cy', height2)
+    .attr('r', 5);
 
  }
 
