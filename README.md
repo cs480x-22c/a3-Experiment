@@ -15,15 +15,19 @@ We created all the charts in three.js. We generated random data with numbers bet
 and aligned it with the html text on the webpage. The text gives short instructions on how to user needs to answer the question. It will handle errors in the user answers, such as the answer being over 100. When the user clicks the next button the trial counter will update and a new graph will appear. Since we chose to do 4 graphs and each graph needed at least 20 trials, we have a total of 80 trials. We chose to use stacked bar and pie charts because a stacked bar chart is just a pie chart that has been rotated around a center point and the center is filled in. This way we can have a control by having technically the same chart types but we can test the difference in performance between positions versus angles. We chose to test the same chart types but in 3D. By doing this we can still test the difference in performance between pie and stacked bar charts but in 3D and we can test the difference in performance between 2D and 3D charts. Below are screenshots of the chart in the order of best performance to worst performance.
 
 Stacked Bar Chart
+---
 ![stackedbar](experiment_img/stackedbar.png)
 
 3D Pie Chart
+---
 ![pie3D](experiment_img/pie3D.png)
 
 Pie Chart
+---
 ![pie](experiment_img/pie.png)
 
 3D Stacked Bar Chart
+---
 ![stackedbar3D](experiment_img/stackedbar3D.png)
 
 
