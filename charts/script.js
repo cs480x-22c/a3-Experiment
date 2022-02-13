@@ -151,7 +151,7 @@ function generateStackedBarChart(data, comps, is3D) {
 
   is3D ? chart.rotation.set(.3, .7, 0) : null
   scene.add(chart);
-  const res = Math.min(data[comps[1]], data[comps[0]]) / Math.max(data[comps[1]], data[comps[0]]) * 100
+  const res = Math.round(Math.min(data[comps[1]], data[comps[0]]) / Math.max(data[comps[1]], data[comps[0]]) * 100)
   return res
 }
 
@@ -182,6 +182,6 @@ function generatePieChart(data, comps, is3D) {
 
   })
 
-  const res = Math.min(data[comps[1]], data[comps[0]]) / Math.max(data[comps[1]], data[comps[0]]) * 100
+  const res = Math.round(Math.min(data[comps[1]], data[comps[0]]) / Math.max(data[comps[1]], data[comps[0]]) * 100)
   return res
 }
