@@ -8,6 +8,7 @@
   </header>
   <body>
     <h1> Experiment </h1>
+    <label id="countID">Progress: 1/30</label><br>
     <div id="plot"></div>
     <button onclick="nextPlot()">Next</button>
     <script>
@@ -117,6 +118,9 @@
           if(prev == 3)
             prev = 0
         } 
+
+        //Uodate label
+        document.getElementById('countID').innerHTML = 'Progress: ' + idx + "/30";
 
         //End condition for survey
         if(idx==31) { //if index maxes out, clears page and thanks user
