@@ -96,7 +96,7 @@ and stating that it's the end? WIP -->
 
   <div style="overflow:auto;">
     <div style='float:right;'>
-      <button type="button" id="saveSubmitButton" onclick="saveSubmit()">Submit</button>
+      <button type="button" id="saveSubmitButton" onclick="next()">Submit</button>
     </div>
   </div>
 
@@ -130,7 +130,7 @@ function display() {
     else if (thisPage > 0) {
       document.getElementById("nextButton").innerHTML = 'Next';
       // calling function to display random graph here i.e. displayTrialGraph();
-      // next(); maybe? TBD
+       next(); //maybe? TBD
     }
   document.getElementById('qHeader').innerHTML = 'Question ' + tracker + " " + trialDisplay; // Show participant the trial they're on
 }
@@ -166,8 +166,11 @@ var count = 0; //count to know which function to use
       pie_graph();
     } else if (this_graph==2){
       donut_graph();
-    } else {
+    } else if (this_graph==3){
       bar_graph();
+    }else {
+      d3.select("#my_dataviz").selectAll("svg").remove();
+      window.alert("Thank you for participating in our experiment! Your answers are the only thing that will be recorded.");
     }
   }
   
