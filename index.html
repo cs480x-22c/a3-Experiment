@@ -93,7 +93,11 @@
           if(prev == 0) testType = "hue";
           if(prev == 1) testType = "saturation";
           if(prev == 2) testType = "luminance";
-          var truePercentage = (Math.abs(sequence[prev][0]['value']-sequence[prev][1]['value']))
+          var truePercentage = 0//(Math.abs(sequence[prev][0]['value']-sequence[prev][1]['value']))
+          if(sequence[prev][0]['value'] >= sequence[prev][1]['value'])
+            truePercentage = sequence[prev][0]['value']
+          else
+            truePercentage = sequence[prev][1]['value']
           details['entry.1362470865'] = userID,
           details['entry.1174877292'] = testType,
           details['entry.357989325'] = truePercentage,
@@ -133,6 +137,6 @@
   </body>
   <footer>
     <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
-    Please input an estimate of the difference between the areas (ex. 75% vs 25% --> 50)
+    Please input an estimate of the % area covered by the larger part of the pie chart
   </footer>  
 </html>
