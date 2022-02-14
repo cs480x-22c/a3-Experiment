@@ -272,6 +272,7 @@
           }
 
           sample++;
+          document.getElementById("counter").value = "Sample " + sample + "/60";
       }
     </script>
 
@@ -324,10 +325,9 @@
       dotted data point is of the larger. 
     </h3>
 
+    <p id="counter">Sample 1/60</p>
+
     <div id="container"></div> 
-    <script>
-      console.log(d3);
-    </script>
 
 <div align="center" id="container"></div>
 
