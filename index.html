@@ -8,7 +8,8 @@
   </header>
   <body>
     <h1> Experiment </h1>
-    <label id="countID">Progress: 1/30</label><br>
+    <label id="countID">Progress: 1/25</label><br>
+    <label id="instructions">Instructions</label><br>
     <div id="plot"></div>
     <button onclick="nextPlot()">Next</button>
     <script>
@@ -16,42 +17,171 @@
       //----------------------------------------------------------------------- Set-Up
 
       let rpg = new RandomPlots()
-      const userID = Math.floor(Math.random()*1000000);
-      var r1 = Math.floor(Math.random()*100);
-      var r2 = 100-r1;
-      let sequence = [
-        [ //hue is different
-          {
-            'value': r1,
-            'color': 'hsl(100, 30%, 20%)'
-          },
-          {
-            'value': r2,
-            'color': 'hsl(202, 30%, 20%)'
-          }
-        ],
-        [ //saturation is different
-          {
-            'value': r1,
-            'color': 'hsl(150, 30%, 20%)'
-          },
-          {
-            'value': r2,
-            'color': 'hsl(150, 50%, 20%)'
-          }   
-        ],
-        [ //lightness is different
-          {
-            'value': r1,
-            'color': 'hsl(155, 2%, 20%)'
-          },
-          {
-            'value': r2,
-            'color': 'hsl(155, 2%, 5%)'
-          }   
-        ]
-      ]
+      const userID = Math.floor(Math.random()*1000000)
+      const maxPerChart = 5
+
+      function rand(min, max) {
+        return Math.floor(Math.random() * (max-min+1)+min)
+      }
       
+      var r1 = -1
+      var r2 = -1
+      var testType = ''
+
+      let numPie = 0
+      function createPie() {
+        testType = 'Pie'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the difference between the two highlighted areas (ex. 50% vs 25% --> 25)'
+        r1 = rand(20, 180)
+        r2 = rand(20, 150)
+        if(r1==r2)
+          r1-=rand(5, 15)
+
+        r3 = rand(10, 340 - r2 - r1)
+        r4 = rand(10, 350 - r3 - r2 - r1)
+        r5 = 360 - r4 - r3 - r2 - r1
+
+        let sequence = [
+          {'value': r5, 'color': 'hsl(0,0%,50%)'},
+          {'value': r4, 'color': 'hsl(0,0%,50%)'},
+          {'value': r1, 'color': 'hsl(0,0%,100%)'},
+          {'value': r2, 'color': 'hsl(0,0%,100%)'},
+          {'value': r3, 'color': 'hsl(0,0%,50%)'}
+        ]
+
+        numPie++
+        rpg.createPieChart(sequence)
+      }
+
+      let numBar = 0
+      function createBar() {
+        testType = 'Bar'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the difference between the two highlighted bar heights (ex. 50 vs 25 --> 25)<br />Assume the top of the grey background is 100 and the bottom is 0'
+        r1 = rand(420, 700)
+        r2 = 770 - r1
+
+        let sequence = [
+        [rand(10, 700)],
+        [rand(10, 700)],
+        [rand(10, 700)],
+        [r1],
+        [r2],
+        [rand(10, 700)]
+        ]
+
+        let colors = [
+        ['hsl(0,0%,50%)'],
+        ['hsl(0,0%,50%)'],
+        ['hsl(0,0%,100%)'],
+        ['hsl(0,0%,100%)'],
+        ['hsl(0,0%,50%)'],
+        ['hsl(0,0%,50%)']
+        ]
+
+        numBar++
+        rpg.createBarChart(sequence, colors)
+      }
+
+      let numH = 0
+      function createH() {
+        testType = 'H'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the hue of the first and last colors in each sequence (ex. 25)'
+        r1 = rand(0, 320)
+        r2 = rand(r1+40, 360)
+        var r3 = r1 + (r2-r1)/4
+        var r4 = r1 + 2*(r2-r1)/4
+        var r5 = r1 + 3*(r2-r1)/4
+
+        let sequence = [
+          ['hsl('+r1+',80%,50%)'],
+          ['hsl('+r3+',80%,50%)'],
+          ['hsl('+r4+',80%,50%)'],
+          ['hsl('+r5+',80%,50%)'],
+          ['hsl('+r2+',80%,50%)']
+        ]
+
+        sequence.color = 'hsl(0,0%,50%)'
+
+        numH++
+        rpg.createCircles(sequence)
+      }
+
+      let numS = 0
+      function createS() {
+        testType = 'S'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the saturation of the first and last colors in each sequence (ex. 25)'
+        r1 = rand(0, 60)
+        r2 = rand(r1+40, 100)
+        var r3 = r1 + (r2-r1)/4
+        var r4 = r1 + 2*(r2-r1)/4
+        var r5 = r1 + 3*(r2-r1)/4
+
+        let sequence = [
+          ['hsl(30,'+r1+'%,50%)'],
+          ['hsl(30,'+r3+'%,50%)'],
+          ['hsl(30,'+r4+'%,50%)'],
+          ['hsl(30,'+r5+'%,50%)'],
+          ['hsl(30,'+r2+'%,50%)']
+        ]
+
+        numS++
+        rpg.createCircles(sequence)
+      }
+      
+      let numL = 0
+      function createL() {
+        testType = 'L'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the luminance/lightness of the first and last colors in each sequence (ex. 25)'
+        r1 = rand(0, 60)
+        r2 = rand(r1+40, 100)
+        var r3 = r1 + (r2-r1)/4
+        var r4 = r1 + 2*(r2-r1)/4
+        var r5 = r1 + 3*(r2-r1)/4
+
+        let sequence = [
+          ['hsl(150,80%,'+r1+'%)'],
+          ['hsl(150,80%,'+r3+'%)'],
+          ['hsl(150,80%,'+r4+'%)'],
+          ['hsl(150,80%,'+r5+'%)'],
+          ['hsl(150,80%,'+r2+'%)']
+        ]
+
+        numL++
+        rpg.createCircles(sequence)
+      }
+
+      function nextTest() { //messy, but can't think of how to do pseudo rand that hits all charts 5 times
+        var cont = true;
+
+        while(cont) {
+          switch(rand(0, 4)) {
+            case 0:
+            createBar()
+            cont = false
+            break
+
+            case 1:
+            createPie()
+            cont = false
+            break
+
+            case 2:
+            createH()
+            cont = false
+            break
+
+            case 3:
+            createS()
+            cont = false
+            break
+
+            case 4:
+            createL()
+            cont = false
+            break
+          }
+        }  
+      }
 
       //---------------------------------------------------------------------- Sending Data
 
@@ -78,53 +208,37 @@
         'entry.1174877292': 'testType',
         'entry.357989325': 'true percentage',
         'entry.138102301': 'response percentage'
-      };
+      }
 
       //---------------------------------------------------------------------- Button Press/Next Graph Gen
 
       let s = 0
       let idx = 1
-      let rot = 1
-      let prev = 0
       function nextPlot() {
         s = document.getElementById('numInput').value
         if(s >= 0.01 && s <= 100.00) { //if s is valid, passes to sheets and gens next graph
-          //Write to sheets but the code is messy... kept breaking when I tried to clean it. I gave up.
-          var testType = "";
-          if(prev == 0) testType = "hue";
-          if(prev == 1) testType = "saturation";
-          if(prev == 2) testType = "luminance";
-          var truePercentage = (Math.abs(sequence[prev][0]['value']-sequence[prev][1]['value']))
+          //Write to sheets
+          var trueDiff = (Math.abs(r1-r2))
           details['entry.1362470865'] = userID,
           details['entry.1174877292'] = testType,
-          details['entry.357989325'] = truePercentage,
+          details['entry.357989325'] = trueDiff,
           details['entry.138102301'] = s
           sendData(details);
 
           //Update UI
           document.getElementById('numInput').value = "";
-          r1 = Math.floor(Math.random()*100);
-          r2 = 100-r1;
-          sequence[rot][0]['value'] = r1;
-          sequence[rot][1]['value'] = r2;
-          rpg.createPieChart(sequence[rot])
+          nextTest();
 
           //Josh's Super-Lazy Indexing Extrodinaire
           idx += 1
-          rot += 1
-          prev += 1
-          if(rot == 3)
-            rot = 0
-          if(prev == 3)
-            prev = 0
-        } 
 
-        //Uodate label
-        document.getElementById('countID').innerHTML = 'Progress: ' + idx + "/30";
+          //Uodate label
+          document.getElementById('countID').innerHTML = 'Progress: ' + idx + "/30";
 
-        //End condition for survey
-        if(idx==31) { //if index maxes out, clears page and thanks user
-          document.write('THANK YOU!')
+          //End condition for survey
+          if(idx==maxPerChart*5+1) { //if index maxes out, clears page and thanks user
+            document.write('THANK YOU!')
+          }
         }
       }
 
@@ -132,11 +246,11 @@
 
     </script>
     <script>
-      rpg.createPieChart(sequence[0]) //Loads first plot with page
+      //nextTest()
+      createBar();
     </script>
   </body>
   <footer>
     <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
-    Please input an estimate of the difference between the areas (ex. 75% vs 25% --> 50)
   </footer>  
 </html>
