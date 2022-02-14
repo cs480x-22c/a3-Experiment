@@ -1,13 +1,18 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
-
-<style>
-</style>
-
-<body>
-  <h1> Experiment </h1>
-</body>
-
+<button id="again" onclick="reload();">Press to restart</button>
+<head>
+    Don't click submit another response when redirected at the end of the experiment. 
+    <br />
+    Click the restart button instead
+</head>
+<br />
+<object type="text/html" id="contain" data="form.html" width="1000" height="800"></object>
 <script>
-  console.log(d3); // test if d3 is loaded
+    var container;
+    window.onload = function () {
+        container = document.getElementById("contain");
+    };
+    var content = container.innerHTML;
+    function reload(event) {
+        container.innerHTML = content;
+    }
 </script>
