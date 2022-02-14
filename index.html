@@ -1,13 +1,46 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<!DOCTYPE html>
+<html>
 
+  <head>
+    <style>
+      .center {
+        text-align: center;
+      }
+      .button {
+        background-color: #bdbdbd;
+        border: 2px solid black;
+        color: black;
+        padding: 5px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
 
-<style>
-</style>
+  <body>
 
-<body>
-  <h1> Experiment </h1>
-</body>
+    <div class="center">
+      <h1>Data Vis Experiment</h1>
+      <p>In this experiement you will be tested on how well you can read various chart types in 2D and 3D</p>
+      <p> You will have to guess what percentage a small value is of a larger value</p>
+      <p>To begin click the Start button</p>
+      <button type="button" class="button" id="Startbutton">Start</button>
+    </div>
+    <script>
+      let buttonObject = document.getElementById("Startbutton")
+      buttonObject.onclick = function () { handleStartButton() }
 
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+      let x = Math.floor(Math.random()*1000)
+
+      function handleStartButton() {
+        window.localStorage.setItem('ID', x);
+        location.href = "experiment.html";
+      }
+    </script>
+  </body>
+
+</html>

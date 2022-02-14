@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="module">
+    import { generateChart, clearChart } from "./script.js"
+
+    let data, chart, percentAnswer;
+    let counter = 0;
+    let csvFileData = [];
+    const comps = [1, 4] // The things to compare
+    const graphTypes = ['stackedBar3D', 'stackedBar', 'pie', 'pie3D']
+    const person_id = window.localStorage.getItem("ID")
+    //html elements
+    let inputObject = document.getElementById('ans')
+    let buttonObject = document.getElementById('button')
+    let downloadObject = document.getElementById('download')
+    let msgObject = document.getElementById('msg')
+    let msgObject_1 = document.getElementById('msg_1')
+    let msgObject_2 = document.getElementById('msg_2')
+
+
+    buttonObject.onclick = function () { handleNextButton() }
+    downloadObject.onclick = function () { download_csv_file() }
+
+    //generateChart(data, comps, 'stackedBar3D')
+    handleNextButton(true)
+
+    function handleNextButton(first = false) {
+      if (!first) {
+        let guess = inputObject.value;
+        if (isNaN(inputObject.value) || inputObject.value === '' || inputObject.value > 100 || inputObject.value < 1) {
+          msgObject.innerHTML = "please guess a number (1 - 100) before continuing"
+          return
+        }
+        else if (counter > 79) {
+          msgObject_1.innerHTML = "You've finished 80 trials! Thank you. You can continue and do for trials if you'd like."
+          msgObject_2.innerHTML = "Once you are done, scroll down and download the csv and send it to us!"
+        }
+        else {
+          msgObject.innerHTML = " "
+        }
+        if (counter > 80) {
+          msgObject_1.innerHTML = " "
+        }
+
+
+        clearChart()
+        csvFileData.push([person_id, counter, graphTypes[chart], percentAnswer, guess])
+      }
+
+      //new data generation
+      data = Array.from({ length: 5 }, () => Math.floor((Math.random() * 97) + 3))
+      chart = Math.floor(Math.random() * 4)
+      percentAnswer = generateChart(data, comps, graphTypes[chart])
+      inputObject.value = ""
+
+      counter += 1; //increments counter after each trial
+      msgObject.innerHTML = "Trial: " + counter + "/80"
+    }
+
+    function download_csv_file() {
+
+   //define the heading for each row of the data
+   let csv = 'Person_ID,Trial,Chart_Type,true_percentage,guessed_percentage\n';
+
+   //merge the data with CSV
+   csvFileData.forEach(function(row) {
+           csv += row.join(',');
+           csv += "\n";
+   });
+
+
+
+
+
+   let hiddenElement = document.createElement('a');
+   hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+   hiddenElement.target = '_blank';
+
+   //provide the name for the CSV file to be downloaded
+   hiddenElement.download = 'experiment_data.csv';
+   hiddenElement.click();
+
+}
+  </script>
+    <style>
+      .right {
+        position: absolute;
+        bottom: 250px;
+        right: 120px;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .button {
+        background-color: #bdbdbd;
+        border: 2px solid black;
+        color: black;
+        padding: 5px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas class="webgl"></canvas>
+    <scripttype="module" src="charts/script.js"></script>
+  <div class="right">
+    <p>What percentage does the smaller value represent of the larger value? </p>
+    <p>(The two selected values are marked with ●.)</p>
+    <form>
+      <label for="Answer">Answer:</label>
+      <input type="text" id="ans" name="ans" value="">
+      <label>%</label><br>
+    </form>
+    <button type="button" class="button" id="button">Next</button>
+    <p id="msg"> </p>
+    <p id="msg_1"> </p>
+    <p id="msg_2"> </p>
+  </div>
+  <h3> Click the button to download the CSV file </h3>
+
+<!-- create an HTML button to download the CSV file on click -->
+<button id="download"> Download CSV</button>
+</body>
+
+</html>
