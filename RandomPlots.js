@@ -23,9 +23,30 @@ class RandomPlots {
         .attr('z-index', -1)
     }
 
-    createBarChart() {
-    }
+    createBarChart(data, colors) {
+        this.initializeView()
 
+        console.log(data)
+        console.log(colors)
+
+        var height = this.height;
+        var width = this.width; 
+        var barWidth = 70;
+        var barOffset = 30;
+
+        var myChart = d3.select('#content')
+            .attr('width', width)
+            .attr('height', height)
+            .style('background', '#4c34eb')
+            .selectAll('rect')
+                .data(data)
+                .enter().append('rect')
+                    .style('fill', function(d, i){ return colors[i] })
+                    .attr('width', barWidth)
+                    .attr('height', function(d){ return d })
+                    .attr('x', function(d, i){ return i*(barWidth+barOffset) })
+                    .attr('y', function(d){ return height-d })
+    }
 
     createPieChart(data) {
         // Developed based on https://www.d3-graph-gallery.com/graph/pie_basic.html
@@ -53,15 +74,19 @@ class RandomPlots {
 
     createCircles(data) {
         this.initializeView()
-        let radius = Math.min(this.width, this.height) / 6 / 2
+        let radius = Math.min(this.width, this.height) / 6 / 2  - 30
+
+        console.log(data)
 
         d3.select('#content')
-        .selectAll('circle').data(data)
+        .selectAll('None').data(data)
         .enter()
         .append('circle')
         .attr('r', radius)
         .attr('cx', (_, i) => (2 + (i*2)) * 2*radius)
         .attr('cy', this.height / 2)
-        .attr('fill', c => c)
+        .style('fill', function(d, i) { 
+            return data[i]})
     }
+
 }
