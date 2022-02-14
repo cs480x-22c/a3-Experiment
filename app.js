@@ -5,8 +5,6 @@ const path = require('path');
 require("dotenv").config(); 
 const router = express.Router();
 
-console.log('directory-name: ', __dirname);
-
 // Creating express object
 var app = express();
  
@@ -49,7 +47,6 @@ router.get("/", (req, res) => {
     fs.appendFile('data.json', JSON.stringify(doc), (err) => {  
       // Catch this!
       if (err) throw err;
-  
       console.log(doc)
   });
 });

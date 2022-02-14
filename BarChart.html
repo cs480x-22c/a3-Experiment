@@ -45,20 +45,17 @@
 <body onload="generateGraph()">
 	<div id="chartholder" ></div>
 	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
-	<form id="form" method="post" action="/addResults"> 
+	<form id="form"> 
 		<div class="container">
 		<input type="text" name="inputs" id="userInput" class="input" title="input"></input>
 			<p class="input">   %</p>
 		</div>
 
 		<div class="btn">
-			<input hidden type="text" value="0" name="percent" id="percent" class="percent" title="percent"></input>
-			<input hidden type="text" value="barchart" name="bc" id="bc" class="bc" title="bc"></input>
 			<button type="submit" onclick="calcInput()">Submit</button>
-				
-		<form id="form1" method="get" action="/PieGraph">
-			<button type="button" onclick="window.location.href='/PieGraph.html'">next</button>
-		</form>
+			<button type="button" onclick="window.location.href='/PieGraph.html'">Next</button>	
+
+			<label hidden type="text" value="barchart" id="chart" class="bc" title="bc"></label>
 		</div>
 	</form>
 </body>
@@ -98,10 +95,16 @@ function generateGraph(){
 
 function calcInput() {
     var input = document.getElementById("userInput").value;
-    var results = Math.min(point1, point2) / Math.max(point1, point2) * 100;
-    console.log(results); 
-    document.getElementById("percent").value=results;
-	return results;
+    var percent = Math.min(point1, point2) / Math.max(point1, point2) * 100;
+    console.log(percent); 
+    
+	var results = [input, percent, "barchart"] 
+
+	fs.appendFile('data.json', JSON.stringify(results), (err) => {  
+      // Catch this!
+      if (err) throw err;
+      console.log(results)
+  });
 }
 
 
