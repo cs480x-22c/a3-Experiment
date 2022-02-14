@@ -19,9 +19,6 @@ access the sheet data using JavaScript, and then I used R and GGPlot2 to create 
 ## Stacked Rectangles:
 ![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/stackedrectangles.PNG)
 
-## Post-Submission:
-![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/postsubmit.PNG)
-
 ## Results
 ![caption]()
 
