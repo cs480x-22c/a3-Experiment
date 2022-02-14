@@ -20,6 +20,6 @@ access the sheet data using JavaScript, and then I used R and GGPlot2 to create 
 ![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/stackedrectangles.PNG)
 
 ## Results
-<object type="text/html" id="contain" data="https://jacobadamsky.github.io/a3-Experiment/img/results.html" width="1000" height="800"></object>
+<a href="https://jacobadamsky.github.io/a3-Experiment/img/results.html"></a>
 
 ## Technical and Design Achievements:
