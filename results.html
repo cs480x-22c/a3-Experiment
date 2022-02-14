@@ -1,0 +1,152 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<style></style>
+
+<div id="my_dataviz"></div> 
+
+<script>
+
+var margin = {top: 10, right: 30, bottom: 60, left: 75},
+  width = 600 - margin.left - margin.right,
+  height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+.append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+.append("g")
+  .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+  d3.json("https://cs480x-22c-a3.herokuapp.com/results", function(data) {
+  //d3.json("results.json", function(data) {
+
+    // user_data = {
+    //   "bar":[1,2,3,2,1,2,3,1,2,3,1,1,1,2,3,2,1,2,2,3],
+    //   "pie":[1,2,3,2,1,2,3,1,2,3,1,1,1,2,3,2,1,2,2,3],
+    //   "sbar":[1,2,3,2,1,2,3,1,2,3,1,1,1,2,3,2,1,2,2,3]
+    // };
+
+    console.log(d3.keys(data))
+
+    console.log(data)
+    
+    // var bar_data = data.bar
+    // bar_data = bar_data.concat([5, 4, 5, 5, 4, 3, 4, 4, 5, 7, 8, 8, 6, 5, 4, 7, 8, 9, 5, 4, 3, 1, 2, 3])
+    //var bar_data = [1,1,1,1,1,3,3,3,1,2,2,3,2,2,3,3,2,2,1,3,2,1,2,3,2,1,2,3]
+    //console.log(bar_data);
+
+    // Show the X scale
+    var x = d3.scaleLinear()
+      .domain([1,8])
+      .range([0, width]);
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+
+      // Show the Y scale
+      var y = d3.scaleBand()
+        .range([ height, 0 ])
+        .domain(d3.keys(data))
+        // .domain(["Bar", "Stacked Bar", "Pie"])
+        .padding(.4)
+      svg.append("g")
+        .call(d3.axisLeft(y).tickSize(0))
+        .select(".domain").remove()
+
+        var find_interval = function(array) {
+          const n = array.length
+          var z = 1.96
+          const mean = array.reduce((a, b) => a + b) / n
+          var std = Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
+
+          var mrgerr = (z*std)/Math.sqrt(n)
+          var final = [mean-mrgerr, mean+mrgerr, mean]
+          return final
+          }
+
+        var bar_interval = find_interval(data.bar)
+        var pie_interval = find_interval(data.pie)
+        var sbar_interval = find_interval(data.sbar)
+
+        var newd = [
+          {
+            label: "bar",
+            min: bar_interval[0],
+            max: bar_interval[1],
+            mid: bar_interval[2]
+          },
+          {
+            label: "pie",
+            min: pie_interval[0],
+            max: pie_interval[1],
+            mid: pie_interval[2]
+          },
+          {
+            label: "sbar",
+            min: sbar_interval[0],
+            max: sbar_interval[1],
+            mid: sbar_interval[2]
+          },
+        ]
+
+    // Horizontal lines
+    svg.selectAll("myline")
+      .data(newd)
+      .enter()
+      .append("line")
+        .attr("x1", function(d) {return x(d.min); })
+        .attr("x2", function(d) {return x(d.max); })
+        .attr("y1", function(d) {return y(d.label)+32; })
+        .attr("y2", function(d) {return y(d.label)+32; })
+        .attr("stroke", "grey")
+        .attr("stroke-width", "1px")
+
+    // left vertical line
+    svg.selectAll("myline")
+      .data(newd)
+      .enter()
+      .append("line")
+        .attr("x1", function(d) {return x(d.min); })
+        .attr("x2", function(d) {return x(d.min); })
+        .attr("y1", function(d) {return y(d.label)+22; })
+        .attr("y2", function(d) {return y(d.label)+42; })
+        .attr("stroke", "grey")
+        .attr("stroke-width", "1px")
+      
+    // right vertical line
+    svg.selectAll("myline")
+      .data(newd)
+      .enter()
+        .append("line")
+        .attr("x1", function(d) {return x(d.max); })
+        .attr("x2", function(d) {return x(d.max); })
+        .attr("y1", function(d) {return y(d.label)+22; })
+        .attr("y2", function(d) {return y(d.label)+42; })
+        .attr("stroke", "grey")
+        .attr("stroke-width", "1px")
+
+    // center circle
+    svg.selectAll("myline")
+      .data(newd)
+      .enter()
+        .append("circle")
+        .attr("r", 5)
+        .attr("cx", function(d) {return x(d.mid); })
+        .attr("cy", function(d) {return y(d.label)+32; })
+        .style("fill", "black")
+
+    svg.append("text")
+      .attr("x", 100)
+      .attr("y", 20)
+      .text("95% Confinence Intervals for Crowd-Sourced Results");
+
+    svg.append("text")
+      .attr("x", 225)
+      .attr("y", 375)
+      .text("Log Error");
+
+  });
+
+</script>
