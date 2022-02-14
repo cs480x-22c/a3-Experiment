@@ -1,251 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-  <header>
-    <title>CS480x Experiment</title>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="RandomPlots.js"></script>
-    <script src="backend.js"></script>
-    <style>
-    </style>
-  </header>
-  <body>
-    <h1> CS480x Experiment </h1>
-    <label id="countID">Progress: 1/25</label><br>
-    <label id="instructions">Instructions</label><br>
-    <div id="plot"></div>
-    <p id = 'error' style="color:red;display:none;">% Difference Must Be In Range [0.01, 100]</p>
-    <label for = 'numInput'>Estimated % Difference:</label>
-    <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
-    <button onclick="nextPlot()">Next</button>
-    <script>
+class RandomPlots {
 
-      //----------------------------------------------------------------------- Set-Up
+    constructor() {
+        this.width = 700
+        this.height = 700
+        d3.select('#plot')
+        .append('svg')
+        .attr('height', this.height)
+        .attr('width', this.width)
+        .attr('id', 'content')
+        this.initializeView = this.initializeView.bind(this)
+    }
 
-      let rpg = new RandomPlots()
-      const userID = Math.floor(Math.random()*1000000)
-      const maxPerChart = 5
-
-      function rand(min, max) {
-        return Math.floor(Math.random() * (max-min+1)+min)
-      }
-      
-      var r1 = -1
-      var r2 = -1
-      var testType = ''
-
-      let numPie = 0
-      function createPie() {
-        testType = 'Pie'
-        document.getElementById("instructions").innerHTML = 'Of the two white areas: What % of the larger is the smaller?'
-        r1 = rand(20, 180)
-        r2 = rand(20, 150)
-        if(r1==r2)
-          r1-=rand(5, 15)
-
-        r3 = rand(10, 340 - r2 - r1)
-        r4 = rand(10, 350 - r3 - r2 - r1)
-        r5 = 360 - r4 - r3 - r2 - r1
-
-        let sequence = [
-          {'value': r5, 'color': 'hsl(0,0%,50%)'},
-          {'value': r4, 'color': 'hsl(0,0%,50%)'},
-          {'value': r1, 'color': 'hsl(0,0%,100%)'},
-          {'value': r2, 'color': 'hsl(0,0%,100%)'},
-          {'value': r3, 'color': 'hsl(0,0%,50%)'}
-        ]
-
-        numPie++
-        rpg.createPieChart(sequence)
-      }
-
-      let numBar = 0
-      function createBar() {
-        testType = 'Bar'
-        document.getElementById("instructions").innerHTML = 'Of the two white bars: What % of the larger is the smaller?'
-        r1 = rand(420, 700)
-        r2 = 770 - r1
-
-        let sequence = [
-        [rand(10, 700)],
-        [rand(10, 700)],
-        [rand(10, 700)],
-        [r1],
-        [r2],
-        [rand(10, 700)]
-        ]
-
-        let colors = [
-        ['hsl(0,0%,50%)'],
-        ['hsl(0,0%,50%)'],
-        ['hsl(0,0%,50%)'],
-        ['hsl(0,0%,100%)'],
-        ['hsl(0,0%,100%)'],
-        ['hsl(0,0%,50%)']
-        ]
-
-        numBar++
-        rpg.createBarChart(sequence, colors)
+    initializeView() {
+        d3.select('#content')
+        .selectAll("*").remove()
         
-        r1 = Math.floor(r1/7)
-        r2 = Math.floor(r2/7)
-      }
+        d3.select('#content')
+        .append('rect')
+        .attr('fill', 'lightgray')
+        .attr('height', this.height)
+        .attr('width', this.width)
+        .attr('z-index', -1)
+    }
 
-      let numH = 0
-      function createH() {
-        testType = 'H'
-        document.getElementById("instructions").innerHTML = 'What % of the right hue is the left hue?'
-        r1 = rand(0, 350)
-        r2 = rand(r1+10, 360)
-        var r3 = (r2+r1)/2
+    createBarChart(data, colors) {
+        this.initializeView()
 
-        let sequence = [
-          ['hsl('+r1+',80%,50%)'],
-          ['hsl('+r3+',80%,50%)'],
-          ['hsl('+r2+',80%,50%)']
-        ]
+        console.log(data)
+        console.log(colors)
 
-        sequence.color = 'hsl(0,0%,50%)'
+        var height = this.height;
+        var width = this.width; 
+        var barWidth = 70;
+        var barOffset = 30;
 
-        numH++
-        rpg.createCircles(sequence)
-      }
+        var myChart = d3.select('#content')
+            .attr('width', width)
+            .attr('height', height)
+            .style('background', '#4c34eb')
+            .selectAll('rect')
+                .data(data)
+                .enter().append('rect')
+                    .style('fill', function(d, i){ return colors[i] })
+                    .attr('width', barWidth)
+                    .attr('height', function(d){ return d })
+                    .attr('x', function(d, i){ return i*(barWidth+barOffset) })
+                    .attr('y', function(d){ return height-d })
+    }
 
-      let numS = 0
-      function createS() {
-        testType = 'S'
-        document.getElementById("instructions").innerHTML = 'What % of the right saturation is the left saturation?'
-        r1 = rand(0, 90)
-        r2 = rand(r1+10, 100)
-        var r3 = (r2+r1)/2
+    createPieChart(data) {
+        // Developed based on https://www.d3-graph-gallery.com/graph/pie_basic.html
+        this.initializeView()
+        // Set color palette
+        console.log(data);
+            
+        var pieData = d3.pie().value( d=>d.value)(data);
+        console.log(pieData)
 
-        let sequence = [
-          ['hsl(30,'+r1+'%,50%)'],
-          ['hsl(30,'+r3+'%,50%)'],
-          ['hsl(30,'+r2+'%,50%)']
-        ]
+        d3.select('#content').selectAll("None")
+        .data(pieData)
+        .enter()
+        .append('path')
+        .attr('d', d3.arc()
+            .innerRadius(0)
+            .outerRadius(this.width  * 0.3)
+        )
+        .attr('fill', function(d){ return(d.data.color) })
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("opacity", 0.7)    
+        .attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")");
+    }
 
-        numS++
-        rpg.createCircles(sequence)
-      }
-      
-      let numL = 0
-      function createL() {
-        testType = 'L'
-        document.getElementById("instructions").innerHTML = 'What % of the right luminance is the left luminance?'
-        r1 = rand(0, 90)
-        r2 = rand(r1+10, 100)
-        var r3 = (r2+r1)/2
+    createCircles(data) {
+        this.initializeView()
+        let radius = Math.min(this.width, this.height) / 6 / 2 - 16
 
-        let sequence = [
-          ['hsl(150,80%,'+r1+'%)'],
-          ['hsl(150,80%,'+r3+'%)'],
-          ['hsl(150,80%,'+r2+'%)']
-        ]
+        console.log(data)
 
-        numL++
-        rpg.createCircles(sequence)
-      }
+        d3.select('#content')
+        .selectAll('None').data(data)
+        .enter()
+        .append('circle')
+        .attr('r', radius)
+        .attr('cx', (_, i) => (2 + (i*2)) * 2*radius)
+        .attr('cy', this.height / 2)
+        .style('fill', function(d, i) { 
+            return data[i]})
+    }
 
-      function nextTest() { //messy, but can't think of how to do pseudo rand that hits all charts 5 times
-        var cont = true;
-
-        while(cont) {
-          switch(rand(0, 4)) {
-            case 0:
-            createBar()
-            cont = false
-            break
-
-            case 1:
-            createPie()
-            cont = false
-            break
-
-            case 2:
-            createH()
-            cont = false
-            break
-
-            case 3:
-            createS()
-            cont = false
-            break
-
-            case 4:
-            createL()
-            cont = false
-            break
-          }
-        }  
-      }
-
-      //---------------------------------------------------------------------- Sending Data
-
-      function sendData(payload) {
-        var formBody = [];
-        for (var property in details) {
-          var encodedKey = encodeURIComponent(property);
-          var encodedValue = encodeURIComponent(details[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-    
-        fetch('https://docs.google.com/forms/u/4/d/e/1FAIpQLSe9BLtXqwfV94_f-feQM6vsAeIYTcbPXhwGF2-WQy-RVgPFcQ/formResponse', {
-          method: 'POST',
-          headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-            body: formBody
-        })
-      }
-
-      var details = {
-        'entry.1362470865': 'userID',
-        'entry.1174877292': 'testType',
-        'entry.357989325': 'true percentage',
-        'entry.138102301': 'response percentage'
-      }
-
-      //---------------------------------------------------------------------- Button Press/Next Graph Gen
-
-      let s = 0
-      let idx = 1
-      function nextPlot() {
-        s = document.getElementById('numInput').value
-        if(s >= 0.01 && s <= 100.00) { //if s is valid, passes to sheets and gens next graph
-          //Write to sheets
-          var trueDiff = Math.floor(100*(Math.min(r1, r2)/Math.max(r1, r2)))
-          details['entry.1362470865'] = userID,
-          details['entry.1174877292'] = testType,
-          details['entry.357989325'] = trueDiff,
-          details['entry.138102301'] = s
-          sendData(details);
-
-          //Update UI
-          document.getElementById('error').style.display = 'none'
-          document.getElementById('numInput').value = "";
-          nextTest();
-
-          //Josh's Super-Lazy Indexing Extrodinaire
-          idx += 1
-
-          //Uodate label
-          document.getElementById('countID').innerHTML = 'Progress: ' + idx + "/25";
-
-          //End condition for survey
-          if(idx==maxPerChart*5+1) { //if index maxes out, clears page and thanks user
-            document.write('THANK YOU!')
-          }
-        } else {
-          document.getElementById('error').style.display = 'block'
-        }
-      }
-
-      //-------------------------------------------------------------------------- Nada mas.
-
-    </script>
-    <script>
-      nextTest()
-    </script>
-  </body>
-</html>
+}
