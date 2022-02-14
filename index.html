@@ -68,7 +68,9 @@ and stating that it's the end? WIP -->
   
   <form action="https://docs.google.com/forms/d/e/1FAIpQLSd_ZsKpbjbQX0w_-EJU5Pzj8bRJ9epkZnYqaAuEg_4Cus212Q/formResponse" method="post" target="hidden_iframe">
       <input placeholder="Answer" type="text" name="entry.83238013">
-     <button type="button" id="nextButton" onclick="display()">Next</button>
+     <button type="submit" id="nextButton" onclick="display()">Next</button>
+     <input id="chartInput" placeholder="chart" type="hidden" name="entry.1193509729">
+     <input id="areaInput" placeholder="chart" type="hidden" name="entry.1523472127">
     </form>
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
     <form id="form" onsubmit="return false;">
@@ -106,20 +108,24 @@ var tracker = 0; // Tracking pages
 var trialDisplay = 60; // Having 60 trials for each expmt (20 of each vis)
 var thisPage = 0;
 var lastPage = 2; // Title page, then pages for trials, then final page for "thank you" and submission
+var type = "nothing";
+var correct_area = 0;
 
 document.getElementById("nextButton").innerHTML = "Next" //working on start button
 
 // Display the pages and buttons
 function display() {
+   d3.select("#areaInput").attr("value",correct_area);
+  d3.select("#chartInput").attr("value",type);
   var pg = document.getElementsByClassName("page");
   pg[thisPage].style.display = 'block';
 
   if (thisPage == trialDisplay) {
     document.getElementById("nextButton").innerHTML = 'Download trial results';
   }
-    else if (tracker == trialDisplay) {
-      document.getElementById("nextButton").innerHTML = 'Finish and save results';
-    }
+   // else if (tracker == trialDisplay) {
+   //   document.getElementById("nextButton").innerHTML = 'Finish and save results';
+   // }
     else if (thisPage > 0) {
       document.getElementById("nextButton").innerHTML = 'Next';
       tracker++;
@@ -127,7 +133,7 @@ function display() {
        next(); //maybe? TBD
     }
     
-  document.getElementById('qHeader').innerHTML = 'Question ' + tracker + " " + trialDisplay; // Show participant the trial they're on
+  document.getElementById('qHeader').innerHTML = 'Question ' + tracker + " out of " + trialDisplay; // Show participant the trial they're on
   if(thisPage==0){
     thisPage++;
   }
@@ -158,16 +164,20 @@ var count = 0; //count to know which function to use
 var pie_count = 0;
 var donut_count = 0;
 var bar_count = 0;
+var types =[];
 
   function next(){ //need to change to have 20 of each type
     if (count<60){
        d3.select("#my_dataviz").selectAll("svg").remove();
       var this_graph = getRandomIntInclusive(1, 3); //get random number 1-3
        if(this_graph==1){
+         type = "pie";
       pie_graph();
     } else if (this_graph==2){
+      type = "donut";
       donut_graph();
     } else if (this_graph==3){
+      type = "bar";
       bar_graph();
     }
     count++;
@@ -255,6 +265,15 @@ function pie_graph(){
   var c2 = (b2 + a2)/2;
   var x2 = cx + (r * Math.sin(c2));
   var y2 = cy - (r * Math.cos(c2));
+  var area1 = ((b1 - a1)/2)*Math.pow(radius2,2);
+  var area2 = ((b2 - a2)/2)*Math.pow(radius2,2);
+  if (area1 > area2){
+    correct_area = area2 / area1;
+  }
+  else{
+    correct_area = area1 / area2;
+  }
+  
   d3.select('#my_dataviz')
     .append("svg")
     .append('circle')
@@ -340,6 +359,20 @@ function pie_graph(){
   var c2 = (b2 + a2)/2;
   var x2 = cx + (r * Math.sin(c2));
   var y2 = cy - (r * Math.cos(c2));
+  var area1 = ((b1 - a1)/2)*Math.pow(radius2,2);
+  var area2 = ((b2 - a2)/2)*Math.pow(radius2,2);
+  var area1_hole = ((b1 - a1)/2)*Math.pow(100,2);
+  var area2_hole = ((b2 - a2)/2)*Math.pow(100,2);
+  var real_area1 = area1 - area1_hole;
+  var real_area2 = area2 - area2_hole;
+  
+  if (real_area1 > real_area2){
+    correct_area = real_area2 / real_area1;
+  }
+  else{
+    correct_area = real_area1 / real_area2;
+  }
+  
   d3.select('#my_dataviz')
     .append("svg")
     .append('circle')
@@ -460,6 +493,14 @@ var barChart = svg3.selectAll("rect")
   var x_start2 = get_start(bar_dot2);
   var x_end1 = x_start1 + (bar_width/2);
   var x_end2 = x_start2 + (bar_width/2);
+  var area1 = bar_width * (dataset[bar_dot1]);
+  var area2 = bar_width * (dataset[bar_dot2]);
+  if (area1 > area2){
+    correct_area = area2 / area1;
+  }
+  else{
+    correct_area = area1 / area2;
+  }
 
   d3.select('#my_dataviz')
     .append("svg")
