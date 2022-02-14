@@ -23,12 +23,18 @@
     }
     #open button {
       margin: 0;
-      
       position: absolute;
       top: 70%;
       left: 50%;
+      
+    }
+    #open button#disagree {
+      margin-right: -70%;
+      transform: translate(-25%, -70%);
+    }
+    #open button#agree {
       margin-right: -50%;
-      transform: translate(-50%, -70%);
+      transform: translate(-70%, -70%);
     }
   </style>
 </head>
@@ -46,8 +52,8 @@
       <br>
       <br>Thank you! - Mattheus Faria
     </p>
-    <button>Disagree</button>
-    <button>Agree</button>
+    <button id='disagree'>Disagree</button>
+    <button id='agree'>Agree</button>
   </div>
 </body>
 
