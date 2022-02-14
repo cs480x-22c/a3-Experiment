@@ -41,10 +41,11 @@ Technical Achievements
 ---
 - Created 3D versions of the pie and stacked bar charts in order to compare performance between 2D and 3D charts.
 - Created 4 charts instead of 3 which was the requirement
-- Was able to prove through log2error that 2D charts did perform better than 3D charts for stacked bar chart, but not for pie charts
+- Was able to prove through log2error that 2D charts did perform better than 3D charts for stacked bar charts, but not for pie charts
 
 Design Achievements
 ---
 - Used three.js to set chart angles and camera angles to make the charts appear in 3D
 - Put the download csv button below the webpage frame so users wouldn't immediately see it when they took the experiment
-- Added user error checking for non-number inputs and numbers over 100.
+- Added user error checking for non-number inputs, numbers over 100 or less than 1.
+- Made text appear after the user was done with 80 trials to give them instructions on how to download the csv and said they could continue if they'd like
