@@ -88,7 +88,7 @@
       let numH = 0
       function createH() {
         testType = 'H'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the hue of the first and last colors in each sequence (ex. 25)'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the hue of the first and last colors in each sequence (0 to 360)'
         r1 = rand(0, 320)
         r2 = rand(r1+40, 360)
         var r3 = r1 + (r2-r1)/4
@@ -112,7 +112,7 @@
       let numS = 0
       function createS() {
         testType = 'S'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the saturation of the first and last colors in each sequence (ex. 25)'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the saturation of the first and last colors in each sequence (0=gray to 100=orange)'
         r1 = rand(0, 60)
         r2 = rand(r1+40, 100)
         var r3 = r1 + (r2-r1)/4
@@ -134,7 +134,7 @@
       let numL = 0
       function createL() {
         testType = 'L'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the luminance/lightness of the first and last colors in each sequence (ex. 25)'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the luminance/lightness of the first and last colors in each sequence (0=black to 100=white)'
         r1 = rand(0, 60)
         r2 = rand(r1+40, 100)
         var r3 = r1 + (r2-r1)/4
@@ -219,7 +219,7 @@
       let idx = 1
       function nextPlot() {
         s = document.getElementById('numInput').value
-        if(s >= 0.01 && s <= 100.00) { //if s is valid, passes to sheets and gens next graph
+        if(s >= 0.01 && s <= 360.00) { //if s is valid, passes to sheets and gens next graph
           //Write to sheets
           var trueDiff = (Math.abs(r1-r2))
           details['entry.1362470865'] = userID,
@@ -253,6 +253,6 @@
     </script>
   </body>
   <footer>
-    <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
+    <input type='number' id='numInput' min='0.00' max='360.00' name='number' />
   </footer>  
 </html>
