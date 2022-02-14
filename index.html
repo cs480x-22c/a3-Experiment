@@ -13,8 +13,9 @@
     <label id="countID">Progress: 1/25</label><br>
     <label id="instructions">Instructions</label><br>
     <div id="plot"></div>
-    <label for = 'numInput'>Difference in Value:</label>
-    <input type='number' id='numInput' min='0.00' max='360.00' name='number' />
+    <p id = 'error' style="color:red;display:none;">% Difference Must Be In Range [0.01, 100]</p>
+    <label for = 'numInput'>Estimated % Difference:</label>
+    <input type='number' id='numInput' min='0.00' max='100.00' name='number' />
     <button onclick="nextPlot()">Next</button>
     <script>
 
@@ -35,7 +36,7 @@
       let numPie = 0
       function createPie() {
         testType = 'Pie'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the difference between the two highlighted areas (ex. 50% vs 25% --> 25)'
+        document.getElementById("instructions").innerHTML = 'Of the two white areas: What % of the larger is the smaller?'
         r1 = rand(20, 180)
         r2 = rand(20, 150)
         if(r1==r2)
@@ -60,7 +61,7 @@
       let numBar = 0
       function createBar() {
         testType = 'Bar'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the difference between the two highlighted bar heights (ex. 50 vs 25 --> 25)<br />Assume the top of the grey background is 100 and the bottom is 0'
+        document.getElementById("instructions").innerHTML = 'Of the two white bars: What % of the larger is the smaller?'
         r1 = rand(420, 700)
         r2 = 770 - r1
 
@@ -92,18 +93,14 @@
       let numH = 0
       function createH() {
         testType = 'H'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the hue of the first and last colors in each sequence (0 to 360)'
-        r1 = rand(0, 320)
-        r2 = rand(r1+40, 360)
-        var r3 = r1 + (r2-r1)/4
-        var r4 = r1 + 2*(r2-r1)/4
-        var r5 = r1 + 3*(r2-r1)/4
+        document.getElementById("instructions").innerHTML = 'What % of the right hue is the left hue?'
+        r1 = rand(0, 350)
+        r2 = rand(r1+10, 360)
+        var r3 = (r2+r1)/2
 
         let sequence = [
           ['hsl('+r1+',80%,50%)'],
           ['hsl('+r3+',80%,50%)'],
-          ['hsl('+r4+',80%,50%)'],
-          ['hsl('+r5+',80%,50%)'],
           ['hsl('+r2+',80%,50%)']
         ]
 
@@ -116,18 +113,14 @@
       let numS = 0
       function createS() {
         testType = 'S'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the saturation of the first and last colors in each sequence (0=gray to 100=orange)'
-        r1 = rand(0, 60)
-        r2 = rand(r1+40, 100)
-        var r3 = r1 + (r2-r1)/4
-        var r4 = r1 + 2*(r2-r1)/4
-        var r5 = r1 + 3*(r2-r1)/4
+        document.getElementById("instructions").innerHTML = 'What % of the right saturation is the left saturation?'
+        r1 = rand(0, 90)
+        r2 = rand(r1+10, 100)
+        var r3 = (r2+r1)/2
 
         let sequence = [
           ['hsl(30,'+r1+'%,50%)'],
           ['hsl(30,'+r3+'%,50%)'],
-          ['hsl(30,'+r4+'%,50%)'],
-          ['hsl(30,'+r5+'%,50%)'],
           ['hsl(30,'+r2+'%,50%)']
         ]
 
@@ -138,18 +131,14 @@
       let numL = 0
       function createL() {
         testType = 'L'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the luminance/lightness of the first and last colors in each sequence (0=black to 100=white)'
-        r1 = rand(0, 60)
-        r2 = rand(r1+40, 100)
-        var r3 = r1 + (r2-r1)/4
-        var r4 = r1 + 2*(r2-r1)/4
-        var r5 = r1 + 3*(r2-r1)/4
+        document.getElementById("instructions").innerHTML = 'What % of the right luminance is the left luminance?'
+        r1 = rand(0, 90)
+        r2 = rand(r1+10, 100)
+        var r3 = (r2+r1)/2
 
         let sequence = [
           ['hsl(150,80%,'+r1+'%)'],
           ['hsl(150,80%,'+r3+'%)'],
-          ['hsl(150,80%,'+r4+'%)'],
-          ['hsl(150,80%,'+r5+'%)'],
           ['hsl(150,80%,'+r2+'%)']
         ]
 
@@ -223,9 +212,9 @@
       let idx = 1
       function nextPlot() {
         s = document.getElementById('numInput').value
-        if(s >= 0.01 && s <= 360.00) { //if s is valid, passes to sheets and gens next graph
+        if(s >= 0.01 && s <= 100.00) { //if s is valid, passes to sheets and gens next graph
           //Write to sheets
-          var trueDiff = (Math.abs(r1-r2))
+          var trueDiff = Math.floor(100*(Math.min(r1, r2)/Math.max(r1, r2)))
           details['entry.1362470865'] = userID,
           details['entry.1174877292'] = testType,
           details['entry.357989325'] = trueDiff,
@@ -233,6 +222,7 @@
           sendData(details);
 
           //Update UI
+          document.getElementById('error').style.display = 'none'
           document.getElementById('numInput').value = "";
           nextTest();
 
@@ -246,6 +236,8 @@
           if(idx==maxPerChart*5+1) { //if index maxes out, clears page and thanks user
             document.write('THANK YOU!')
           }
+        } else {
+          document.getElementById('error').style.display = 'block'
         }
       }
 
