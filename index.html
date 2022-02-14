@@ -33,9 +33,13 @@
       transform: translate(0%, -75%);
     }
     #open button#agree {
-      left: 75%;
+      left: -25%;
       transform: translate(0%, -75%);
     }
+    .hidden {
+      visibility : hidden;
+    }
+    
   </style>
 </head>
 
@@ -59,4 +63,9 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+  
+  d3.select('#agree')
+    .on('click', function(){
+      d3.select('#open').attr('class','hidden');
+    });
 </script>
