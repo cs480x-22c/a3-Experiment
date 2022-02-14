@@ -3,7 +3,7 @@
 
 <head>
   <script type="module">
-    import { generateChart, clearChart } from "/charts/script.js"
+    import { generateChart, clearChart } from "./script.js"
 
     let data, chart, percentAnswer;
     let counter = 0;
@@ -11,8 +11,6 @@
     const comps = [1, 4] // The things to compare
     const graphTypes = ['stackedBar3D', 'stackedBar', 'pie', 'pie3D']
     const person_id = window.localStorage.getItem("ID")
-    console.log(person_id)
-
     //html elements
     let inputObject = document.getElementById('ans')
     let buttonObject = document.getElementById('button')
@@ -48,14 +46,8 @@
 
 
         clearChart()
-        //append to csv array here
-
         csvFileData.push([person_id, counter, graphTypes[chart], percentAnswer, guess])
-        //console.log(csvFileData)
-        //sendtoCSVArray(chart, guess, percentAnswer)
-        //create a user-defined function to download CSV file
       }
-
 
       //new data generation
       data = Array.from({ length: 5 }, () => Math.floor((Math.random() * 97) + 3))

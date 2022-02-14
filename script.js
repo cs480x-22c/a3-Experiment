@@ -1,18 +1,18 @@
 
 // Find the latest version by visiting https://cdn.skypack.dev/three.
 
-import * as THREE from 'https://cdn.skypack.dev/three@0.127.0';
-
+//import * as THREE from 'https://cdn.skypack.dev/three@0.127.0';
+import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.137.5-HJEdoVYPhjkiJWkt6XIa/mode=imports/optimized/three.js';
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene();
 const chart = new THREE.Group(); //
 scene.background = new THREE.Color(0xffffff)
 
 //Light
-const ambientlight = new THREE.AmbientLight(0x404040); // soft white light
+const ambientlight = new THREE.AmbientLight(0x404040);
 scene.add(ambientlight);
 
-const directionallight = new THREE.DirectionalLight(0x404040, 2.6); // soft white light
+const directionallight = new THREE.DirectionalLight(0x404040, 2.6);
 scene.add(directionallight);
 scene.add(directionallight.target);
 directionallight.position.set(0, 1, 1)
@@ -36,7 +36,6 @@ updateSizes()
 
 // Camera
 //const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-
 const camera = new THREE.OrthographicCamera(
   sizes.width / - sizes.scaleFactor,
   sizes.width / sizes.scaleFactor,
@@ -76,12 +75,6 @@ const tick = () => {
   renderer.render(scene, camera)
   window.requestAnimationFrame(tick)
 }
-
-// //dummy data
-// const data = [43, 3, 67, 23, 95]
-// const comps = [1, 4] // choose the things to compare
-
-// generateChart(data, comps, 'pie3D')
 
 tick()
 
