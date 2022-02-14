@@ -155,11 +155,11 @@
 			})
 			console.log("Actual:%d", actual)
 			guessIndex++;
-			if(guessIndex<=60){
+			if(guessIndex<60){
 				main()
 			}else{
 				removeAll()
-				document.getElementById("header").innerHTML = "<h2>Finished. Here are the results<h2>"
+				document.getElementById("header").innerHTML = "<h2>Finished.<h2>"
 				nextBtn.style.visibility = "hidden"
 				slider.style.visibility = "hidden"
 				label.style.visibility = "hidden"
