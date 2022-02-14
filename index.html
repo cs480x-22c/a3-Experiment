@@ -5,8 +5,17 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript">
+      function showMessage() {
+          alert("please click yes we need your data");
+      }
+  </script>
+
+<script type="text/javascript">
+  document.getElementById("button1").onclick = function () {
+      location.href = "/graph.html";
+  };
+</script>
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -63,11 +72,12 @@ button2 {
         </h2>
         
   
-        <button1
+        <div align= "center">
+          <button1
           type="button"
           action=""
           id="confirm"
-        >
+          onclick= parent.open("graph.html")>
           Yes, continue. 
         </button1>
 
@@ -78,9 +88,10 @@ button2 {
           type="button"
           action=""
           id="confirm"
+          onclick="showMessage()"
         >
           No, I don't. 
         </button2>
-
+        </div>
   </body>
 </html>
