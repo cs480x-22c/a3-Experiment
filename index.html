@@ -19,7 +19,7 @@
 			</h1>
                 By Liam Rathke, Sean and Maria del Carmen Sacristan Benjet
 			<h2 id="header">
-				What percentage is the smaller of the larger?(A and B)
+				What percentage of the larger labeled section is the smaller labeled section?
 			</h2>
 
 		<svg width="300" height="300">
@@ -31,6 +31,9 @@
 							class="slider" id="sliderRange">
 			<p><span id="label"></span></p>
 		  </div>
+		  <h3 id="pagenum">
+			
+		</h3>
 		</div>
 	
 	
@@ -103,18 +106,37 @@
 		const guesses = [] //60
 		var guessIndex =0;
 		function btnStart(){
+			var str = "<h3>Page 1/60<h3>"
+			document.getElementById("pagenum").innerHTML = str
 			nextBtn.style.visibility = "visible"
 			startBtn.style.visibility = "hidden"
 			main()
 		}
 		
 		function accuracy(guess, actual){
-			return Math.log(Math.abs(guess-actual)+(1/8))/ Math.log(2)
+			console.log('Guess:', guess, 'Actual:', actual)
+			// guess = guess/100
+			// actual = actual/100
+			// console.log('Guess:', guess, 'Actual:', actual)
+
+			let diff = guess - actual;
+			let abs = Math.abs(diff);
+			let absPlus = abs + 0.125;
+			let log2 = Math.log2(absPlus);
+
+			console.log('Diff:', diff, 'Abs:', abs,
+			'absPlus:', absPlus, 'log2:', log2)
+
+			return Math.log(Math.abs(guess-actual)+(0.125))/ Math.log(2)
 		}
 
 		var currentchart;
 		var actual;
+		var pnum = 1;
 		function btn() {
+			pnum++;
+			var str = "<h3>Page " + pnum + "/60<h3>"
+			document.getElementById("pagenum").innerHTML = str
 			guesses[guessIndex] = slider.value
 			console.log("Guess: %s", guesses[guessIndex])
 			const response = {
@@ -131,6 +153,7 @@
 			}).then(r => {
 				console.log('Data sent to server!', r)
 			})
+			console.log("Actual:%d", actual)
 			guessIndex++;
 			if(guessIndex<=60){
 				main()
@@ -240,7 +263,7 @@
 				v1 = data[r+3]
 				v2 =data[r]
 			}
-			actual = (v1/v2) *100;
+			actual = (v1/v2)*100;
 			var lineData = [[bar1-25, bottom -100, bar1+10, bottom -(h1*2)+(data[r]/2)], [bar2+65, bottom -100, bar2+30, bottom -(h2*2)+(data[r+3]/2)]];
 
 			d3.select("svg")
@@ -328,8 +351,8 @@
 				v1=data[r[1]]
 			}
 			actual = (v1/v2)*100
-			var str = "<h2>What percentage is " + smaller + " of " + larger + "?<h2>"
-			document.getElementById("header").innerHTML = str
+			//var str = "<h2>What percentage is " + smaller + " of " + larger + "?<h2>"
+			//document.getElementById("header").innerHTML = str
 			var textData = [['A',bars_x[r[0]]+15],['B',bars_x[r[1]]+15]]
 			d3.select("svg")
 			.selectAll("text")
