@@ -77,10 +77,14 @@
     <h2>What percentage is the smaller mark of the bigger mark?</h2>
     <h3>For example: There are marked pieces of size 40 and 60, so the input would be around 66% (Type 66)</h3>
     <svg id='canvas'></svg>
+    <h2>___</h2>
     <div id='submittions'>
       <input id='guess'></input>
       <button id='submit'>Submit</button>
     </div>
+  </div>
+  <div id='closed' class='hidden'>
+    <h2>Thank you for participating!</h2>
   </div>
 </body>
 
@@ -91,5 +95,15 @@
     .on('click', function(){
       d3.select('#open').attr('class','hidden');
       d3.select('#graph').attr('class','');
+    });
+  d3.select('#disagree')
+    .on('click', function(){
+      d3.select('#open').attr('class','hidden');
+      d3.select('#closed').attr('class','');
+    });
+  d3.select('#submit')
+    .on('click', function(){
+      d3.select('#graph').attr('class','hidden');
+      d3.select('#closed').attr('class','');
     });
 </script>
