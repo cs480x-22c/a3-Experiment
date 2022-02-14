@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width" charset="utf-8">
 
 	<script type="text/javascript" src="app.js"></script>
->
+
 
 	<style type="text/css">
 		#chartholder {
@@ -45,21 +45,22 @@
 <body onload="generateGraph()">
 	<div id="chartholder" ></div>
 	<p class="container">Please input how much smaller you think the indicated bar is from the larger one</p><br>
-	<div class="container">
-		<input type="text" class="input" id="userInput" title="input"></input>
-		<p class="input">   %</p>
-	</div>
+	<form id="form" method="post" action="/addResults"> 
+		<div class="container">
+		<input type="text" name="inputs" id="userInput" class="input" title="input"></input>
+			<p class="input">   %</p>
+		</div>
 
-	<div class="btn">
-		<form id="form" method="post" action="/addResults">  
+		<div class="btn">
+			<input hidden type="text" value="0" name="percent" id="percent" class="percent" title="percent"></input>
+			<input hidden type="text" value="barchart" name="bc" id="bc" class="bc" title="bc"></input>
 			<button type="submit" onclick="calcInput()">Submit</button>
-		</form>
+				
 		<form id="form1" method="get" action="/pie">
-			<a href="/pie">Next</a>
+			<button type="button" onclick="window.location.href='/pie'">next</button>
 		</form>
-	</div>
-	
-	
+		</div>
+	</form>
 </body>
 </html>
 
@@ -94,5 +95,14 @@ function generateGraph(){
         .style('height', function (d) { return d * 400 + 'px';})
         //.style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}return "white";});
 }
+
+function calcInput() {
+    var input = document.getElementById("userInput").value;
+    var results = Math.min(point1, point2) / Math.max(point1, point2) * 100;
+    console.log(results); 
+    document.getElementById("percent").value=results;
+	return results;
+}
+
 
 </script>

@@ -1,7 +1,7 @@
 // Requiring module
 var express = require('express');
 const path = require('path');
-
+require("dotenv").config(); 
 const router = express.Router();
 
 console.log('directory-name: ', __dirname);
@@ -19,31 +19,27 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var mongoose = require("mongoose");
-mongoose.Promise = global.Promise;mongoose.connect("mongodb://localhost:27017/node-demo");
+var Schema = mongoose.Schema;
 
-var nameSchema = new mongoose.Schema({
-    id: Number,
+const password = process.env.DB_PASSWORD
+var conn = mongoose.connect('mongodb+srv://lsg:troop3398@cluster0.4gwej.mongodb.net/trial',
+(err)=>{
+if(err) throw err;
+
+console.log('DB Connected Successfully');
+})
+
+var schema = new Schema({
     input: Number,
-    value: Number,
+    actual: Number,
     type: String
 });
 
-var User = mongoose.model("User", nameSchema);
+var trialData = mongoose.model("trialData", schema);
 
 // Server Setup
 router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname + "/index1.html"));
-   });
-
- app.post("/addResults", (req, res) => {
-    var myData = new User(req.body);
-    myData.save()
-    .then(item => {
-        res.send("data saved"); 
-    })
-    .catch(err => {
-    res.status(400).send("unable to save to database");
-    });
    });
 
    router.get("/bc", (req, res) => {
@@ -63,6 +59,21 @@ router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/results.html'));
   });
   
+  app.post('/addResults', function (req, res) {  
+      var inp = req.body.inputs;
+      var per = req.body.percent;
+      var chart = req.body.bc;
+    const doc = new trialData(
+    {   input: inp,
+        actual: per,
+        type: chart,
+    });
+    console.log(doc);
+    console.log(doc.input);
+    console.log(doc.actual);
+    doc.save()
+    });
+
    
   app.use('/', router);
 
