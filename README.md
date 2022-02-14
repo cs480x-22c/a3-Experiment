@@ -8,11 +8,21 @@ every iteration using D3 and then stored the results using Google Forms and a li
 access the sheet data using JavaScript, and then I used R and GGPlot2 to create the graph.
 
 ## Front Page:
+![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/frontpage.PNG)
+
 ## Bar Chart:
+![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/barchart.PNG)
+
 ## Pie Chart:
+![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/piechart.PNG)
+
 ## Stacked Rectangles:
+![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/stackedrectangles.PNG)
+
 ## Post-Submission:
+![caption](https://raw.githubusercontent.com/jacobadamsky/a3-Experiment/main/img/postsubmit.PNG)
 
 ## Results
+![caption]()
 
 ## Technical and Design Achievements:
