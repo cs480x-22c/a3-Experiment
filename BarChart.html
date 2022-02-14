@@ -56,7 +56,7 @@
 			<input hidden type="text" value="barchart" name="bc" id="bc" class="bc" title="bc"></input>
 			<button type="submit" onclick="calcInput()">Submit</button>
 				
-		<form id="form1" method="get" action="/pie">
+		<form id="form1" method="get" action="/PieGraph">
 			<button type="button" onclick="window.location.href='/PieGraph.html'">next</button>
 		</form>
 		</div>
@@ -93,7 +93,7 @@ function generateGraph(){
         .attr('class', 'bar')
 		.attr("style", "outline: solid black;")
         .style('height', function (d) { return d * 400 + 'px';})
-        //.style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}return "white";});
+        .style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}return "white";});
 }
 
 function calcInput() {

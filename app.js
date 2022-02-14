@@ -1,5 +1,6 @@
 // Requiring module
 var express = require('express');
+var fs = require('fs');
 const path = require('path');
 require("dotenv").config(); 
 const router = express.Router();
@@ -18,39 +19,20 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-
-const password = process.env.DB_PASSWORD
-var conn = mongoose.connect('mongodb+srv://lsg:troop3398@cluster0.4gwej.mongodb.net/trial',
-(err)=>{
-if(err) throw err;
-
-console.log('DB Connected Successfully');
-})
-
-var schema = new Schema({
-    input: Number,
-    actual: Number,
-    type: String
-});
-
-var trialData = mongoose.model("trialData", schema);
-
 // Server Setup
 router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname + "/index.html"));
    });
 
-   router.get("/bc", (req, res) => {
+   router.get("/BarChart", (req, res) => {
     res.sendFile(path.join(__dirname, "/BarChart.html"));
    });
 
-   router.get("/pie", (req, res) => {
+   router.get("/PieGraph", (req, res) => {
     res.sendFile(path.join(__dirname, "/PieGraph.html"));
      });
 
-     router.get("/bb", (req, res) => {
+     router.get("/Bubble", (req, res) => {
         res.sendFile(path.join(__dirname, "/Bubble.html"));
          });
 
@@ -60,19 +42,17 @@ router.get("/", (req, res) => {
   });
   
   app.post('/addResults', function (req, res) {  
-      var inp = req.body.inputs;
-      var per = req.body.percent;
-      var chart = req.body.bc;
-    var doc = new trialData(
-    {   input: inp,
-        actual: per,
-        type: chart,
-    });
-    console.log(doc);
-    console.log(doc.input);
-    console.log(doc.actual);
-    doc.save()
-    });
+    var inp = req.body.inputs;
+    var per = req.body.percent;
+    var chart = req.body.bc;
+    var doc = [inp, per ,chart];
+    fs.appendFile('data.json', JSON.stringify(doc), (err) => {  
+      // Catch this!
+      if (err) throw err;
+  
+      console.log(doc)
+  });
+});
 
    
   app.use('/', router);

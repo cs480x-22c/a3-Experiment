@@ -49,7 +49,7 @@
 		<input hidden type="text" value="piegraph" name="bc" id="bc" class="bc" title="bc"></input>
 		<button type="submit" onclick="calcInput()">Submit</button>
 			
-	<form id="form1" method="get" action="/bb">
+	<form id="form1" method="get" action="/Bubble">
 		<button type="button" onclick="window.location.href='/Bubble.html'">next</button>
 	</form>
 	</div>
@@ -80,9 +80,11 @@ var data = [
 	{num: 5, val: r5}
 ];
 
+var p1 =data[Math.floor(Math.random() * 5)];
+var p2 =data[Math.floor(Math.random() * 5)];
+var point1 = p1.val;
+var point2 = p2.val;
 
-var point1 = data[Math.floor(Math.random() * 5)].val;
-var point2 = data[Math.floor(Math.random() * 5)].val;
 
 while (point1 == point2){
     point2 = data[Math.floor(Math.random() * 5)].val;
@@ -109,7 +111,7 @@ function generatePieGraph(){
     var arc = g.selectAll("arc")
         .data(pie(data))
 		.enter().append("g")
-        .attr("class", "arc");
+        .attr("class", "arc")
 
 	var path = d3.arc()
 	    .outerRadius(radius)
@@ -117,7 +119,7 @@ function generatePieGraph(){
 
     arc.append("path")
         .attr("d", path)
-		.style("fill", "white")
+		.style("background-color", function(d){if(d == p1 || d == p2){return "black"} return "white";})
         .style("stroke", "black")
 		.style("stroke-width", "2px");
 
@@ -125,6 +127,7 @@ function generatePieGraph(){
         .outerRadius(radius)
         .innerRadius(0)
 		.attr("translate", );
+
             
     arc.append("text")
         .attr("transform", function(d) { 
