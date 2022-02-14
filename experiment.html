@@ -29,7 +29,7 @@
     function handleNextButton(first = false) {
       if (!first) {
         let guess = inputObject.value;
-        if (isNaN(inputObject.value) || inputObject.value === '' || inputObject.value > 100) {
+        if (isNaN(inputObject.value) || inputObject.value === '' || inputObject.value > 100 || inputObject.value < 1) {
           msgObject.innerHTML = "please guess a number (1 - 100) before continuing"
           return
         }
