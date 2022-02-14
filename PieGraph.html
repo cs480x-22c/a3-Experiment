@@ -46,7 +46,7 @@
 			<div class="btn">
 			<input hidden type="text" value="piegraph" name="bc" id="bc" class="bc" title="bc"></input>
 			<button type="button" onclick="calcInput()">Submit</button>
-			<a href='/a3-Experiment/Bubble.html'>next</a>	
+			<a href='/Bubble.html'>next</a>	
 		</div>
 	</form>	
 </body>
@@ -96,6 +96,10 @@ function generatePieGraph(){
             height = svg.attr("height"),
             radius = 150;
 
+			var ordScale = d3.scaleOrdinal()
+                            .domain(data)
+                            .range(['white','grey','white','grey','white']);
+
 	var g = svg.append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -114,9 +118,10 @@ function generatePieGraph(){
 
     arc.append("path")
         .attr("d", path)
-		.style("background-color", function(d){if(d == p1 || d == p2){return "black"} return "white";})
-        .style("stroke", "black")
-		.style("stroke-width", "2px");
+		.attr("stroke", "black")
+		.attr("fill", function(d) { return ordScale(d.data.val); });
+	
+
 
 	var label = d3.arc()
         .outerRadius(radius)

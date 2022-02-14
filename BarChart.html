@@ -88,10 +88,11 @@ function generateGraph(){
         .enter()
         .append('div')
         .attr('class', 'bar')
-		.attr("style", "outline: solid black;")
+		.attr("style", "outline: solid black;")		
         .style('height', function (d) { return d * 400 + 'px';})
-        .style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}return "white";});
-}
+        .style('background-color', function(d){ if(d == point1 || d == point2){ return "grey"}return "white";});
+
+	}
 
 function calcInput() {
     var input = document.getElementById("userInput").value;
