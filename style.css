@@ -1,0 +1,52 @@
+h1 {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+#open, #graph, #closed{
+  height: 600px;
+  position: relative;
+}
+#open p {
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+#graph, #closed{
+  margin: 0;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+#open button {
+  margin: 0px 20px;
+  padding: 10px;
+  width: 20%;
+  position: absolute;
+  top: 80%;
+}
+#open button#disagree {
+  left: 20%;
+  transform: translate(0%, -75%);
+}
+#open button#agree {
+  left: 55%;
+  transform: translate(0%, -75%);
+}
+.hidden {
+  visibility : hidden;
+}
+svg {
+  height: 450px;
+  width: 400px;
+  border: 3px solid black;
+}
