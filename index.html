@@ -35,6 +35,7 @@
 	
 	
 	<script>
+
 		///////////////////
 		//slider
 		//////////////
@@ -106,10 +107,30 @@
 			startBtn.style.visibility = "hidden"
 			main()
 		}
+		
+		function accuracy(guess, actual){
+			return Math.log(Math.abs(guess-actual)+(1/8))/ Math.log(2)
+		}
 
+		var currentchart;
+		var actual;
 		function btn() {
 			guesses[guessIndex] = slider.value
 			console.log("Guess: %s", guesses[guessIndex])
+			const response = {
+				chart: currentchart,
+				value: accuracy(slider.value, actual)
+			}
+			console.log(response)
+			fetch('https://cs480x-22c-a3.herokuapp.com/chart', {
+  				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+  				body: JSON.stringify(response),
+			}).then(r => {
+				console.log('Data sent to server!', r)
+			})
 			guessIndex++;
 			if(guessIndex<=60){
 				main()
@@ -140,6 +161,7 @@
 			removeAll()
 			var data = [[10, 30, 60, 80, 90], [80, 70, 30, 20, 10]]
 			if(charts[i]=='stacked'){
+				currentchart ='sbar'
 				b1 = randSum(6,100,3);
 				b2 = randSum(6,100,3);
 				data= [b1[0], b1[1], b1[2], b2[0], b2[1], b2[2]]
@@ -148,15 +170,20 @@
 				
 			}else{
 				if(charts[i]=='bar'){
+					currentchart ='bar'
 					data = randNum(6,100,5)
 					console.log("bar data: { %d, %d, %d, %d, %d}", data[0], data[1], data[2], data[3], data[4])
 					barChart(data)
 				}else{//pie
+					currentchart ='pie'
 					data = randSum(6, 100, 5);
 					console.log("pie data: { %d, %d, %d, %d, %d}", data[0], data[1], data[2], data[3], data[4])
 					pie(data)
 				}
 			}
+
+			console.log('currentChart:', currentchart)
+
 			if(i>1){
 				i=0;
 			}else{
@@ -207,6 +234,13 @@
 				h1 += data[i]
 				h2 += data[i+3]
 			}
+			var v1 =data[r]
+			var v2 = data[r+3]
+			if(v1>v2){
+				v1 = data[r+3]
+				v2 =data[r]
+			}
+			actual = (v1/v2) *100;
 			var lineData = [[bar1-25, bottom -100, bar1+10, bottom -(h1*2)+(data[r]/2)], [bar2+65, bottom -100, bar2+30, bottom -(h2*2)+(data[r+3]/2)]];
 
 			d3.select("svg")
@@ -281,13 +315,19 @@
 			console.log(r[0])
 			console.log(r[1])
 			var smaller, larger
+			var v1, v2
 			if(data[r[0]]<data[r[1]]){
 				smaller= 'A'
 				larger ='B'
+				v1=data[r[0]]
+				v2=data[r[1]]
 			}else{
 				smaller= 'B'
 				larger ='A'
+				v2=data[r[0]]
+				v1=data[r[1]]
 			}
+			actual = (v1/v2)*100
 			var str = "<h2>What percentage is " + smaller + " of " + larger + "?<h2>"
 			document.getElementById("header").innerHTML = str
 			var textData = [['A',bars_x[r[0]]+15],['B',bars_x[r[1]]+15]]
@@ -339,8 +379,18 @@
 			var label = ['','', '' , '', '']
 			label[r[0]]= 'A'
 			label[r[1]]= 'B'
+
+			var v1, v2
+			if(data[r[0]]<data[r[1]]){
+				v1=data[r[0]]
+				v2=data[r[1]]
+			}else{
+				v2=data[r[0]]
+				v1=data[r[1]]
+			}
+			actual = (v1/v2)*100
 				
-				var i=-1
+			var i=-1
 			// Adding data to each arc
 			arcs.append("text")
             .attr("transform",(d)=>{ 
