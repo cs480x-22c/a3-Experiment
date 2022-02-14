@@ -74,7 +74,7 @@ class RandomPlots {
 
     createCircles(data) {
         this.initializeView()
-        let radius = Math.min(this.width, this.height) / 6 / 2  - 30
+        let radius = Math.min(this.width, this.height) / 6 / 2 - 16
 
         console.log(data)
 
