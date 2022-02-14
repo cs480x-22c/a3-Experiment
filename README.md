@@ -1,6 +1,6 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
-**Team Team**
+**Team Team**<br/>
 Jake Bissonette<br/>
 Sean Horton<br/>
 Victoria Mirecki<br/>
