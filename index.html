@@ -59,6 +59,15 @@
     <button id='disagree'>Disagree</button>
     <button id='agree'>Agree</button>
   </div>
+  <div id='graph' class='hidden'>
+    <h2>What percentage is the smaller mark of the bigger mark</h2>
+    <h3>For example: There are marked pieces of size 40 and 60, so the input would be around 66% (Type 66)</h3>
+    <svg id='canvas'></svg>
+    <div id='submittions'>
+      <input id='guess'></input>
+      <button id='submit'>Submit</button>
+    </div>
+  </div>
 </body>
 
 <script>
@@ -67,5 +76,6 @@
   d3.select('#agree')
     .on('click', function(){
       d3.select('#open').attr('class','hidden');
+      d3.select('#graph').attr('class','');
     });
 </script>
