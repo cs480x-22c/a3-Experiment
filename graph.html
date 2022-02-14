@@ -69,6 +69,8 @@
         let svg = d3.select("#container");
         svg.selectAll("*").remove();
 
+        document.getElementById("userin").value = "";
+
         createNextGraph();
       }
 
@@ -317,7 +319,9 @@
 
     <h3 align="center">
       In this experiment, you are asked to judge what is the percent of smaller
-      value to a larger value in several charts.
+      value to a larger value in several charts. For each chart shown, please enter a
+      number between 1 and 100 that represents the percentage of value that the smaller
+      dotted data point is of the larger. 
     </h3>
 
     <div id="container"></div> 
