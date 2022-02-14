@@ -35,3 +35,7 @@ run of the experiment. I also managed to use Google Sheets API which, while nice
 The one design achievement that I was happy with was my use of Google Forms. Instead of having two separate HTML objects (one for the form link and the other for the
 D3 visualization), I was able to combine them into one object. I was also happy with my pie chart design. This may be more of a technical achievemnt, but getting
 the pie chart to look right took me longer than it should have.
+
+## Credits
+Google Sheets API: https://developers.google.com/sheets/api/quickstart/js
+Google Forms Custom Frontend: https://dev.to/utkarshdhiman48/custom-frontend-for-google-form-456l
