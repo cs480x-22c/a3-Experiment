@@ -45,7 +45,7 @@
 	</div>
 	<div class="btn">
 		<input hidden type="text" value="bubbles" name="bc" id="bc" class="bc" title="bc"></input>
-		<button type="submit" onclick="calcInput()">Submit</button>
+		<button type="button" onclick="calcInput()">Submit</button>
 		<button type="button" onclick="window.location.href='../index.html'">finish</button>
 	</div>
 </form>	
@@ -126,6 +126,8 @@ var svg = d3.select("svg")
       .attr("stroke", "black")
 
 }
+
+var fs = require('fs');
 
 function calcInput() {
     var input = document.getElementById("userInput").value;

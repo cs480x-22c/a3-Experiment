@@ -45,7 +45,7 @@
 		</div>
 			<div class="btn">
 			<input hidden type="text" value="piegraph" name="bc" id="bc" class="bc" title="bc"></input>
-			<button type="submit" onclick="calcInput()">Submit</button>
+			<button type="button" onclick="calcInput()">Submit</button>
 			<button type="button" onclick="window.location.href='../Bubble.html'">next</button>	
 		</div>
 	</form>	
@@ -137,6 +137,8 @@ function generatePieGraph(){
         .attr("class", "title")
  
  }
+
+ var fs = require('fs');
 
  function calcInput() {
     var input = document.getElementById("userInput").value;

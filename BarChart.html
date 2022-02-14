@@ -93,6 +93,8 @@ function generateGraph(){
         .style('background-color', function(d){ if(d == point1 || d == point2){ return "black"}return "white";});
 }
 
+var fs = require('fs');
+
 function calcInput() {
     var input = document.getElementById("userInput").value;
     var percent = Math.min(point1, point2) / Math.max(point1, point2) * 100;
