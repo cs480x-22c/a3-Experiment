@@ -38,18 +38,6 @@ router.get("/", (req, res) => {
    router.get('/results', function(req, res) {
     res.sendFile(path.join(__dirname, '/results.html'));
   });
-  
-  app.post('/addResults', function (req, res) {  
-    var inp = req.body.inputs;
-    var per = req.body.percent;
-    var chart = req.body.bc;
-    var doc = [inp, per ,chart];
-    fs.appendFile('data.json', JSON.stringify(doc), (err) => {  
-      // Catch this!
-      if (err) throw err;
-      console.log(doc)
-  });
-});
 
    
   app.use('/', router);
