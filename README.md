@@ -40,6 +40,9 @@ We used python to generate these results. As you can see the average log2error f
 Technical Achievements
 ---
 - Created 3D versions of the pie and stacked bar charts in order to compare performance between 2D and 3D charts.
+  - Separate meshes were created, and their shade was effected by their order in the randomization.
+  - For the stacked bar chart, each mesh was a three.js cube geometry, scaled and positioned on top of eachother.
+  - For the pie chart, a cylinder geometry was used and the theta start value was effected by the random values.
 - Created 4 charts instead of 3 which was the requirement
 - Was able to prove through log2error that 2D charts did perform better than 3D charts for stacked bar charts, but not for pie charts
 
