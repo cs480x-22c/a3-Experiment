@@ -1,13 +1,359 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport"
+		content="width=device-width,
+				initial-scale=1.0"/>
 
-<style>
-</style>
+	<script src=
+		"https://d3js.org/d3.v7.min.js">
+	</script>
+</head>
 
 <body>
-  <h1> Experiment </h1>
+	<div style="width:300px; height:300px;">
+			<h1 style="color:black">
+				Cleveland-McGill experiment
+			</h1>
+                By Liam Rathke, Sean and Maria del Carmen Sacristan Benjet
+			<h2 id="header">
+				What percentage is the smaller of the larger?(A and B)
+			</h2>
+
+		<svg width="300" height="300">
+		</svg>
+		<button onclick="btnStart()" id="startBtn">Start</button>
+		<button onclick="btn()" id="nextBtn">Next</button>
+		<div class="rangeslider">
+			<input type="range" min="0" max="100" value="10"
+							class="slider" id="sliderRange">
+			<p><span id="label"></span></p>
+		  </div>
+		</div>
+	
+	
+	<script>
+		///////////////////
+		//slider
+		//////////////
+		var slider = document.getElementById("sliderRange");
+		var label = document.getElementById("label");
+		label.innerHTML = slider.value + '%';
+		label.style.visibility = "hidden"
+		slider.style.visibility = "hidden"
+		var nextBtn = document.getElementById("nextBtn")
+		var startBtn = document.getElementById("startBtn")
+		nextBtn.style.visibility = "hidden"
+		slider.oninput = function() {
+  			label.innerHTML = this.value + '%';
+		}
+
+		////////////
+		//random number generators
+		//////////////////
+		function randNum(min, max, num) { 
+			const arr = [];
+			for (var i=0; i<num; i++){
+				arr[i]= Math.random() * (max - min) + min;
+			}
+    		return arr;
+		}
+
+		function randSum(min, max, num){
+			const r = randNum(min, max, num)
+			var total =0
+			for(var i=0; i<num; i++){
+				total += r[i]
+			}
+			var arr= []
+			for(var i=0; i<num; i++){
+				arr[i]= 100 * r[i]/total
+				if(arr[i]<min){
+					arr= randSum(min, max, num)
+					i = num
+				}
+			}
+    		return arr;
+		}
+
+		// used to select a and b
+		function getrand(){
+			var n1 =Math.floor(Math.random() * 5);
+			var n2 =Math.floor(Math.random() * 5);
+			while(n1 == n2){
+				n2 =Math.floor(Math.random() * 5);
+			}
+			console.log(n1)
+			console.log(n2)
+			if(n2<n1){
+				return [n2, n1]
+			}
+			return [n1, n2]
+		}
+
+		////////////
+		//buttons and helper functions
+		//////////////////
+		var i=0
+		charts = ['pie', 'bar', 'stacked']
+		var dataSets =[]
+		const guesses = [] //60
+		var guessIndex =0;
+		function btnStart(){
+			nextBtn.style.visibility = "visible"
+			startBtn.style.visibility = "hidden"
+			main()
+		}
+
+		function btn() {
+			guesses[guessIndex] = slider.value
+			console.log("Guess: %s", guesses[guessIndex])
+			guessIndex++;
+			if(guessIndex<=60){
+				main()
+			}else{
+				removeAll()
+				document.getElementById("header").innerHTML = "<h2>Finished. Here are the results<h2>"
+				nextBtn.style.visibility = "hidden"
+				slider.style.visibility = "hidden"
+				label.style.visibility = "hidden"
+			}
+		}
+
+		function removeAll(){
+			d3.selectAll('g').remove();
+			d3.selectAll('rect').remove();
+			d3.selectAll('line').remove();
+			d3.selectAll('text').remove();
+		}
+
+		
+		//////////////////////
+		//Main
+		////////////////////
+		
+		function main(){
+			label.style.visibility = "visible"
+			slider.style.visibility = "visible"
+			removeAll()
+			var data = [[10, 30, 60, 80, 90], [80, 70, 30, 20, 10]]
+			if(charts[i]=='stacked'){
+				b1 = randSum(6,100,3);
+				b2 = randSum(6,100,3);
+				data= [b1[0], b1[1], b1[2], b2[0], b2[1], b2[2]]
+				console.log("stacked data: { %d, %d, %d, %d, %d, %d}", data[0], data[1], data[2], data[3], data[4], data[5])
+				stacked(data)
+				
+			}else{
+				if(charts[i]=='bar'){
+					data = randNum(6,100,5)
+					console.log("bar data: { %d, %d, %d, %d, %d}", data[0], data[1], data[2], data[3], data[4])
+					barChart(data)
+				}else{//pie
+					data = randSum(6, 100, 5);
+					console.log("pie data: { %d, %d, %d, %d, %d}", data[0], data[1], data[2], data[3], data[4])
+					pie(data)
+				}
+			}
+			if(i>1){
+				i=0;
+			}else{
+				i++;
+			}
+		}
+
+		var bottom = 204;
+		var side = 10;
+
+		///////////////////////////////////////
+        /////////stacked bar CHART
+        /////////////////////////////////////
+		function stacked(data){
+		var bar1 = side+50;
+		var bar2 = side+100;
+		var rectData = ///////x,data,color
+			[
+			[bar1, data[0], 0],
+			[bar1, data[1], data[0]*2],
+			[bar1, data[2],(data[0] + data[1])*2],
+			
+
+
+
+			 [bar2, data[3], 0],
+			 [bar2, data[4], data[3]*2],
+			 [bar2, data[5], (data[3] + data[4])*2]];
+		
+
+			d3.select("svg")
+			.selectAll("rect")
+			.data(rectData)
+			.enter().append("rect")
+			.attr('x', function(d) { return d[0]; })
+			.attr('y', function(d) { return bottom-(d[1]*2)-d[2]; })
+			.attr('width', 40)
+			.attr('height', function(d) { return d[1]*2; })
+			.attr('fill', "#FFFFFF")	
+			.attr('stroke-width', 2)
+			.attr('stroke', '#000000')
+
+
+			var r =Math.floor(Math.random() * 3);
+			var h1 =0
+			var h2 =0
+			for(var i=0; i<r+1;i++){
+				h1 += data[i]
+				h2 += data[i+3]
+			}
+			var lineData = [[bar1-25, bottom -100, bar1+10, bottom -(h1*2)+(data[r]/2)], [bar2+65, bottom -100, bar2+30, bottom -(h2*2)+(data[r+3]/2)]];
+
+			d3.select("svg")
+			.selectAll("line")
+			.data(lineData)
+			.enter().append("line")
+			.attr('x1', function(d) { return d[0]; })
+			.attr('y1', function(d) { return d[1]; })
+			.attr('x2', function(d) { return d[2]; })
+			.attr('y2', function(d) { return d[3]; })
+			.attr('stroke-width', 3)
+			.attr('stroke', '#000000')
+
+			
+			var textData = [['A',20],['B',bar2+70]]
+			d3.select("svg")
+			.selectAll("text")
+			.data(textData)
+			.enter().append("text")
+			.attr('x', function(d) { return d[1]; })
+			.attr('y', bottom -100)
+			.attr('fill', '#000000')
+			.style("font-size", 18)
+			.text(function(d) { return d[0]; });
+		}
+
+        ///////////////////////////////////////
+        /////////bar CHART
+        /////////////////////////////////////
+		
+		function barChart(data) {
+			
+			var lfside = 1000
+			var top =4
+							///	x,y ,x2, y2	
+			var lineData = [[side, bottom, lfside, bottom], [side, top, side, bottom]];
+
+			d3.select("svg")
+			.selectAll("line")
+			.data(lineData)
+			.enter().append("line")
+			.attr('x1', function(d) { return d[0]; })
+			.attr('y1', function(d) { return d[1]; })
+			.attr('x2', function(d) { return d[2]; })
+			.attr('y2', function(d) { return d[3]; })
+			.attr('stroke-width', 2)
+			.attr('stroke', '#000000')
+			
+
+				
+			var bars_x = [side+10,side+60, side+110, side+160, side+210]
+			var rectData = ///////x,data,color
+			[[bars_x[0], data[0], d3.schemeSet3[0]],
+			[bars_x[1], data[1],d3.schemeSet3[5]],
+			[bars_x[2], data[2],d3.schemeSet3[2]],
+			[bars_x[3], data[3],d3.schemeSet3[3]],
+			[bars_x[4], data[4],d3.schemeSet3[4]]];
+
+			d3.select("svg")
+			.selectAll("rect")
+			.data(rectData)
+			.enter().append("rect")
+			.attr('x', function(d) { return d[0]; })
+			.attr('y', function(d) { return bottom-(d[1]*2); })
+			.attr('width', 40)
+			.attr('height', function(d) { return d[1]*2; })
+			.attr('fill', '#FFFFFF')
+			.attr('stroke-width', 2)
+			.attr('stroke', '#000000')
+			
+			var r =getrand()
+			console.log(r[0])
+			console.log(r[1])
+			var smaller, larger
+			if(data[r[0]]<data[r[1]]){
+				smaller= 'A'
+				larger ='B'
+			}else{
+				smaller= 'B'
+				larger ='A'
+			}
+			var str = "<h2>What percentage is " + smaller + " of " + larger + "?<h2>"
+			document.getElementById("header").innerHTML = str
+			var textData = [['A',bars_x[r[0]]+15],['B',bars_x[r[1]]+15]]
+			d3.select("svg")
+			.selectAll("text")
+			.data(textData)
+			.enter().append("text")
+			.attr('x', function(d) { return d[1]; })
+			.attr('y', bottom + 20)
+			.attr('fill', '#000000')
+			.style("font-size", 18)
+			.text(function(d) { return d[0]; });
+			
+			return;
+		}
+		
+
+		///////////////////////////////////////
+        /////////PIE CHART
+        /////////////////////////////////////
+		function pie(data){
+			var svg = d3.select("svg");
+			
+			// Creating Pie generator
+			var pie = d3.pie();
+
+			// Creating arc
+			var arc = d3.arc()
+						.innerRadius(0)
+						.outerRadius(100);
+
+			let g = svg.append("g")
+					.attr("transform", "translate(150,120)"); //location on the page
+			
+			// Grouping different arcs
+			var arcs = g.selectAll("arc")
+						.data(pie(data))
+						.enter()
+						.append("g");
+
+			// Appending path
+			arcs.append("path")
+				.attr("fill", "#FFFFFF")
+				.attr('stroke', '#000000')
+				.attr('stroke-width', 2)
+				.attr("d", arc);
+
+			var r = getrand()
+			var label = ['','', '' , '', '']
+			label[r[0]]= 'A'
+			label[r[1]]= 'B'
+				
+				var i=-1
+			// Adding data to each arc
+			arcs.append("text")
+            .attr("transform",(d)=>{ 
+                    return "translate("+ 
+                    arc.centroid(d)+ ")"; 
+            })
+            .text(function(d){
+				i++;
+               return label[i]; 
+               });
+		}
+	</script>
 </body>
 
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+</html>
+
