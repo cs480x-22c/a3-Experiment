@@ -34,7 +34,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
 
 </head>
-<title>PieGraph</title>  
+<title>Bubble Plot</title>  
 <body onload="generateBubble()">
 	<svg class="graph" width="500" height="400"></svg>
 	<p class="container">Please input how much smaller you think the indicated circle is from the larger one</p><br>
@@ -134,12 +134,12 @@ function calcInput() {
     var percent = Math.min(point1, point2) / Math.max(point1, point2) * 100;
     console.log(percent); 
     
-	var results = [input, percent, "bubble"] 
+	var results = [input, percent, "bubble"] ;
 
-	fs.appendFile('../data.json', JSON.stringify(results), (err) => {  
+	//fs.appendFile('../data.json', JSON.stringify(results), (err) => {  
       // Catch this!
-      if (err) throw err;
-      console.log(results)
+     // if (err) throw err;
+      console.log(results);
   });
 }
 </script>
