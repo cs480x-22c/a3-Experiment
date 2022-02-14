@@ -99,7 +99,7 @@ function calcInput() {
     console.log(percent); 
     
 	var results = [input, percent, "barchart"] 
-
+	console.log(results);
 	fs.appendFile('data.json', JSON.stringify(results), (err) => {  
       // Catch this!
       if (err) throw err;
