@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
    });
 
    router.get("/BarChart", (req, res) => {
-    res.sendFile(path.join(__dirname, "/BarChart.html"));
+    res.sendFile( "/BarChart.html");
    });
 
    router.get("/PieGraph", (req, res) => {
