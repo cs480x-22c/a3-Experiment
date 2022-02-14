@@ -39,7 +39,7 @@ var trialData = mongoose.model("trialData", schema);
 
 // Server Setup
 router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname + "/index1.html"));
+    res.sendFile(path.join(__dirname + "/index.html"));
    });
 
    router.get("/bc", (req, res) => {
