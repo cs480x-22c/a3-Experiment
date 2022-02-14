@@ -70,6 +70,7 @@
         onclick="submitBtnPieChart('4')">Submit</button>
     </form>
   </div>
+  <div id="barchart_5"></div>
 
 
   <!--
@@ -92,6 +93,11 @@
   for (let i = 3; i < 5; i++) {
     let bind = '#piechart_' + i;
     makePieChart(bind, i)
+  }
+
+  for (let i = 5; i < 6; i++) {
+    let bind = '#barchart_' + i;
+    makeBarChart(bind, i);
   }
 
 
@@ -386,6 +392,73 @@
       pieChart(pieChartData)
     });
   }
+
+  function makeBarChart(bind, chartNum) {
+    var margin = { top: 30, right: 30, bottom: 70, left: 60 },
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+    d3.csv("./testData.csv", function (data) {
+      // append the svg object to the body of the page
+      var svg = d3.select(bind)
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+      //console.log("doodoo");
+      // console.log(width);
+
+      var color = d3.scaleOrdinal()
+        .domain(data)
+        .range(["#fbb4ae", "#b3cde3", "#ccebc5", "#decbe4", "#fed9a6", "#ffffcc", "#e5d8bd", "#fddaec", "#f2f2f2"]);
+
+      // X axis
+      var x = d3.scaleBand()
+        .range([0, width / 2])
+        .domain(data.map(function (d) { return d.xval; }))
+        .padding(0.2);
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
+
+      // Add Y axis
+      var y = d3.scaleLinear()
+        .domain([0, 30])
+        .range([height, 0]);
+      svg.append("g")
+        .call(d3.axisLeft(y));
+
+      // Bars
+      svg.selectAll("mybar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("x", function (d) { return x(d.xval); })
+        .attr("y", function (d) { return y(d.value); })
+        .attr("width", x.bandwidth())
+        .attr("height", function (d) { return height - y(d.value); })
+        .attr("fill", function (d) {
+          console.log(chartNum);
+          if (chartNum == 1) {
+            if (d.selected == "true") {
+
+              return ("red");
+            } else {
+              return (color(d.value));
+            };
+          } else {
+            return "#949494";
+          };
+        });
+    })
+  }
+
 
   function submitBtnStackedBar(num) {
     d3.csv("./testData.csv", function (data) {
