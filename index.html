@@ -37,11 +37,34 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+  howManyGraphs = 5;
+  ids = new Array(howMany);
+  
+  function getGraphIDs(howMany,max) {
+    counter = 0;
+    for (let i = 0; i < howMany; i++) ids[i] = -1;
+    while (counter < howMany){
+      ids[counter] = Math.floor(Math.random() * max);
+      for (let i = 0; i < ids.length; i++){
+        if (i != counter) {
+          if (ids[counter] == ids[i]) check = 0;
+        }
+      }
+      if(check == 1) counter++;
+      else check = 1;
+    }
+  }
+  
+  function drawG (data) {
+    getGraphIDs(howManyGraphs,1000);
+    console.log(ids);
+  }
   
   d3.select('#agree')
     .on('click', function(){
       d3.select('#open').attr('class','hidden');
       d3.select('#graph').attr('class','');
+      d3.csv("data.csv").then(data => drawG(data));
     });
   d3.select('#disagree')
     .on('click', function(){
@@ -53,4 +76,5 @@
       d3.select('#graph').attr('class','hidden');
       d3.select('#closed').attr('class','');
     });
+  
 </script>
