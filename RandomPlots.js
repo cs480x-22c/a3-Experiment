@@ -33,7 +33,7 @@ class RandomPlots {
                     .range([0, this.width])
                     .domain(data.map(function(d) { return d.Names }))
                     .padding(0.5)
-        svg.append('g')
+        d3.select('#content')
             .attr('transform', 'translate(0,' + this.height + ')')
             .call(d3.axisBottom(x))
             .selectAll('text')
@@ -42,7 +42,7 @@ class RandomPlots {
 
         // y axis
         var y = d3.scaleLinear().domain([0, this.height]).range()
-        svg.append('g').call(d3.axisLeft(y))
+        d3.select('#content').call(d3.axisLeft(y))
 
         // make da bars
         d3.select('#content')
