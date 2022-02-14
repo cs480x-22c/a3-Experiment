@@ -1,5 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <header>
+    <title>CS480x Experiment</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="RandomPlots.js"></script>
     <script src="backend.js"></script>
@@ -7,10 +9,11 @@
     </style>
   </header>
   <body>
-    <h1> Experiment </h1>
+    <h1> CS480x Experiment </h1>
     <label id="countID">Progress: 1/25</label><br>
     <label id="instructions">Instructions</label><br>
     <div id="plot"></div>
+    <label for = 'numInput'>Difference in Value:</label>
     <input type='number' id='numInput' min='0.00' max='360.00' name='number' />
     <button onclick="nextPlot()">Next</button>
     <script>
