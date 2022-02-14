@@ -71,6 +71,7 @@
     </form>
   </div>
   <div id="barchart_5"></div>
+  <div id="barchart_6"></div>
 
 
   <!--
@@ -95,7 +96,7 @@
     makePieChart(bind, i)
   }
 
-  for (let i = 5; i < 6; i++) {
+  for (let i = 5; i < 7; i++) {
     let bind = '#barchart_' + i;
     makeBarChart(bind, i);
   }
@@ -408,7 +409,7 @@
         .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-      //console.log("doodoo");
+      
       // console.log(width);
 
       var color = d3.scaleOrdinal()
@@ -444,15 +445,15 @@
         .attr("width", x.bandwidth())
         .attr("height", function (d) { return height - y(d.value); })
         .attr("fill", function (d) {
-          console.log(chartNum);
-          if (chartNum == 1) {
+          if (d.chart == 5) {
+            console.log('logging value');
+            console.log(d.value);
             if (d.selected == "true") {
-
               return ("red");
             } else {
               return (color(d.value));
             };
-          } else {
+          } else if(chartNum == 6) {
             return "#949494";
           };
         });
