@@ -15,4 +15,4 @@ access the sheet data using JavaScript, and then I used R and GGPlot2 to create 
 
 ## Results
 
-#Technical and Design Achievements:
+## Technical and Design Achievements:
