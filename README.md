@@ -1,4 +1,4 @@
-#Experiment
+# Experiment
 Link: https://jacobadamsky.github.io/a3-Experiment/
 
 This experiment was based off of the Cleveland and McGill experiment where the participants were asked to compare two areas and write what percent
@@ -7,12 +7,12 @@ expected to solely use their visual perception of the charts, meaning they weren
 every iteration using D3 and then stored the results using Google Forms and a linked Google Sheet. To graph the results, I used Google Sheets API to
 access the sheet data using JavaScript, and then I used R and GGPlot2 to create the graph.
 
-##Front Page:
-##Bar Chart:
-##Pie Chart:
-##Stacked Rectangles:
-##Post-Submission:
+## Front Page:
+## Bar Chart:
+## Pie Chart:
+## Stacked Rectangles:
+## Post-Submission:
 
-##Results
+## Results
 
-##Technical and Design Achievements:
+#Technical and Design Achievements:
