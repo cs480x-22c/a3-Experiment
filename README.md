@@ -1,10 +1,10 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 **Team Team**
-Jake Bissonette
-Sean Horton
-Victoria Mirecki
-Sam Mora
+Jake Bissonette<br/>
+Sean Horton<br/>
+Victoria Mirecki<br/>
+Sam Mora<br/>
 
 ## Experiment 
 Link: https://jbiss4.github.io/
