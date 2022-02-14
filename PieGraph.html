@@ -38,19 +38,22 @@
 <body onload="generatePieGraph()">
 	<svg class="graph" width="500" height="400"></svg>
 	<p class="container">Please input how much smaller you think the indicated slice is from the larger one</p><br>
-	<div class="container">
-		<input type="text" class="input" id="userInput" title="input"></input>
-		<p class="input">   %</p>
+	<form id="form" method="post" action="/addResults"> 
+	
+		<div class="container">
+			<input type="text" name="inputs" id="userInput" class="input" title="input"></input>
+			<p class="input">   %</p>
 	</div>
 	<div class="btn">
-		<form id="form" method="post" action="/addResults">  
-			<button type="submit" onclick="calcInput()">Submit</button>
-		</form>
-		<form id="form1" method="get" action="/bb">
-			<a href="/bb">Next</a>
-		</form>
+		<input hidden type="text" value="0" name="percent" id="percent" class="percent" title="percent"></input>
+		<input hidden type="text" value="piegraph" name="bc" id="bc" class="bc" title="bc"></input>
+		<button type="submit" onclick="calcInput()">Submit</button>
+			
+	<form id="form1" method="get" action="/bb">
+		<button type="button" onclick="window.location.href='/bb'">next</button>
+	</form>
 	</div>
-		
+</form>	
 </body>
 </html>
 
@@ -58,28 +61,38 @@
 
 console.log(d3);
 // Random Dataset
+var r1 = (Math.random());
+var r2 =  (Math.random());
+var r3 =  (Math.random());
+var r4 =  (Math.random());
+var r5 =  (Math.random());
+var sum = (r1+ r2+ r3+ r4+ r5); 
+r1 = r1 / sum * 100;
+r2 = r2 / sum * 100;
+r3 = r3 / sum * 100;
+r4 = r4 / sum * 100;
+r5 = r5 / sum * 100;
 var data = [
-	{num: 1, val: 23},
-	{num: 2, val: 16},
-	{num: 3, val: 20},
-	{num: 4, val: 31},
-	{num: 5, val: 10}
+	{num: 1, val: r1},
+	{num: 2, val: r2},
+	{num: 3, val: r3},
+	{num: 4, val: r4},
+	{num: 5, val: r5}
 ];
 
 
-// var point1 = data.Math.floor(Math.random(5) * 10);
-// var point2 = data.Math.floor((Math.random(5)) * 10);
+var point1 = data[Math.floor(Math.random() * 5)].val;
+var point2 = data[Math.floor(Math.random() * 5)].val;
 
-// while (point1 == point2){
-//     point2 = data[Math.floor((Math.random(5)) * 10)]
-// }
+while (point1 == point2){
+    point2 = data[Math.floor(Math.random() * 5)].val;
+}
 
 console.log(data);
-// console.log(point1);
-// console.log(point2);
+console.log(point1);
+console.log(point2);
 
 function generatePieGraph(){
-	console.log("making graph");
     // Display data
 	var svg = d3.select("svg"),
             width = svg.attr("width"),
@@ -126,4 +139,12 @@ function generatePieGraph(){
         .attr("class", "title")
  
  }
+
+ function calcInput() {
+    var input = document.getElementById("userInput").value;
+    var results = Math.min(point1, point2) / Math.max(point1, point2) * 100;
+    console.log(results); 
+    document.getElementById("percent").value=results;
+	return results;
+}
 </script>

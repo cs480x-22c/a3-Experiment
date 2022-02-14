@@ -63,7 +63,7 @@ router.get("/", (req, res) => {
       var inp = req.body.inputs;
       var per = req.body.percent;
       var chart = req.body.bc;
-    const doc = new trialData(
+    var doc = new trialData(
     {   input: inp,
         actual: per,
         type: chart,
