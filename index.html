@@ -19,6 +19,10 @@
     stroke-width: 2px;
     stroke: black;
   }
+
+  .rect {
+    stroke-width: 2px;
+  }
 </style>
 
 <body>
@@ -71,7 +75,27 @@
     </form>
   </div>
   <div id="barchart_5"></div>
+  <div>
+    <form id="barchart_form5" onsubmit="return false;">
+      <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
+        size.
+      </label>
+      <input type="text" id="barchart_submission5" name="barchart_submission" placeholder="Your guess..">
+      <button type="submit" value="Submit" class="submitBtn_barchart" id="submitBtn_barchart"
+        onclick="submitBtnBarChart('5')">Submit</button>
+    </form>
+  </div>
   <div id="barchart_6"></div>
+  <div>
+    <form id="barchart_form_6" onsubmit="return false;">
+      <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
+        size.
+      </label>
+      <input type="text" id="barchart_submission6" name="barchart_submission" placeholder="Your guess..">
+      <button type="submit" value="Submit" class="submitBtn_barchart" id="submitBtn_barchart"
+        onclick="submitBtnBarChart('6')">Submit</button>
+    </form>
+  </div>
 
 
   <!--
@@ -327,7 +351,6 @@
           })
         }
       }
-      console.log(pieChartData)
       function pieChart(data) {
 
         //compute radius for pie chart
@@ -400,63 +423,97 @@
       height = 400 - margin.top - margin.bottom;
 
     d3.csv("./testData.csv", function (data) {
-      // append the svg object to the body of the page
-      var svg = d3.select(bind)
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+      let barChartData = []
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].chart == chartNum) {
+          barChartData.push({
+            chart: data[i].chart,
+            xval: data[i].xval,
+            value: data[i].value,
+            selected: data[i].selected
+          })
+        }
+      }
 
-      
-      // console.log(width);
+      function barChart(data) {
+        let selectedColors = []
+        if (chartNum == 5) {
+          selectedColors = ["#fbb4ae", "#b3cde3", "#ccebc5", "#decbe4", "#fed9a6", "#ffffcc", "#e5d8bd", "#fddaec", "#f2f2f2"]
+        }
+        if (chartNum == 6) {
+          selectedColors = ['#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4']
+        }
+        console.log(barChartData)
+        // append the svg object to the body of the page
+        var svg = d3.select(bind)
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
 
-      var color = d3.scaleOrdinal()
-        .domain(data)
-        .range(["#fbb4ae", "#b3cde3", "#ccebc5", "#decbe4", "#fed9a6", "#ffffcc", "#e5d8bd", "#fddaec", "#f2f2f2"]);
 
-      // X axis
-      var x = d3.scaleBand()
-        .range([0, width / 2])
-        .domain(data.map(function (d) { return d.xval; }))
-        .padding(0.2);
-      svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
+        // console.log(width);
 
-      // Add Y axis
-      var y = d3.scaleLinear()
-        .domain([0, 30])
-        .range([height, 0]);
-      svg.append("g")
-        .call(d3.axisLeft(y));
+        var color = d3.scaleOrdinal()
+          .domain(data)
+          .range(["#fbb4ae", "#b3cde3", "#ccebc5", "#decbe4", "#fed9a6", "#ffffcc", "#e5d8bd", "#fddaec", "#f2f2f2"]);
 
-      // Bars
-      svg.selectAll("mybar")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("x", function (d) { return x(d.xval); })
-        .attr("y", function (d) { return y(d.value); })
-        .attr("width", x.bandwidth())
-        .attr("height", function (d) { return height - y(d.value); })
-        .attr("fill", function (d) {
-          if (d.chart == 5) {
-            console.log('logging value');
-            console.log(d.value);
-            if (d.selected == "true") {
-              return ("red");
+        // X axis
+        var x = d3.scaleBand()
+          .range([0, width / 2])
+          .domain(data.map(function (d) { return d.xval; }))
+          .padding(0.2);
+        svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+          .attr("transform", "translate(-10,0)rotate(-45)")
+          .style("text-anchor", "end");
+
+        // Add Y axis
+        var y = d3.scaleLinear()
+          .domain([0, 30])
+          .range([height, 0]);
+        svg.append("g")
+          .call(d3.axisLeft(y));
+
+        // Bars
+        svg.selectAll("mybar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("x", function (d) { return x(d.xval); })
+          .attr("y", function (d) { return y(d.value); })
+          .attr("width", x.bandwidth())
+          .attr("height", function (d) { return height - y(d.value); })
+          .attr("fill", function (d) {
+            if (d.selected == "true" && chartNum % 2 != 0) {
+              return "red"
             } else {
-              return (color(d.value));
-            };
-          } else if(chartNum == 6) {
-            return "#949494";
-          };
-        });
+              return selectedColors[d.xval - 1]
+            }
+          })
+
+          svg.selectAll('.text-label')
+          .data(data)
+          .enter().append('text')
+          .attr('class', 'text-label')
+          .attr('text-anchor', 'middle')
+          .attr('x', d => 1.2*x.bandwidth()*d.xval + d.xval )
+          .attr('y', height)
+          .style('fill', (d, i) => "black")
+          .style('font-size', "30px")
+          .text(d => {
+            if (d.selected == "true") {
+              return "*";
+            } else {
+              "";
+            }
+          })
+      }
+      barChart(barChartData);
     })
   }
 
@@ -472,7 +529,7 @@
           }
         }
       }
-      console.log(stackedbar_values)
+
       let trueValue = Math.max(...stackedbar_values) / Math.min(...stackedbar_values)
       let error = Math.abs(trueValue - observedValue) / trueValue
       alert(`The correct answer is ${trueValue}\n
@@ -485,7 +542,7 @@
         observed_value: observedValue,
         error_rate: Math.abs((trueValue - observedValue) / trueValue) * 100
       }
-      console.log(record)
+
       //csvWriter.csvWriter.writeRecords(record)
       document.getElementById('stackedbar_' + num).style.display = 'none'
       document.getElementById('stackedbar_form' + num).style.display = 'none'
@@ -503,7 +560,7 @@
           }
         }
       }
-      console.log(piechart_values)
+
       let trueValue = Math.max(...piechart_values) / Math.min(...piechart_values)
       let error = Math.abs(trueValue - observedValue) / trueValue
       alert(`The correct answer is ${trueValue}\n
@@ -513,6 +570,26 @@
     })
   }
 
+  function submitBtnBarChart(num) {
+    d3.csv("./testData.csv", function (data) {
+      let observedValue = document.getElementById('barchart_submission' + num).value
+      let barchart_values = []
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].chart == num) {
+          if (data[i].selected == "true") {
+            barchart_values.push(data[i].value)
+          }
+        }
+      }
+
+      let trueValue = Math.max(...barchart_values) / Math.min(...barchart_values)
+      let error = Math.abs(trueValue - observedValue) / trueValue
+      alert(`The correct answer is ${trueValue}\n
+           The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
+      document.getElementById('barchart_' + num).style.display = 'none'
+      document.getElementById('barchart_form' + num).style.display = 'none'
+    })
+  }
 
 
 </script>
