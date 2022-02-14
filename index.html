@@ -1,4 +1,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <style>
@@ -8,7 +11,7 @@
 
   .submitBtn_stackedBar {
     width: 60px;
-    height: 20px;
+    height: 25px;
     position: relative;
   }
 
@@ -19,13 +22,13 @@
 </style>
 
 <body>
-  <h1> Experiment </h1>
+  <h1 style="text-align: center;"> Data Visualization Experiment </h1>
   <!--   
     Stacked Bar Chart
   -->
   <div id="stackedbar_1"></div>
   <div>
-    <form id="stackedbar_form1" onsubmit="return false;">
+    <form id="stackedbar_form1" onsubmit="return false;" action="./process.php" method="post">
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
@@ -78,6 +81,7 @@
   -->
 
 </body>
+
 
 <script>
   for (let i = 1; i < 3; i++) {
@@ -150,10 +154,10 @@
 
       function stackedBar(bind, data, config) {
         let selectedColors = []
-        if(chartNum == 1) {
-          selectedColors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#1D412F', '#241D4D']
+        if (chartNum == 1) {
+          selectedColors = ["#fbb4ae", "#b3cde3", "#ccebc5", "#decbe4", "#fed9a6", "#ffffcc", "#e5d8bd", "#fddaec", "#f2f2f2"]
         }
-        if(chartNum == 2) {
+        if (chartNum == 2) {
           selectedColors = ['#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4', '#b4b4b4']
         }
         //['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#1D412F', '#241D4D']
@@ -198,6 +202,13 @@
           .attr('height', barHeight)
           .attr('width', d => xScale(d.value))
           .style('fill', (d, i) => colors[i])
+          .style('fill', (d, i) => {
+            if (d.chosen && chartNum % 2 != 0) {
+              return '#FF675E'
+            } else {
+              return colors[i]
+            }
+          })
           .style('cursor', 'pointer')
 
 
@@ -284,9 +295,9 @@
 
   function makePieChart(bind, chartNum) {
     // set the dimensions and margins of the graph
-    var width = 450
-    height = 450
-    margin = 40;
+    var width = 450,
+      height = 450,
+      margin = 40;
 
     // append the svg object to the body of the page
     var svg = d3.select(bind)
@@ -311,7 +322,7 @@
       }
       console.log(pieChartData)
       function pieChart(data) {
-        
+
         //compute radius for pie chart
         var radius = Math.min(width, height) / 2 - margin;
 
@@ -392,6 +403,16 @@
       let error = Math.abs(trueValue - observedValue) / trueValue
       alert(`The correct answer is ${trueValue}\n
            The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
+
+      let record = {
+        participant_num: 1,
+        chart_num: num,
+        correct_answer: trueValue,
+        observed_value: observedValue,
+        error_rate: Math.abs((trueValue - observedValue) / trueValue) * 100
+      }
+      console.log(record)
+      //csvWriter.csvWriter.writeRecords(record)
       document.getElementById('stackedbar_' + num).style.display = 'none'
       document.getElementById('stackedbar_form' + num).style.display = 'none'
     })
@@ -418,6 +439,6 @@
     })
   }
 
-  
+
 
 </script>
