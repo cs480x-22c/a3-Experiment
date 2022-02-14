@@ -44,8 +44,236 @@
         border: 3px solid #555;
       }
     </style>
+     <script>
+      var sampleTypes = [];
+      var sample = 0;
+
+      function shuffle(array) {
+          for(let j = array.length - 1; j > 0; j--) {
+              // pick a random index
+              let i = Math.floor(Math.random() * (j + 1));
+
+              // swap i and j
+              let temp = array[j];
+              array[j] = array[i];
+              array[i] = temp;
+          }
+      }
+
+      function startup() {
+          for(let j = 0; j < 20; j++) {
+              sampleTypes.push(1);
+              sampleTypes.push(2);
+              sampleTypes.push(3);
+          }
+
+          shuffle(sampleTypes);
+
+          createNextGraph();
+      }
+
+      function createNextGraph() {
+          let graphType = sampleTypes[sample];
+          
+          if(graphType === 1) {
+              // bar chart
+              let data = [];
+
+              for(let j = 0; j < 10; j++) {
+                  data.push(20 + Math.random() * 200);
+              }
+              
+              // indices for the two dotted data points
+              let index1 = Math.floor(10 * Math.random());
+              let index2 = Math.floor(10 * Math.random());
+              while(index2 === index1) index2 = Math.floor(10 * Math.random());
+
+              // this is the correct percentage
+              let ratio = 100.0 * Math.min(data[index1], data[index2]) / Math.max(data[index1], data[index2]);
+          
+              // start generating the graph
+              let margin = {top: 30, right: 30, bottom: 30, left: 30};
+              let width = 600 - margin.left - margin.right;
+              let height = 600 - margin.top - margin.bottom;
+
+              let svg = d3.select("#container")
+                  .append("svg")
+                      .attr("width", 600)
+                      .attr("height", 600)
+                  .append("g")
+                      .attr("transform",
+                          "translate(" + margin.left + "," + margin.top + ")");
+          
+              // x axis
+              let x = d3.scaleBand()
+                  .range([0, width])
+                  .domain(data)
+                  .padding(0.2);
+              svg.append("g")
+                  .attr("transform", "translate(0," + height + ")")
+                  .call(d3.axisBottom(x).tickFormat(""));
+
+              // y axis
+              let y = d3.scaleLinear()
+                  .domain([0, 220])
+                  .range([height, 0]);
+              svg.append("g")
+                  .call(d3.axisLeft(y).tickFormat(""));
+
+              svg.selectAll("mybar")
+                  .data(data)
+                  .enter()
+                  .append("rect")
+                      .attr("x", d => x(d))
+                      .attr("y", d => y(d))
+                      .attr("width", x.bandwidth())
+                      .attr("height", d => height - y(d))
+                      .attr("fill", "#69b3a2");
+
+              svg.selectAll("dot")
+                  .data(
+                      [{Index: index1, Value: data[index1]},
+                       {Index: index2, Value: data[index2]}]
+                  )
+                  .enter()
+                  .append("circle")
+                      .attr("r", 5)
+                      .attr("cx", d => (x(d.Value) + 21))
+                      .attr("cy", d => y(d.Value / 2))
+                      .attr("fill", "black");
+          } else if(graphType === 2) {
+              // pie chart
+              let data = [];
+
+              for(let j = 0; j < 10; j++) {
+                  data.push(20 + Math.random() * 200);
+              }
+              
+              // indices for the two dotted data points
+              let index1 = Math.floor(10 * Math.random());
+              let index2 = Math.floor(10 * Math.random());
+              while(index2 === index1) index2 = Math.floor(10 * Math.random());
+
+              // this is the correct percentage
+              let ratio = 100.0 * Math.min(data[index1], data[index2]) / Math.max(data[index1], data[index2]);
+          
+              // start generating the graph
+              let margin = {top: 30, right: 30, bottom: 30, left: 30};
+              let width = 600 - margin.left - margin.right;
+              let height = 600 - margin.top - margin.bottom;
+
+              let radius = Math.min(width, height) / 2 - margin.top;
+              
+              let svg = d3.select("#container")
+                  .append("svg")
+                      .attr("width", 600)
+                      .attr("height", 600)
+                  .append("g")
+                      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+          
+              let pie = d3.pie()
+                  .value(d => d).sort(null);
+              let prepData = pie(data);
+
+              let arcGen = d3.arc()
+                              .innerRadius(0)
+                              .outerRadius(radius);
+
+              svg.selectAll("mypie")
+                  .data(prepData)
+                  .enter()
+                  .append("path")
+                      .attr("d", arcGen)
+                      .attr("fill", "#69b3a2")
+                      .attr("stroke", "black")
+                      .style("stroke-width", "2px");
+
+              svg.selectAll("dot")
+                  .data(prepData)
+                  .enter()
+                  .append("circle")
+                      .attr("transform", d => {
+                          return "translate(" + arcGen.centroid(d) + ")";
+                      })
+                      .attr("r", 5)
+                      .attr("fill", "black")
+                      .style("opacity", (d, i) => {
+                          return (i === index1 || i === index2) ? 1 : 0;
+                      });
+          } else {
+              // circular bar plot
+              let data = [];
+
+              for(let j = 0; j < 10; j++) {
+                  data.push(20 + Math.random() * 200);
+              }
+              
+              // indices for the two dotted data points
+              let index1 = Math.floor(10 * Math.random());
+              let index2 = Math.floor(10 * Math.random());
+              while(index2 === index1) index2 = Math.floor(10 * Math.random());
+
+              // this is the correct percentage
+              let ratio = 100.0 * Math.min(data[index1], data[index2]) / Math.max(data[index1], data[index2]);
+          
+              // start generating the graph
+              let margin = {top: 30, right: 30, bottom: 30, left: 30};
+              let width = 600 - margin.left - margin.right;
+              let height = 600 - margin.top - margin.bottom;
+
+              let innerRadius = 50;
+              let outerRadius = Math.min(width, height) / 2 - margin.top;
+
+              let svg = d3.select("#container")
+                  .append("svg")
+                      .attr("width", 600)
+                      .attr("height", 600)
+                  .append("g")
+                      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+              let x = d3.scaleBand()
+                  .range([0, 2 * Math.PI])
+                  .domain(data);
+
+              let y = d3.scaleRadial()
+                  .range([innerRadius, outerRadius])
+                  .domain([0, 220]);
+
+              svg.append("g")
+                  .selectAll("path")
+                  .data(data)
+                  .enter()
+                  .append("path")
+                      .attr("fill", "#69b3a2")
+                      .attr("stroke", "black")
+                      .style("stroke-width", "2px")
+                      .attr("d", d3.arc()
+                          .innerRadius(innerRadius)
+                          .outerRadius(d => y(d))
+                          .startAngle(d => x(d))
+                          .endAngle(d => x(d) + x.bandwidth())
+                          .padAngle(0.2)
+                          .padRadius(innerRadius));
+
+              svg.selectAll("dot")
+                  .data(data)
+                  .enter()
+                  .append("circle")
+                      .attr("transform", d => {
+                          return "rotate(" + ((x(d) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (y(d / 2)) + ",0)";
+                      })
+                      .attr("r", 5)
+                      .attr("fill", "black")
+                      .style("opacity", (d, i) => {
+                          return (i === index1 || i === index2) ? 1 : 0;
+                      });
+          }
+
+          sample++;
+      }
+  </script>
   </head>
-  <body>
+  <body onload="startup();">
     <h1 align="center">Let's get started!</h1>
 
     <h3 align="center">
@@ -53,15 +281,15 @@
       value to a larger value in several charts.
     </h3>
 
-    <div id="chart"></div>
+    <div id="container"></div> 
     <script>
       console.log(d3);
     </script>
 
 <div align="center">
   <form>
-    <label for="userin">Type Your Guess Below:</label>
-    <input type="text" id="userin" name="userin" value="type a number" />
+    <label for="userin">Type Your Guess Below, then click enter to continue:</label>
+    <input type="text" id="userin" name="userin" />
       <button1
       type="button"
       action=""
@@ -70,6 +298,12 @@
       Submit 
     </button1>
   </form>
+  <script>
+    function myFunction() {
+      document.getElementById("userin").submit();
+      console.log(document.getElementById("userin"))
+    }
+    </script>
   </div>
   </body>
 </html>
