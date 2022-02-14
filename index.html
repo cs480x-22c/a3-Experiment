@@ -112,7 +112,7 @@
       let numS = 0
       function createS() {
         testType = 'S'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the saturation of the first and last colors in each sequence (0 to 100)'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the saturation of the first and last colors in each sequence (0=gray to 100=orange)'
         r1 = rand(0, 60)
         r2 = rand(r1+40, 100)
         var r3 = r1 + (r2-r1)/4
@@ -134,7 +134,7 @@
       let numL = 0
       function createL() {
         testType = 'L'
-        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the luminance/lightness of the first and last colors in each sequence (0 to 100)'
+        document.getElementById("instructions").innerHTML = 'Please input an estimate of the numerical difference between the luminance/lightness of the first and last colors in each sequence (0=black to 100=white)'
         r1 = rand(0, 60)
         r2 = rand(r1+40, 100)
         var r3 = r1 + (r2-r1)/4
