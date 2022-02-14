@@ -64,7 +64,9 @@
     .on('click', function(){
       d3.select('#open').attr('class','hidden');
       d3.select('#graph').attr('class','');
-      d3.csv("data.csv").then(data => drawG(data));
+      d3.csv("data.csv", function(data) {
+        drawG(data);
+      });
     });
   d3.select('#disagree')
     .on('click', function(){
