@@ -70,6 +70,8 @@
   
   function drawPie (percents, m1, m2) {
     console.log(percents);
+    tempIDs = new Array(percents.length);
+    for (let i = 0; i < tempIDs.length; i++) tempIDs[i] = i;
     radius = 200;
     g = d3.select('svg')
       .append('g')
@@ -90,12 +92,17 @@
       .attr("stroke", "black")
       .style("stroke-width", "1px");
     arcs.append('circle')
+      .data(tempIDs)
+      .enter()
       .attr('transform', function(c) {
         c.innerRadius = 0;
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r', 3)
+      .attr('r', function (d, counter) { 
+        if(counter == m1 || counter == m2) return 3;
+        else return 0;
+      })
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
