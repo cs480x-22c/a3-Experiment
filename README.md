@@ -2,18 +2,22 @@
 
 https://alexiscaira.github.io/a3-Experiment/
 
+## Charts Used
+
+Bar Charts
+Radial Charts
+Pie Charts
+
 ## Design Achievements
 
 - Use Raleway as a custom font on the page
 
 ## Tech Achievements
 
+- Linked the Google form fuctionality to our form to auto log data to CSV for us to make it easier to put into R/GGPlot
+
 - Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
 - Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0).
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.
-  - Grab friends or people in the class.
-  - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
 - Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
 - To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
 - Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
