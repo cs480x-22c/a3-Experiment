@@ -94,7 +94,6 @@ console.log(point2);
 function start() {
 	generateGraph();
 	calcInput();
-
 }
 
 function generateGraph(){
@@ -153,11 +152,11 @@ function generateGraph(){
 
 function calcInput() {
     var percent = Math.min(point1, point2) / Math.max(point1, point2) * 100;
-    document.getElementById("per").setAttribute("value", percent);
+    document.getElementById("per").setAttribute("value", str(percent));
      
 }
 var input = document.getElementById("userInput").value;
-var results = [input, percent, "barchart"]    
+var results = [input, percent, "barchart"] ;   
 console.log(results);
 
 </script>
