@@ -143,14 +143,15 @@ function generatePieGraph(){
         .text(function(d) { return d.data.num; });
 
  }
-var percent = 0;
+
 function calcInput() {
-    percent = 100 - (Math.min(point1, point2) / Math.max(point1, point2) * 100);
+    var percent = 100 - (Math.min(point1, point2) / Math.max(point1, point2) * 100);
     document.getElementById("per").setAttribute("value", percent);
-     
+    
+	var input = document.getElementById("userInput").value;
+	var results = [input, percent, "piechart"]
+	console.log(results);
+
 }
-var input = document.getElementById("userInput").value;
-var results = [input, percent, "piechart"] ;   
-console.log(results);
 
 </script>
