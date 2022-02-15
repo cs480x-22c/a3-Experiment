@@ -38,3 +38,7 @@ We used d3, html/javascript, google sheets and _ to complete this assignment.
 
 ## Design Achievements
 We made sure that there was a counter on the top of the webpage to let the participants know how far they had reached in the experiment. We also made sure that all of our chart types were of a similar size to make sure that the differences between chart types were not due to just having bigger / larger charts. We also edited the formatting, where participants originally had to scroll down to see the image and then scroll up to input the answer, the image and answer box were moved next to one another for easier use. Although with this format it was less accessible to see the counter at the top. Something we could have changed would have been to edit the text box so that it deletes the text inputted after each submission, since participants had to manually erase the data each time and this caused a couple people to accidentally input incorrectly without realizing. 
+
+## Resources Used
+- Pie Chart Example: https://www.tutorialsteacher.com/d3js/create-pie-chart-using-d3js 
+- Donut Chart Example: https://www.d3-graph-gallery.com/graph/donut_basic.html
