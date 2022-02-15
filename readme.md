@@ -1,3 +1,7 @@
+# A3 Experiment
+
+Liam Rathke, Sean Barry and Maria del Carmen Sacristan Benjet
+
 # Tests
 ![image1](https://github.com/liamrathke/a3-Experiment/blob/main/tests.PNG)
 
