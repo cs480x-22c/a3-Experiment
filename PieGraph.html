@@ -45,7 +45,7 @@
 		<input hidden type="text" name="entry.1119470707" id="per" class="per" title="per"></input>
 		<input hidden type="text" name="entry.560768253" value="piechart" id="chart" class="bc" title="bc"></input>
 		</div>
-			<div class="btn">
+		<div class="btn">
 			<button type="submit">Submit</button>
 			<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/PieGraph.html';}"></iframe>
 			<a href='/a3-Experiment/Bubble.html'>Next</a>	
@@ -132,8 +132,7 @@ function generatePieGraph(){
 
 	var label = d3.arc()
         .outerRadius(radius)
-        .innerRadius(0)
-		.attr("translate", );
+        .innerRadius(0);
 
             
     arc.append("text")
