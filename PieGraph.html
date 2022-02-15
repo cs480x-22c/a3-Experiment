@@ -141,13 +141,7 @@ function generateGraph(){
         return "translate(" + label.centroid(d) + ")"; 
     })
         .text(function(d) { return d.data.num; });
-		
-	svg.append("g")
-        .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")")
-        .append("text")
-        .text("Browser use statistics - Jan 2017")
-        .attr("class", "title")
- 
+
  }
 
 function calcInput() {
