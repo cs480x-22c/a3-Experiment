@@ -37,6 +37,8 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+  width = 400;
+  height = 450;
   howManyGraphs = 5;
   ids = new Array(howManyGraphs);
   
@@ -59,6 +61,24 @@
   function drawG (data) {
     getGraphIDs(howManyGraphs,1000);
     console.log(ids);
+    drawPie(data);
+  }
+  
+  function drawPie (data) {
+    radius = 200;
+    pie = d3.pie();
+    arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(radius);
+    arcs = d3.select("svg")
+      .selectAll('arc')
+      .data(pie(data[ids[0]].data))
+      .enter()
+      .append('g')
+      .attr('class','arc');
+    arcs.append('path')
+      .attr('fill','gray')
+      .attr('d', arc);
   }
   
   d3.select('#agree')
