@@ -4,11 +4,15 @@
 	import Question from '../components/Question.svelte';
 	let questions;
 	let currentPage;
-	let numQuestions = 0;
+	let numQuestions = 1;
 	onMount(async () => {
 		questions = (await (await fetch('/questions.json')).json()).filter(
 			(q) => q.data[q.comp1] < q.data[q.comp2]
 		);
+
+		let neighbors = questions.filter( q => q.graphtype == "n")
+		let distanced = questions.filter( q => q.graphtype == "d")
+		questions = distanced.filter((a,i) => i < 4).concat(neighbors.filter((a,i) => i < 4))
 
 		numQuestions = questions.length;
 	});
@@ -30,8 +34,6 @@
 			'6': 'entry.707594900',
 			'7': 'entry.1899165164',
 			'8': 'entry.1742913110',
-			'9': 'entry.2089839453',
-			'10': 'entry.2022321668'
 		};
 
 		let url = `https://docs.google.com/forms/d/e/${formID}/formResponse?usp=pp_url`;
@@ -46,18 +48,20 @@
 		const res = await fetch(url, {
 			mode: 'no-cors'
 		});
-		console.log(res);
+		
+		window.location.href = "./thanks";
+
 		return res;
 	};
 </script>
 
 <div id="questions">
 	{#if questions}
-		<Question bind:response={currentResponse} question={questions[currentPage]} hoverable={true} />
+		<Question bind:response={currentResponse} question={questions[currentPage-1]} hoverable={(currentPage % 2) == 0} />
 	{/if}
 </div>
 <span  id="pages">
-    <Pagination pages={numQuestions} bind:currentPage />
+    <Pagination  pages={numQuestions} bind:currentPage />
 </span>
 <span  id="submit">
     <Button filled on:click={submitForm}>Submit</Button>

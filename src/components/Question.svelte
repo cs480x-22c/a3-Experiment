@@ -3,10 +3,8 @@
 	export let question;
 	export let hoverable;
     export let response = 0;
-    let pctResponse = 0;
     let max;
     $: max = question.data[question.comp2]
-    $: pctResponse = response/max
 </script>
 
 <div class="question">
@@ -18,16 +16,17 @@
 			Compare the heights of the red and blue bars. 
             <br/><br/>
             In the field below, enter your guess for the blue bar's height,
-            given that the red bar is valued at {question.data[question.comp2]}. 
+            as a percentage of the red bar's height.
             <br/><br/>
             {hoverable ? "You can hover over a bar to see a line spanning the graph." : ""}
 		</p>
 	</span>
 	<span class="Answer">
         <h4>Your guess</h4>
-		<input type="number" bind:value={response} min=0 max={max}  />
-        <input type="range" bind:value={response} min=0 max={max} />
-        <span>{Math.round(pctResponse*100)/1}% of the red bar</span>
+        <span>
+            <input type="number" bind:value={response} min=0 max=100  />
+            % of the red bar</span><br/>
+            <input type="range" bind:value={response} min=0 max=100 />
     </span>
 </div>
 

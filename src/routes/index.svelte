@@ -1,10 +1,21 @@
 <script>
-    import Graph from "../components/Graph.svelte"
+	import { Button } from 'attractions';
 </script>
 
+<h1>Welcome to our Survey</h1>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<p>
+	You will be participating in an experiment testing the precision and accuracy of bar chart
+	measurements, with and without assistance.
+    <br/><br/>
+    This will likely take less than 3 minutes to complete.
+	<br /><br />
+	<a href="./survey">Click to start.</a>
+</p>
 
-
-<Graph />
+<style>
+	* {
+		font-family: 'Roboto';
+		text-align: center;
+	}
+</style>
