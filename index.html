@@ -22,12 +22,12 @@
   </div>
   <div id='graph' class='hidden'>
     <h2>What percentage is the smaller mark of the bigger mark?</h2>
-    <h3>For example: There are marked pieces of size 40 and 60, so the input would be around 66% (Type 66)</h3>
+    <h3>For example: If the smaller marked segment is half the size of the larger one, type 50 (representing 50%). Also, if the mark is not in the center of a segment, input 0.</h3>
     <svg id='canvas'></svg>
     <h2>___</h2>
     <div id='submittions'>
       <input id='guess'></input>
-      <button id='submit'>Submit</button>
+      <input type='submit' id='submit'>Submit</input>
     </div>
   </div>
   <div id='closed' class='hidden'>
@@ -42,6 +42,7 @@
   howManyGraphs = 5;
   graphNum = 0;
   ids = new Array(howManyGraphs);
+  results = new Array(howManyGraphs);
   
   function getGraphIDs(howMany,max) {
     check = 1;
@@ -122,16 +123,24 @@
       d3.select('#closed').attr('class','');
     });
   d3.select('#submit')
-    .on('click', function(){
-      graphNum++;
-      if(graphNum < howManyGraphs){
-        d3.csv("data.csv", function(data) {
-          drawG(data);
-        });
-      }
+    .on('submit', event => {
+      event.preventDefault();
+      
+      guess = d3.select('#guess').value;
+      if (guess == "") console.log("Please enter a number");
       else {
-        d3.select('#graph').attr('class','hidden');
-        d3.select('#closed').attr('class','');
+        results[graphNum] = guess;
+        graphNum++;
+        if(graphNum < howManyGraphs){
+          d3.csv("data.csv", function(data) {
+            drawG(data);
+          });
+        }
+        else {
+          console.log(results);
+          d3.select('#graph').attr('class','hidden');
+          d3.select('#closed').attr('class','');
+        }
       }
     });
   
