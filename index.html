@@ -25,10 +25,10 @@
     <h3>For example: If the smaller marked segment is half the size of the larger one, type 50 (representing 50%). Also, if the mark is not in the center of a segment, input 0.</h3>
     <svg id='canvas'></svg>
     <h2>___</h2>
-    <div id='submittions'>
-      <input id='guess'></input>
-      <input type='submit' id='submit'>Submit</input>
-    </div>
+    <form id='submittions'>
+      <input id='guess' type='text' required maxlength='2'></input>
+      <input type='button' id='submit'>Submit</input>
+    </form>
   </div>
   <div id='closed' class='hidden'>
     <h2>Thank you for participating!</h2>
@@ -71,8 +71,6 @@
   
   function drawPie (percents, m1, m2) {
     marked = percents.filter(percent => (percents.indexOf(percent) == m1) || (percents.indexOf(percent) == m2));
-    console.log(marked);
-    console.log(percents);
     radius = 200;
     g = d3.select('svg')
       .append('g')
@@ -123,9 +121,7 @@
       d3.select('#closed').attr('class','');
     });
   d3.select('#submit')
-    .on('submit', event => {
-      event.preventDefault();
-      
+    .on('click', function() {
       guess = d3.select('#guess').value;
       if (guess == "") console.log("Please enter a number");
       else {
