@@ -48,11 +48,12 @@
 	<form id="form" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSem31Rwenl8ys0SmFXxWK8wpimxpvQew6HCI0Dc5MEkXb3uMg/formResponse"> 
 		<div class="container">
 		<input type="text" name="entry.1400593830" id="userInput" class="input" title="input"></input>
-			<p class="input">   %</p>
+			<p class="input">   %</p>		
+		<input hidden type="text" window.onload="calcInput()" name="entry.1119470707" value="0" id="per" class="per" title="per"></input>
+		<input hidden type="text" name="entry.1119470707" value="barchart" id="chart" class="bc" title="bc">barchart</input>
 		</div>
 
 		<div class="btn">
-			<label hidden type="text" onload="calcInput()" name="entry.1119470707" value="barchart" id="chart" class="bc" title="bc"></label>
 			<button type="submit" >Submit</button>
 			<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/BarChart.html';}"></iframe>
 			<a href="/a3-Experiment/PieGraph.html">Next</a>	
@@ -104,8 +105,7 @@ function calcInput() {
 // 	fs.appendFile('data.json', JSON.stringify(results), (err) => {  
 //       // Catch this!
 //       if (err) throw err;
-      console.log(results)
-  });
+     
 }
 
 
