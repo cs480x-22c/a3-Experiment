@@ -1,0 +1,84 @@
+---
+title: "Error Analysis"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(gridExtra)
+library(boot)
+
+
+
+# Colorblind-friendly palette, found at 
+# http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette
+
+cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+df <- read.csv('a3 csv values.csv')
+
+labelConversion <- setNames(c("Bar", "Pie", "L", "H", "S"),
+                            c("Bar Chart", "Pie Chart", "Luminance", "Hue", "Saturation"))
+
+summaryBarAndPiePlot <- ggplot(df, aes(x = reorder(testType,error), error, fill=testType)) +
+  stat_summary(fun = mean, geom = "bar") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", fun.args = list(mult = 1)) +
+  ggtitle("Mean Error for all Visualization Types") +
+  xlab("Visualization Type") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none") +
+  scale_fill_manual(values=cbbPalette) +
+  scale_x_discrete(breaks = c("Bar", "Pie", "L", "H", "S"),
+                   labels = c("Bar Chart", "Pie Chart", "Luminance", "Hue", "Saturation"))
+
+print(htmltools::tagList(ggplotly(summaryBarAndPiePlot, tooltip = c("y"))))
+
+summaryBoxPlot <- ggplot(df, aes(x=reorder(testType,error), y=error, fill=testType)) +
+                  geom_boxplot() +
+                  ggtitle("Box Plot of Error for all Visualization Types") +
+                  xlab("Visualization Type") +
+                  theme(plot.title = element_text(hjust = 0.5),
+                        legend.position = "none") +
+                  scale_fill_manual(values=cbbPalette) +
+                  scale_x_discrete(breaks = c("Bar", "Pie", "L", "H", "S"),
+                                   labels = c("Bar Chart", "Pie Chart", "Luminance", "Hue",    "Saturation"))
+
+print(htmltools::tagList(ggplotly(summaryBoxPlot)))
+
+summaryDensityPlot <- ggplot(df, aes(x=error, color=testType)) + 
+  geom_density() +
+  ggtitle("Distribution of Error for all Visualization Types") +
+  scale_color_manual(values= c("#E69F00", "#F0E442", "#009E73", "#0072B2", "#56B4E9"),
+                     labels = c("Bar Chart", "Pie Chart", "Luminance", "Hue", "Saturation")) +
+  guides(color=guide_legend(title="Visualization Type")) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+summaryDensityPlot
+
+for (uniqueID in unique(df$userID)) {
+
+  userDF <- subset(df, subset = userID == uniqueID)
+  
+  if (nrow(userDF) >= 25) {
+  
+    userSummaryPlot <- ggplot(userDF, aes(x=reorder(testType,error), y=error, fill=testType)) +
+    stat_summary(fun = mean, geom = "bar") +
+    stat_summary(fun.data = mean_cl_normal, geom = "errorbar", fun.args = list(mult = 1)) +
+    ggtitle(paste("Error Summary for User", uniqueID, sep = " ")) +
+    xlab("Chart Type") +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none") +
+    scale_color_manual(values=cbbPalette) +
+    scale_x_discrete(breaks = c("Bar", "Pie", "L", "H", "S"),
+                                   labels = c("Bar Chart", "Pie Chart", "Luminance", "Hue",    "Saturation"))
+  
+    print(htmltools::tagList(ggplotly(userSummaryPlot, tooltip=c("y"))))
+    
+  }
+}
+
+```
+
