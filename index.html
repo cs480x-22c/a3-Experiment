@@ -73,6 +73,7 @@
     arc = d3.arc()
       .innerRadius(0)
       .outerRadius(radius);
+    console.log(data[ids[0]].data);
     arcs = g.selectAll('arc')
       .data(pie(data[ids[0]].data))
       .enter()
