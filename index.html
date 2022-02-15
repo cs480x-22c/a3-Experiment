@@ -29,7 +29,7 @@
       <input id='guess' type='text' required maxlength='2'></input>
       <input type='button' id='submit' value='Submit'></input>
     </form>
-    <h3 id='warning'>Please enter a number<h3>
+    <h3 class='hidden'>Please enter a number<h3>
   </div>
   <div id='closed' class='hidden'>
     <h2>Thank you for participating!</h2>
@@ -44,7 +44,6 @@
   graphNum = 0;
   ids = new Array(howManyGraphs);
   results = new Array(howManyGraphs);
-  d3.select('#warning').attr('visibility', 'hidden');
   
   function getGraphIDs(howMany,max) {
     check = 1;
@@ -122,9 +121,9 @@
     .on('click', function() {
       var g = document.getElementById('guess').value;
       results[graphNum] = g;
-      if(results[graphNum] == '') d3.select('#warning').attr('visibility', '');
+      if(results[graphNum] == '') d3.select('#warning').attr('class', '');
       else {
-        d3.select('#warning').attr('visibility', 'hidden');
+        d3.select('#warning').attr('class', 'hidden');
         document.getElementById('guess').value = "";
         graphNum++;
         if(graphNum < howManyGraphs){
