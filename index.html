@@ -95,7 +95,10 @@
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r',3)
+      .attr('r', function(id) {
+        if(id == m1 || id == m2) return 3;
+        else return 0;
+      })
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
