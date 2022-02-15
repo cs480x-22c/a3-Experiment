@@ -123,15 +123,18 @@
       results[graphNum] = g;
       if(results[graphNum] == '') d3.select('#warning').attr('class', '');
       else {
+        console.log(results[graphNum]);
         d3.select('#warning').attr('class', 'hidden');
         document.getElementById('guess').value = "";
         graphNum++;
         if(graphNum < howManyGraphs){
+          console.log("Drawing...");
           d3.csv("data.csv", function(data) {
             drawG(data);
           });
         }
         else {
+          console.log("Printing Results");
           console.log(results);
           d3.select('#graph').attr('class','hidden');
           d3.select('#closed').attr('class','');
