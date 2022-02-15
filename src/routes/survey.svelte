@@ -11,8 +11,6 @@
 	});
 
 	let responses = {};
-	let currentResponse;
-	$: responses[currentPage] = currentResponse;
 
 	let submitForm = async () => {
 		//get this using prefill link
@@ -50,7 +48,7 @@
 
 <div id="questions">
 	{#if questions}
-		<Question bind:response={currentResponse} question={questions[currentPage-1]} hoverable={(currentPage % 2) == 0} />
+		<Question bind:response={responses[currentPage]} question={questions[currentPage-1]} hoverable={(currentPage % 2) == 0} />
 	{/if}
 </div>
 <span  id="pages">

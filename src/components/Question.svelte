@@ -2,9 +2,10 @@
     import Graph from './Graph.svelte';
 	export let question;
 	export let hoverable;
-    export let response = 0;
+    export let response;
     let max;
     $: max = question.data[question.comp2]
+    $: response = response ? response : 0;
 </script>
 
 <div class="question">
