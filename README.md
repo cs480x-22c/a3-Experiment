@@ -29,7 +29,8 @@ The image above depicts an example of one of our pie charts that were generated.
 The image above depicts an example of one of our donut charts that were generated. These donut charts had 5 slices, which were randomly generated to have a value between 0 and 100 each. Then two of the slices were randomly selected to be compared. Because we allowed the value to go to 0, there were occasional instances where there would only be 4 slices, and sometimes the circle would end up between two slices to represent that missing slice (and 0% of the larger one). The donut charts very closely resemble the previous pie charts, but without the central area, which could potentially cause it to be more challenging to interpret. 
 
 # Error Graph:
-
+![dot error](https://github.com/jbiss4/jbiss4.github.io/blob/main/img/dot-error.PNG?raw=true)
+![error bar](https://github.com/jbiss4/jbiss4.github.io/blob/main/img/error-bar.PNG?raw=true)
 ## Hypothesis
 Our hypothesis involved trials of three graph types to replicate Cleveland and McGIll's experiment of graphical perception, being a bar graph, a pie graph, and a donut graph. For our experiment, we hypothesized that the bar graph would be the easiest to percieve size differences in graph elements. While we wanted to compare the bar to both the pie and donut graphs, we wanted to compare the pie graph against the donut graph as they are very similar. We hypothesized that the pie graph would be easier to perceive size differences than the donut graph, since the donut graph has empty space in the middle, meaning it could be harder to determine the true size of the slice and its respective value.
 
