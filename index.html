@@ -97,8 +97,8 @@
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r', function(d) {
-        if(percents.indexOf(d) == m1 || percents.indexOf(d) == m2) return 3;
+      .attr('r', function(d, i) {
+        if(percents.indexOf(percents[i]) == m1 || percents.indexOf(percents[i]) == m2) return 3;
         else return 0;
       })
       .attr('stroke','black')
