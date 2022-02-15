@@ -69,9 +69,9 @@
   }
   
   function drawPie (percents, m1, m2) {
+    marked = percents.filter(percent => (percents.indexOf(percent) == m1) || (percents.indexOf(percent) == m2));
+    console.log(marked);
     console.log(percents);
-    tempIDs = new Array(percents.length);
-    for (let i = 0; i < tempIDs.length; i++) tempIDs[i] = i;
     radius = 200;
     g = d3.select('svg')
       .append('g')
@@ -91,18 +91,15 @@
       .attr('fill', 'white')
       .attr("stroke", "black")
       .style("stroke-width", "1px");
-    arcs.append('circle')
-      .data(tempIDs)
-      .enter()
+    
+    arcs
+      .append('circle')
       .attr('transform', function(c) {
         c.innerRadius = 0;
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r', function (d, counter) { 
-        if(counter == m1 || counter == m2) return 3;
-        else return 0;
-      })
+      .attr('r', 3)
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
