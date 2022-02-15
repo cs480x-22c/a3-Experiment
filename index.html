@@ -1,13 +1,96 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Experiment 3</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript">
+      function showMessage() {
+          alert("please click yes we need your data");
+      }
+  </script>
 
-
-<style>
-</style>
-
-<body>
-  <h1> Experiment </h1>
-</body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
+<script type="text/javascript">
+  document.getElementById("button1").onclick = function () {
+      location.href = "/graph.html";
+  };
 </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html *
+  {
+     font-family: 'Raleway', sans-serif !important ;
+     color: #2A2B2A;
+     background-color: #FFFAFA ;
+  } 
+    button1
+  {
+  background-color: #4CAF50; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+button2 {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+</style>
+    </style>
+  </head>
+
+  <br />
+  <br />
+
+    <h1 align="center">Welcome to our experiement!</h1>
+
+    <h3 align="center">
+      In this experiment, you are asked to judge what is the percent of smaller value to a larger value in several charts. We won't record any other information from you except your answers. Click to "agree" button to begin. Thank you!
+    </h3>
+    <br />
+    <br />
+
+        <h2 align="center">
+          Do you agree to these terms?
+        </h2>
+        
+  
+        <div align= "center">
+          <button1
+          type="button"
+          action=""
+          id="confirm"
+          onclick= parent.open("graph.html")>
+          Yes, continue. 
+        </button1>
+
+        <br />
+        <br />
+
+        <button2
+          type="button"
+          action=""
+          id="confirm"
+          onclick="showMessage()"
+        >
+          No, I don't. 
+        </button2>
+        </div>
+  </body>
+</html>
