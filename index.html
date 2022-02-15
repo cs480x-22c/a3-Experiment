@@ -64,8 +64,8 @@
     drawPie(data);
   }
   
-  function drawPie (data) {
-    percents = data[ids[0]].data;
+  function drawPie (dd) {
+    percents = dd[ids[0]].data;
     percentages = new Array(percents.length);
     for (let i = 0; i < percents.length; i++) percentages[i] = Math.floor(percents[i]); 
     radius = 200;
