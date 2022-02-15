@@ -5,8 +5,13 @@ https://alexiscaira.github.io/a3-Experiment/
 ## Charts Used
 
 Bar Charts
+![Alt text](https://github.com/alexiscaira/a3-Experiment/blob/main/img/bar%20graph.png?raw=true)
+
 Radial Charts
+![Alt text](https://github.com/alexiscaira/a3-Experiment/blob/main/img/radial%20graph%20exam.png?raw=true)
+
 Pie Charts
+![Alt text](https://github.com/alexiscaira/a3-Experiment/blob/main/img/pie%20example.png?raw=true)
 
 ## Design Achievements
 
@@ -14,14 +19,8 @@ Pie Charts
 
 ## Tech Achievements
 
-- Linked the Google form fuctionality to our form to auto log data to CSV for us to make it easier to put into R/GGPlot
-
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
+Pie Charts
+![Alt text](https://github.com/alexiscaira/a3-Experiment/blob/main/img/pie%20example.png?raw=true)
 
 ## General Requirements
 
