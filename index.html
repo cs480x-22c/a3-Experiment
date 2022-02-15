@@ -65,17 +65,19 @@
   }
   
   function drawPie (data) {
+    percent = data[ids[0]].data;
     radius = 200;
     g = d3.select('svg')
       .append('g')
       .attr('transform','translate(200,225)');
-    pie = d3.pie();
+    pie = d3.layout.pie()
+      .value(function(d){return d.percent});
     arc = d3.arc()
       .innerRadius(0)
       .outerRadius(radius);
-    console.log(data[ids[0]].data);
+    console.log(percent);
     arcs = g.selectAll('arc')
-      .data(pie(data[ids[0]].data))
+      .data(pie(percent))
       .enter()
       .append('g')
       .attr('class','arc');
