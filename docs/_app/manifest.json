@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-b0ddfd5c.js",
+    "file": "start-1bd2bd7c.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -41,11 +41,11 @@
       "_vendor-a3c18323.js"
     ],
     "css": [
-      "assets/pages/index.svelte-d0c9b152.css"
+      "assets/pages/thanks.svelte-14eacdc5.css"
     ]
   },
   "src/routes/survey.svelte": {
-    "file": "pages/survey.svelte-9d9f20b3.js",
+    "file": "pages/survey.svelte-8769e148.js",
     "src": "src/routes/survey.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -65,7 +65,7 @@
       "_vendor-a3c18323.js"
     ],
     "css": [
-      "assets/pages/index.svelte-d0c9b152.css"
+      "assets/pages/thanks.svelte-14eacdc5.css"
     ]
   },
   "_vendor-a3c18323.js": {

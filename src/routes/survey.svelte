@@ -57,7 +57,7 @@
     <Pagination  pages={numQuestions} bind:currentPage />
 </span>
 <span  id="submit">
-    <Button filled on:click={submitForm}>Submit</Button>
+    <Button filled disabled={currentPage != numQuestions} on:click={submitForm}>Submit</Button>
 </span>
 
 
