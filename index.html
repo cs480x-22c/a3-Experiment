@@ -91,19 +91,19 @@
       .attr('fill', 'white')
       .attr("stroke", "black")
       .style("stroke-width", "1px");
+   
     
-    
-    
-    d3.select('svg').select('pie')
-      .data(marked)
-      .enter()
+    arcs
       .append('circle')
       .attr('transform', function(c) {
         c.innerRadius = 0;
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r',3)
+      .attr('r', function (d) {
+        if(d.index == m1 || d.index == m2) return 3;
+        else return 0;
+      })
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
