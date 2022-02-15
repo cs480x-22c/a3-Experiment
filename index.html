@@ -77,7 +77,7 @@
     arc = d3.arc()
       .innerRadius(0)
       .outerRadius(radius);
-    console.log(percent);
+    console.log(percentages);
     arcs = g.selectAll('arc')
       .data(pie(percentages))
       .enter()
