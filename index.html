@@ -85,7 +85,9 @@
       .attr('class','arc');
     arcs.append('path')
       .attr('fill','gray')
-      .attr('d', arc);
+      .attr('d', arc)
+      .attr("stroke", "black")
+      .style("stroke-width", "2px");
   }
   
   d3.select('#agree')
