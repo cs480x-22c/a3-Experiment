@@ -61,7 +61,10 @@
   function drawG (data) {
     getGraphIDs(howManyGraphs,1000);
     console.log(ids);
-    drawPie(data);
+    stringData = data[ids[0]].data;
+    cleanData = stringData.split(",");
+    cleanData = cleanData.map(datapoint => Number(datapoint));
+    drawPie(cleanData);
   }
   
   function drawPie (dd) {
