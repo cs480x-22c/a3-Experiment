@@ -38,6 +38,7 @@ Our hypothesis involved trials of three graph types to replicate Cleveland and M
 
 ## Results
 Our experiment and error conduction showed us that bar graph was the best graph when it comes to size perception on graphs. Between the pie and donut graphs, the pie graph did better, as we hypothesized. It was interesting to see the spread of the errors for each graph, as they seemed much closer than we originally expected, especially with the pie and donut, showing that the missing area in the middle of the graph doesn't seem to make that big of a difference regarding the perception of graphs.
+Because the pie and donut charts have such close means on the error dot graph, we made an error bar graph to get a closer view the difference in errors between the graphs.
 
 ## Technical Achievements
 We used d3, html/javascript, google sheets, ggplot2 and R to complete this assignment. 
