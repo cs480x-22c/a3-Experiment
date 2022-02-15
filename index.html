@@ -92,6 +92,8 @@
       .attr("stroke", "black")
       .style("stroke-width", "1px");
     
+    
+    
     arcs
       .append('circle')
       .attr('transform', function(c) {
@@ -99,7 +101,10 @@
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r', 3)
+      .attr('r', function (d) {
+        if (d == marked[0] || d == marked[1]) return 3;
+        else return 0;
+      })
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
