@@ -40,7 +40,7 @@ Our hypothesis involved trials of three graph types to replicate Cleveland and M
 Our experiment and error conduction showed us that bar graph was the best graph when it comes to size perception on graphs. Between the pie and donut graphs, the (pie/donut) graph did better, as we hypothesized. It was interesting to see the spread of the errors for each graph, as they seemed much closer than we originally expected.
 
 ## Technical Achievements
-We used d3, html/javascript, google sheets, ggplot2 and R to complete this assignment. 
+We used d3, html/javascript, google sheets, ggplot2 and R to complete this assignment. One of the technical things we worked with in our code was placing the dots on each graph in the correct location. We use variables associated with the given graph and svg so that if one wanted to move the location of the pie and donut chart, their dots woould still appear in the correct places. We also had one running Google Sheet where all of the data went after each trial and we did not have to combine multiple csvs. However, the tradeoff to this method is that it is more difficult to notice incorrect answers, like striings. Addiitionally, when a person submits a response, at the same time the type of graph and the actual value of the percent difference were added simultanepusly to the Google sheet. This was a great achievement for us, as it allowed everything to be updated at the same time, without the user having to input all 3 values (which would totally defeat the experiment).
 
 
 ## Design Achievements
