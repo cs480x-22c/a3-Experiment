@@ -18,7 +18,10 @@ Pie Charts
 ## Design Achievements
 
 - Use Raleway as a custom font on the page
+- Custom startup page that allows users to accept or decline participation in the experiment
 
 ## Tech Achievements
+
+In order to allow users to asynchronously and simulataneously take the quiz we chose to have each trial submit a POST request to a google form that was stored on one of our group members' local Google Drives. This was accomplished by finding the required parameters to the form and submitting the associated request, sending the graph type, the real ratio, and the user ratio for each trial. The Google Form then automatically handles the organization of the results spreadsheet. We then had access to the full functionality of Google Sheets for data manipulation.
 
 ## GGPlot Output
