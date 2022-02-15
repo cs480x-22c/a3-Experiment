@@ -1,9 +1,11 @@
 # Tests
 ![image1](https://github.com/liamrathke/a3-Experiment/blob/main/tests.PNG)
+
 We are comparing 3 different graph types (bar, pie, stacked bar), each graph is randomly generated for the user, the site will check the difference and compare that to the user submitted difference. Each user will do 60 graphs and the data will be sent to the database for storage. Results are stored at https://cs480x-22c-a3.herokuapp.com/results and the tests can be done at https://liamrathke.github.io/a3-Experiment/.
 
 # Results
 ![image1](https://github.com/liamrathke/a3-Experiment/blob/main/results.PNG)
+
 This chart pulls data from our database, calculates the confidence intervals using the most recent data and displays it acording to each graph type. The graph is located here https://liamrathke.github.io/a3-Experiment/results.html.
 
 Pie chart
