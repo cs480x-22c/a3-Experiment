@@ -87,7 +87,7 @@
   </div>
   <div id="barchart_6"></div>
   <div>
-    <form id="barchart_form_6" onsubmit="return false;">
+    <form id="barchart_form6" onsubmit="return false;">
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
@@ -96,7 +96,9 @@
         onclick="submitBtnBarChart('6')">Submit</button>
     </form>
   </div>
+  <textarea id="result" name="w3review" rows="4" cols="50" style="width: 950px;">
 
+  </textarea>
 
   <!--
     Regular Bar Chart
@@ -110,6 +112,7 @@
 
 
 <script>
+  let finalResult = ""
   for (let i = 1; i < 3; i++) {
     let bind = '#stackedbar_' + i;
     makeStackedBar(bind, i)
@@ -496,12 +499,12 @@
             }
           })
 
-          svg.selectAll('.text-label')
+        svg.selectAll('.text-label')
           .data(data)
           .enter().append('text')
           .attr('class', 'text-label')
           .attr('text-anchor', 'middle')
-          .attr('x', d => 1.2*x.bandwidth()*d.xval + d.xval )
+          .attr('x', d => 1.2 * x.bandwidth() * d.xval + d.xval)
           .attr('y', height)
           .style('fill', (d, i) => "black")
           .style('font-size', "30px")
@@ -542,8 +545,11 @@
         observed_value: observedValue,
         error_rate: Math.abs((trueValue - observedValue) / trueValue) * 100
       }
+      
+      console.log(finalResult)
 
       //csvWriter.csvWriter.writeRecords(record)
+      document.getElementById('result').innerHTML += `${record.participant_num}, ${record.chart_num}, ${record.correct_answer}, ${record.observed_value}, ${record.error_rate}\n`;
       document.getElementById('stackedbar_' + num).style.display = 'none'
       document.getElementById('stackedbar_form' + num).style.display = 'none'
     })
@@ -560,11 +566,21 @@
           }
         }
       }
+      
 
       let trueValue = Math.max(...piechart_values) / Math.min(...piechart_values)
       let error = Math.abs(trueValue - observedValue) / trueValue
+
+      let record = {
+        participant_num: 1,
+        chart_num: num,
+        correct_answer: trueValue,
+        observed_value: observedValue,
+        error_rate: Math.abs((trueValue - observedValue) / trueValue) * 100
+      }
       alert(`The correct answer is ${trueValue}\n
            The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
+      document.getElementById('result').innerHTML += `${record.participant_num}, ${record.chart_num}, ${record.correct_answer}, ${record.observed_value}, ${record.error_rate}\n`;
       document.getElementById('piechart_' + num).style.display = 'none'
       document.getElementById('piechart_form' + num).style.display = 'none'
     })
@@ -581,9 +597,18 @@
           }
         }
       }
-
+      
       let trueValue = Math.max(...barchart_values) / Math.min(...barchart_values)
       let error = Math.abs(trueValue - observedValue) / trueValue
+
+      let record = {
+        participant_num: 1,
+        chart_num: num,
+        correct_answer: trueValue,
+        observed_value: observedValue,
+        error_rate: Math.abs((trueValue - observedValue) / trueValue) * 100
+      }
+      document.getElementById('result').innerHTML += `${record.participant_num}, ${record.chart_num}, ${record.correct_answer}, ${record.observed_value}, ${record.error_rate}\n`;
       alert(`The correct answer is ${trueValue}\n
            The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
       document.getElementById('barchart_' + num).style.display = 'none'
