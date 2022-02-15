@@ -27,7 +27,7 @@
     <h2>___</h2>
     <form id='submittions'>
       <input id='guess' type='text' required maxlength='2'></input>
-      <input type='button' id='submit'>Submit</input>
+      <input type='button' id='submit' value='Submit'></input>
     </form>
   </div>
   <div id='closed' class='hidden'>
@@ -122,22 +122,20 @@
     });
   d3.select('#submit')
     .on('click', function() {
-      guess = d3.select('#guess').value;
-      if (guess == "") console.log("Please enter a number");
-      else {
-        results[graphNum] = guess;
-        graphNum++;
-        if(graphNum < howManyGraphs){
-          d3.csv("data.csv", function(data) {
-            drawG(data);
-          });
-        }
-        else {
-          console.log(results);
-          d3.select('#graph').attr('class','hidden');
-          d3.select('#closed').attr('class','');
-        }
+      var g = document.getElementById('guess').value;
+      results[graphNum] = g;
+      graphNum++;
+      if(graphNum < howManyGraphs){
+        d3.csv("data.csv", function(data) {
+          drawG(data);
+        });
       }
+      else {
+        console.log(results);
+        d3.select('#graph').attr('class','hidden');
+        d3.select('#closed').attr('class','');
+      }
+      
     });
   
 </script>
