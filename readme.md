@@ -8,13 +8,16 @@ We are comparing 3 different graph types (bar, pie, stacked bar), each graph is 
 
 This chart pulls data from our database, calculates the confidence intervals using the most recent data and displays it acording to each graph type. The graph is located here https://liamrathke.github.io/a3-Experiment/results.html.
 
-Pie chart
+## Pie chart
+
 ![image](https://user-images.githubusercontent.com/37818941/154110869-460d25b3-e23d-4fd9-bb74-7026cd5ae5cd.png)
 
-Bar chart
+## Bar chart
+
 ![image](https://user-images.githubusercontent.com/37818941/154111048-37ca0a42-6b8e-4cdd-9cbe-663fb24f0c8a.png)
 
-Stacked bar chart
+## Stacked bar chart
+
 ![image](https://user-images.githubusercontent.com/37818941/154111157-fd5c5913-9a40-4aef-8e29-0fa1294132aa.png)
 
 The results seem on par with what we learned in class. The bar chart had the best accuracy of the 3 with stacked not far behind. Pie charts were clearly much less accurate.
