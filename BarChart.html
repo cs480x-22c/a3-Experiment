@@ -98,10 +98,10 @@ function generateGraph(){
 function calcInput() {
     var input = document.getElementById("userInput").value;
     var percent = Math.min(point1, point2) / Math.max(point1, point2);
-    console.log(percent); 
+    document.getElementById("per").value = percent;
     
-	var results = [input, percent, "barchart"] 
-	console.log(results);
+    var results = [input, percent, "barchart"] 
+    console.log(results);
 // 	fs.appendFile('data.json', JSON.stringify(results), (err) => {  
 //       // Catch this!
 //       if (err) throw err;
