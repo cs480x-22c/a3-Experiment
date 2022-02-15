@@ -29,6 +29,7 @@
       <input id='guess' type='text' required maxlength='2'></input>
       <input type='button' id='submit' value='Submit'></input>
     </form>
+    <h3 id='warning'>Please enter a number<h3>
   </div>
   <div id='closed' class='hidden'>
     <h2>Thank you for participating!</h2>
@@ -43,6 +44,7 @@
   graphNum = 0;
   ids = new Array(howManyGraphs);
   results = new Array(howManyGraphs);
+  d3.select('#warning').attr('visibility', 'hidden');
   
   function getGraphIDs(howMany,max) {
     check = 1;
@@ -61,9 +63,6 @@
   }
   
   function drawG (data) {
-    getGraphIDs(howManyGraphs,1000);
-    console.log(ids);
-    
     clean = (data[ids[0]].data).substring(1, (data[ids[0]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
     drawPie(clean, parseInt(data[ids[0]].mark1), parseInt(data[ids[0]].mark2));
@@ -90,10 +89,7 @@
       .attr('fill', 'white')
       .attr("stroke", "black")
       .style("stroke-width", "1px");
-   
-    
-    arcs
-      .append('circle')
+    arcs.append('circle')
       .attr('transform', function(c) {
         c.innerRadius = 0;
         c.outerRadius = radius;
@@ -112,6 +108,8 @@
       d3.select('#open').attr('class','hidden');
       d3.select('#graph').attr('class','');
       d3.csv("data.csv", function(data) {
+        getGraphIDs(howManyGraphs,1000);
+        console.log(ids);
         drawG(data);
       });
     });
@@ -124,8 +122,9 @@
     .on('click', function() {
       var g = document.getElementById('guess').value;
       results[graphNum] = g;
-      if(results[graphNum] == '') console.log("Please enter a number");
+      if(results[graphNum] == '') d3.select('#warning').attr('visibility', '');
       else {
+        d3.select('#warning').attr('visibility', 'hidden');
         document.getElementById('guess').value = "";
         graphNum++;
         if(graphNum < howManyGraphs){
