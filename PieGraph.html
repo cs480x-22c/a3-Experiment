@@ -43,12 +43,12 @@
 		<input type="text" name="entry.1400593830" id="userInput" class="input" title="input"></input>
 			<p class="input">   %</p>
 		<input hidden type="text" name="entry.1119470707" id="per" class="per" title="per"></input>
-		<input hidden type="text" name="entry.560768253" value="piegraph" id="chart" class="bc" title="bc"></input>
+		<input hidden type="text" name="entry.560768253" value="piehart" id="chart" class="bc" title="bc"></input>
 		</div>
 			<div class="btn">
 			<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/BarChart.html';}"></iframe>
 			<button type="submit">Submit</button>
-			<a href='/a3-Experiment/Bubble.html'>next</a>	
+			<a href='/a3-Experiment/Bubble.html'>Next</a>	
 		</div>
 	</form>	
 </body>
@@ -92,11 +92,11 @@ console.log(point1);
 console.log(point2);
 	
 function start() {
-	generateGraph();
+	generatePieGraph();
 	calcInput();
 }
 
-function generateGraph(){
+function generatePieGraph(){
     // Display data
 	var svg = d3.select("svg"),
             width = svg.attr("width"),
@@ -151,7 +151,7 @@ function calcInput() {
      
 }
 var input = document.getElementById("userInput").value;
-var results = [input, percent, "barchart"] ;   
+var results = [input, percent, "piechart"] ;   
 console.log(results);
 
 </script>
