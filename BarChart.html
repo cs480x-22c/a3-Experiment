@@ -98,7 +98,7 @@ function generateGraph(){
         .style('background-color', function(d){ if(d == point1 || d == point2){ return "grey"}return "white";})
 	.append("text")
         .attr("transform", function(d) { 
-        return "translate(" + height.centroid(d) + ")"; 
+        return "translate(" d * 200 + "px")"; 
   	  })
         .text(function(d) { if(d == point1 || d == point2) {return "·" } return "";});
 
