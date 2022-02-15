@@ -22,6 +22,15 @@ This chart pulls data from our database, calculates the confidence intervals usi
 
 The results seem on par with what we learned in class. The bar chart had the best accuracy of the 3 with stacked not far behind. Pie charts were clearly much less accurate.
 
-Technical Achievments: Server back end that stores user results automatically in database, graphs randomly generated for each user, results pushed to database, final visualization pulls from database in real time and calculates confidence intervals.
+# Achievments
 
-Design Achievments: Slider input to select percentage, final visualization updates live with your data, test progress counter
+## Technical: 
+- Server back end that stores user results automatically in database
+- Graphs randomly generated for each user
+- Results pushed to database
+- Final visualization pulls from database in real time and calculates confidence intervals
+
+## Design:
+- Slider input to select percentage
+- Final visualization updates live with your data
+- Test progress counter (Page 17/60)
