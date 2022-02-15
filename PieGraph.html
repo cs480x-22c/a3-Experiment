@@ -152,7 +152,8 @@ function generateGraph(){
 
 function calcInput() {
     var percent = Math.min(point1, point2) / Math.max(point1, point2) * 100;
-    document.getElementById("per").setAttribute("value", str(percent));
+    var val = percent.toString();
+    document.getElementById("per").setAttribute("value", val);
      
 }
 var input = document.getElementById("userInput").value;
