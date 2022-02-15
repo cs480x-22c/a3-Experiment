@@ -90,19 +90,12 @@
       .attr("stroke", "black")
       .style("stroke-width", "1px");
     arcs.append('circle')
-      .data(percents)
-      .enter()
-      .attr('d',arc)
       .attr('transform', function(c) {
         c.innerRadius = 0;
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r', function(d, i) {
-        console.log(i);
-        if(i == m1 || i == m2) return 3;
-        else return 0;
-      })
+      .attr('r', 3)
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
