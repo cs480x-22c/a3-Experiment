@@ -94,17 +94,16 @@
     
     
     
-    arcs
+    d3.select('svg').select('pie')
+      .data(marked)
+      .enter()
       .append('circle')
       .attr('transform', function(c) {
         c.innerRadius = 0;
         c.outerRadius = radius;
         return "translate(" + arc.centroid(c) + ")";
       })
-      .attr('r', function (d) {
-        if (d == marked[0] || d == marked[1]) return 3;
-        else return 0;
-      })
+      .attr('r',3)
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
