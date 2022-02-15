@@ -145,9 +145,8 @@ function generatePieGraph(){
  }
 
 function calcInput() {
-    var percent = Math.min(point1, point2) / Math.max(point1, point2) * 100;
-    var val = percent.toString();
-    document.getElementById("per").setAttribute("value", val);
+    var percent = 100 - (Math.min(point1, point2) / Math.max(point1, point2) * 100);
+    document.getElementById("per").setAttribute("value", percent);
      
 }
 var input = document.getElementById("userInput").value;
