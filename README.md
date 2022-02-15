@@ -31,10 +31,10 @@ The image above depicts an example of one of our donut charts that were generate
 # Error Graph:
 
 ## Hypothesis
-Our hypothesis involved trials of three graph types to replicate Cleveland and McGIll's experiment of graphical perception, being a bar graph, a pie graph, and a donut graph. Four our experiment, we hypothesized that the bar graph would be the easiest to percieve size differences in graph elements. While we wanted to compare the bar to both the pie and donut graphs, we wanted to compare the pie graph against the donut graph as they are very similar. We hypothesized that the pie graph would be easier to perceive size differences than the donut graph, since the donut graph has empty space in the middle, meaning it could be harder to determine the true size of the slice and its respective value.
+Our hypothesis involved trials of three graph types to replicate Cleveland and McGIll's experiment of graphical perception, being a bar graph, a pie graph, and a donut graph. For our experiment, we hypothesized that the bar graph would be the easiest to percieve size differences in graph elements. While we wanted to compare the bar to both the pie and donut graphs, we wanted to compare the pie graph against the donut graph as they are very similar. We hypothesized that the pie graph would be easier to perceive size differences than the donut graph, since the donut graph has empty space in the middle, meaning it could be harder to determine the true size of the slice and its respective value.
 
 ## Results
-Our experiment and error conduction showed us that (bar/pie/donut) graph was the best graph when it comes to size perception on graphs. Between the pie and donut graphs, the (pie/donut) graph did better, (as we hypothesized/going against our original hypothesis). ...Talking about the error differences between the bar graph and two circle graphs, and then the circle graphs against each other.
+Our experiment and error conduction showed us that bar graph was the best graph when it comes to size perception on graphs. Between the pie and donut graphs, the (pie/donut) graph did better, as we hypothesized. It was interesting to see the spread of the errors for each graph, as they seemed much closer than we originally expected.
 
 ## Technical Achievements
 We used d3, html/javascript, google sheets, ggplot2 and R to complete this assignment. 
