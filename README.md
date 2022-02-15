@@ -10,6 +10,8 @@ Sam Mora<br/>
 Link: https://jbiss4.github.io/
 
 # Start Page: 
+
+![start page](img/start-page.PNG)
 The start page starts with a thank you to those who are completing the experiment and a brief explanation of the goal of what the participant will be doing. Once they click "Start" , it moves on to another page which will depict the Question #, the image, and then a text box which you press "Next" and a new image is generated. On each of these pages there is also the question being asked and an example to explain what you are supposed to do. 
 
 # Bar Graph:
@@ -35,7 +37,7 @@ The image above depicts an example of one of our donut charts that were generate
 Our hypothesis involved trials of three graph types to replicate Cleveland and McGIll's experiment of graphical perception, being a bar graph, a pie graph, and a donut graph. For our experiment, we hypothesized that the bar graph would be the easiest to percieve size differences in graph elements. While we wanted to compare the bar to both the pie and donut graphs, we wanted to compare the pie graph against the donut graph as they are very similar. We hypothesized that the pie graph would be easier to perceive size differences than the donut graph, since the donut graph has empty space in the middle, meaning it could be harder to determine the true size of the slice and its respective value.
 
 ## Results
-Our experiment and error conduction showed us that bar graph was the best graph when it comes to size perception on graphs. Between the pie and donut graphs, the (pie/donut) graph did better, as we hypothesized. It was interesting to see the spread of the errors for each graph, as they seemed much closer than we originally expected.
+Our experiment and error conduction showed us that bar graph was the best graph when it comes to size perception on graphs. Between the pie and donut graphs, the pie graph did better, as we hypothesized. It was interesting to see the spread of the errors for each graph, as they seemed much closer than we originally expected, especially with the pie and donut, showing that the missing area in the middle of the graph doesn't seem to make that big of a difference regarding the perception of graphs.
 
 ## Technical Achievements
 We used d3, html/javascript, google sheets, ggplot2 and R to complete this assignment. 
