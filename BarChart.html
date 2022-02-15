@@ -52,11 +52,11 @@
 		</div>
 
 		<div class="btn">
-			<button type="submit" onclick="calcInput()">Submit</button>
-			<a href="/a3-Experiment/PieGraph.html">Next</a>	
 			<label hidden type="text" name="entry.1119470707" value="barchart" id="chart" class="bc" title="bc"></label>
+			<button type="submit" onclick="calcInput()">Submit</button>
+			<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/BarChart.html';}"></iframe>
+			<a href="/a3-Experiment/PieGraph.html">Next</a>	
 		</div>
-		<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/BarChart.html';}"></iframe>
 	</form>
 </body>
 </html>
