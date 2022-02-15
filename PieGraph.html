@@ -43,7 +43,7 @@
 		<input type="text" name="entry.1400593830" id="userInput" class="input" title="input"></input>
 			<p class="input">   %</p>
 		<input hidden type="text" name="entry.1119470707" id="per" class="per" title="per"></input>
-		<input hidden type="text" name="entry.560768253" value="piehart" id="chart" class="bc" title="bc"></input>
+		<input hidden type="text" name="entry.560768253" value="piechart" id="chart" class="bc" title="bc"></input>
 		</div>
 			<div class="btn">
 			<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/BarChart.html';}"></iframe>
@@ -143,9 +143,9 @@ function generatePieGraph(){
         .text(function(d) { return d.data.num; });
 
  }
-
+var percent = 0;
 function calcInput() {
-    var percent = 100 - (Math.min(point1, point2) / Math.max(point1, point2) * 100);
+    percent = 100 - (Math.min(point1, point2) / Math.max(point1, point2) * 100);
     document.getElementById("per").setAttribute("value", percent);
      
 }
