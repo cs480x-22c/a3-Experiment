@@ -26,5 +26,5 @@ Pie Charts
 In order to allow users to asynchronously and simulataneously take the quiz we chose to have each trial submit a POST request to a google form that was stored on one of our group members' local Google Drives. This was accomplished by finding the required parameters to the form and submitting the associated request, sending the graph type, the real ratio, and the user ratio for each trial. The Google Form then automatically handles the organization of the results spreadsheet. We then had access to the full functionality of Google Sheets for data manipulation.
 
 ## GGPlot Output
-In our GGPlot/R output, we can see each graph type's preformance.
+In our GGPlot/R output, we can see each graph type's performance. Graph 1 refers to bar charts, graph 2 refers to pie charts, and graph 3 refers to radial charts. As we can see, the mean log errors are quite close to one another, hinting towards similar performances between each graph. Based on the mean, bar charts did the best and radial charts did the worst in terms of size comparison within users. Radial also had the widest range between min and max guesses with an outlier within the data.  
 ![Alt text](https://github.com/alexiscaira/a3-Experiment/blob/main/img/Rplot.png?raw=true)
