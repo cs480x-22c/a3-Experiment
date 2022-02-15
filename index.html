@@ -66,12 +66,14 @@
   
   function drawPie (data) {
     radius = 200;
+    g = d3.select('svg')
+      .append('g')
+      .attr('transform','translate(200,225)');
     pie = d3.pie();
     arc = d3.arc()
       .innerRadius(0)
       .outerRadius(radius);
-    arcs = d3.select("svg")
-      .selectAll('arc')
+    arcs = g.selectAll('arc')
       .data(pie(data[ids[0]].data))
       .enter()
       .append('g')
