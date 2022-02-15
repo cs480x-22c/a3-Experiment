@@ -1,6 +1,5 @@
 <script>
 	import { Button, Pagination } from 'attractions';
-	import Form from '../components/Form.svelte';
 	import { onMount } from 'svelte';
 	import Question from '../components/Question.svelte';
 	let questions;
@@ -85,8 +84,4 @@
 		width: 20%;
         padding: 2em;
 	}
-    #whitespace {
-        display: block;
-        height: 8rem;
-    }
 </style>
