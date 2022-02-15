@@ -32,7 +32,7 @@ Overall, we collected data from over 1,000 trials, with at least 200 trials perf
  
 Our findings for bar charts and pie charts are consistent with Cleveland and McGill's results as well as the additional crowdsourced results included in the assignment page. Our findings for color scales generally match the convention that luminance scales are more effective than hue scales as well.
 
-![Summary Bar Plot](img/3-summary-bar.PNG)
+![Summary Bar Plot](img/a3-summary-bar.PNG)
 
 ![Summary Box Plot](img/a3-summary-box.PNG)
 
