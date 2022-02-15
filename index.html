@@ -61,10 +61,10 @@
   function drawG (data) {
     getGraphIDs(howManyGraphs,1000);
     console.log(ids);
-    stringData = data[ids[0]].data;
-    cleanData = stringData.split(",");
-    cleanData = cleanData.map(datapoint => Number(datapoint));
-    drawPie(cleanData);
+    
+    clean = (data[ids[0]].data).substring(1, sd.length-1).split(",");
+    clean = clean.map(datapoint => Number(datapoint));
+    drawPie(clean);
   }
   
   function drawPie (percents) {
