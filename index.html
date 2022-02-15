@@ -124,18 +124,21 @@
     .on('click', function() {
       var g = document.getElementById('guess').value;
       results[graphNum] = g;
-      graphNum++;
-      if(graphNum < howManyGraphs){
-        d3.csv("data.csv", function(data) {
-          drawG(data);
-        });
-      }
+      if(results[graphNum] == '') console.log("Please enter a number");
       else {
-        console.log(results);
-        d3.select('#graph').attr('class','hidden');
-        d3.select('#closed').attr('class','');
+        document.getElementById('guess').value = "";
+        graphNum++;
+        if(graphNum < howManyGraphs){
+          d3.csv("data.csv", function(data) {
+            drawG(data);
+          });
+        }
+        else {
+          console.log(results);
+          d3.select('#graph').attr('class','hidden');
+          d3.select('#closed').attr('class','');
+        }
       }
-      
     });
   
 </script>
