@@ -40,6 +40,7 @@
   width = 400;
   height = 450;
   howManyGraphs = 5;
+  graphNum = 0;
   ids = new Array(howManyGraphs);
   
   function getGraphIDs(howMany,max) {
@@ -64,10 +65,10 @@
     
     clean = (data[ids[0]].data).substring(1, (data[ids[0]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
-    drawPie(clean);
+    drawPie(clean, parseInt(data[ids[0]].mark1), parseInt(data[ids[0]].mark2));
   }
   
-  function drawPie (percents) {
+  function drawPie (percents, m1, m2) {
     console.log(percents);
     radius = 200;
     g = d3.select('svg')
@@ -84,10 +85,10 @@
       .append('g')
       .attr('class','arc');
     arcs.append('path')
-      .attr('fill','gray')
       .attr('d', arc)
       .attr("stroke", "black")
-      .style("stroke-width", "2px");
+      .style("stroke-width", "1px");
+    
   }
   
   d3.select('#agree')
@@ -105,8 +106,15 @@
     });
   d3.select('#submit')
     .on('click', function(){
-      d3.select('#graph').attr('class','hidden');
-      d3.select('#closed').attr('class','');
+      if(graphNum < howManyGraphs){
+        d3.csv("data.csv", function(data) {
+          drawG(data);
+        });
+      }
+      else {
+        d3.select('#graph').attr('class','hidden');
+        d3.select('#closed').attr('class','');
+      }
     });
   
 </script>
