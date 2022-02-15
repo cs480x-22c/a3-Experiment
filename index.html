@@ -66,8 +66,12 @@
   
   function drawPie (dd) {
     percents = dd[ids[0]].data;
+    console.log(dd[ids[0]]);
+    console.log(percents);
     percentages = new Array(percents.length);
     for (let i = 0; i < percents.length; i++) percentages[i] = Math.floor(percents[i]); 
+    
+    console.log(percentages);
     radius = 200;
     g = d3.select('svg')
       .append('g')
@@ -77,7 +81,6 @@
     arc = d3.arc()
       .innerRadius(0)
       .outerRadius(radius);
-    console.log(percentages);
     arcs = g.selectAll('arc')
       .data(pie(percentages))
       .enter()
