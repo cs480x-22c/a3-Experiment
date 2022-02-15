@@ -65,8 +65,6 @@
   }
   
   function drawPie (dd) {
-    percents = dd[ids[0]].data;
-    console.log(dd[ids[0]]);
     console.log(percents);
     percentages = new Array(percents.length);
     for (let i = 0; i < percents.length; i++) percentages[i] = Math.floor(percents[i]); 
@@ -82,7 +80,7 @@
       .innerRadius(0)
       .outerRadius(radius);
     arcs = g.selectAll('arc')
-      .data(pie(percentages))
+      .data(pie(percents))
       .enter()
       .append('g')
       .attr('class','arc');
