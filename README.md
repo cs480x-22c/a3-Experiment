@@ -1,6 +1,45 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 
+https://dacs30.github.io/a3-Experiment/
+
+
+# General description
+
+We used react to create the front-end for our experiment. We first show the user 25 bar charts, then 25 donut charts, and finally 25 pie charts. We then display the resulting csv with their data.
+The following are example graphs for each graph type that we used (bar, donut, and pie).
+
+![exBar](B1.png)
+
+![exBarReact](exbar3.PNG)
+
+![exDonut](D3.png)
+
+![exDonutReact](exDonut2.PNG)
+
+![exPie](P2.png)
+
+![exPieReact](exPie2.PNG)
+
+We performed statisical analysis on the collected data. Here are the result graphs.
+
+![allPartGraph](allPartGraphs.png)
+
+![graphTypes](graphTypes.png)
+
+# Code
+The react app structure is the traditional pages, components, hooks set up. App.js runs mos of the code, charts are rendered within the
+ChartArea component and the intputs like buttons are handled in a different component called Buttons. The only hook used was useD3 that
+waits the data to be fetched before calling the D3 SVGs.
+
+
+# Technical challenges
+The first big technical challenge was integrating react with D3. In order to do that we had to create a special hook for the D3 plots. Another
+issue that we faced was the creation of an API with database so the user won't have to send us the CSV after its trial. Because of time
+we ended up not building the API for that.
+
+# Project proposal
+
 For the scope of this project, assume the role of a scientist who runs experiments for a living.
 
 Q: How do we know that bar charts are "better" than pie charts?  
