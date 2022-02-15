@@ -6,14 +6,7 @@
 	let currentPage;
 	let numQuestions = 1;
 	onMount(async () => {
-		questions = (await (await fetch('/questions.json')).json()).filter(
-			(q) => q.data[q.comp1] < q.data[q.comp2]
-		);
-
-		let neighbors = questions.filter( q => q.graphtype == "n")
-		let distanced = questions.filter( q => q.graphtype == "d")
-		questions = distanced.filter((a,i) => i < 4).concat(neighbors.filter((a,i) => i < 4))
-
+		questions = (await (await fetch('/questions.json')).json())
 		numQuestions = questions.length;
 	});
 
