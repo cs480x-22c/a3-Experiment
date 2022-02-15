@@ -81,7 +81,11 @@ console.log(data);
 console.log(point1);
 console.log(point2);
 
+function start() {
+	generateGraph();
+	CalcInput();
 
+}
 function generateGraph(){
     // Display data
     var svg = d3.select('#chartholder').selectAll('div')
@@ -99,14 +103,9 @@ function calcInput() {
     var input = document.getElementById("userInput").value;
     var percent = Math.min(point1, point2) / Math.max(point1, point2);
     document.getElementById("per").value = percent;
-    
-    var results = [input, percent, "barchart"] 
-    console.log(results);
-// 	fs.appendFile('data.json', JSON.stringify(results), (err) => {  
-//       // Catch this!
-//       if (err) throw err;
      
 }
-
+ var results = [input, percent, "barchart"]    
+ console.log(results);
 
 </script>
