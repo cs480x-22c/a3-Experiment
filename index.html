@@ -23,6 +23,10 @@
   .rect {
     stroke-width: 2px;
   }
+
+  .tick {
+    display: none;
+  }
 </style>
 
 <body>
@@ -36,7 +40,7 @@
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="stackedbar_submission1" name="stackedbar_submission" placeholder="Your guess..">
+      <input type="text" id="stackedbar_submission1" name="stackedbar_submission" placeholder="Your guess.." autocomplete="off">
       <button type="submit" value="Submit" class="submitBtn_stackedbar" id="submitBtn_stackedbar1"
         onclick="submitBtnStackedBar('1')">Submit</button>
     </form>
@@ -47,7 +51,7 @@
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="stackedbar_submission2" name="stackedbar_submission" placeholder="Your guess..">
+      <input type="text" id="stackedbar_submission2" name="stackedbar_submission" placeholder="Your guess.." autocomplete="off">
       <button type="submit" value="Submit" class="submitBtn_stackedbar" id="submitBtn_stackedbar2"
         onclick="submitBtnStackedBar('2')">Submit</button>
     </form>
@@ -58,7 +62,7 @@
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="piechart_submission3" name="piechart_submission" placeholder="Your guess..">
+      <input type="text" id="piechart_submission3" name="piechart_submission" placeholder="Your guess.." autocomplete="off">
       <button type="submit" value="Submit" class="submitBtn_piechart" id="submitBtn_piechart3"
         onclick="submitBtnPieChart('3')">Submit</button>
     </form>
@@ -69,7 +73,7 @@
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="piechart_submission4" name="piechart_submission" placeholder="Your guess..">
+      <input type="text" id="piechart_submission4" name="piechart_submission" placeholder="Your guess.." autocomplete="off">
       <button type="submit" value="Submit" class="submitBtn_piechart" id="submitBtn_piechart4"
         onclick="submitBtnPieChart('4')">Submit</button>
     </form>
@@ -80,7 +84,7 @@
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="barchart_submission5" name="barchart_submission" placeholder="Your guess..">
+      <input type="text" id="barchart_submission5" name="barchart_submission" placeholder="Your guess.." autocomplete="off">
       <button type="submit" value="Submit" class="submitBtn_barchart" id="submitBtn_barchart"
         onclick="submitBtnBarChart('5')">Submit</button>
     </form>
@@ -91,7 +95,7 @@
       <label for="fname">How many times bigger is the larger piece than the smaller piece. Answer 1 if they are the same
         size.
       </label>
-      <input type="text" id="barchart_submission6" name="barchart_submission" placeholder="Your guess..">
+      <input type="text" id="barchart_submission6" name="barchart_submission" placeholder="Your guess.." autocomplete="off">
       <button type="submit" value="Submit" class="submitBtn_barchart" id="submitBtn_barchart"
         onclick="submitBtnBarChart('6')">Submit</button>
     </form>
@@ -535,9 +539,7 @@
 
       let trueValue = Math.max(...stackedbar_values) / Math.min(...stackedbar_values)
       let error = Math.abs(trueValue - observedValue) / trueValue
-      alert(`The correct answer is ${trueValue}\n
-           The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
-
+    
       let record = {
         participant_num: 1,
         chart_num: num,
@@ -547,7 +549,7 @@
       }
       
       console.log(finalResult)
-
+    
       //csvWriter.csvWriter.writeRecords(record)
       document.getElementById('result').innerHTML += `${record.participant_num}, ${record.chart_num}, ${record.correct_answer}, ${record.observed_value}, ${record.error_rate}\n`;
       document.getElementById('stackedbar_' + num).style.display = 'none'
@@ -578,8 +580,7 @@
         observed_value: observedValue,
         error_rate: Math.abs((trueValue - observedValue) / trueValue) * 100
       }
-      alert(`The correct answer is ${trueValue}\n
-           The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
+
       document.getElementById('result').innerHTML += `${record.participant_num}, ${record.chart_num}, ${record.correct_answer}, ${record.observed_value}, ${record.error_rate}\n`;
       document.getElementById('piechart_' + num).style.display = 'none'
       document.getElementById('piechart_form' + num).style.display = 'none'
@@ -609,8 +610,7 @@
         error_rate: Math.abs((trueValue - observedValue) / trueValue) * 100
       }
       document.getElementById('result').innerHTML += `${record.participant_num}, ${record.chart_num}, ${record.correct_answer}, ${record.observed_value}, ${record.error_rate}\n`;
-      alert(`The correct answer is ${trueValue}\n
-           The error rate is: ${Math.abs((trueValue - observedValue) / trueValue) * 100}%`);
+      
       document.getElementById('barchart_' + num).style.display = 'none'
       document.getElementById('barchart_form' + num).style.display = 'none'
     })
