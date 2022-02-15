@@ -48,7 +48,7 @@
 	<div class="btn">
 		<button type="submit" onclick="calcInput()">Submit</button>
 		<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/BarChart.html';}"></iframe>
-		<a href='/a3-Experiment/index.html'">finish</a>
+		<a href='/a3-Experiment/index.html'">Finish</a>
 	</div>
 </form>	
 </body>
@@ -132,7 +132,7 @@ var svg = d3.select("svg")
 
 function calcInput() {
     var input = document.getElementById("userInput").value;
-    var percent = Math.min(point1, point2) / Math.max(point1, point2) * 100;
+    var percent = 100 - (Math.min(point1, point2) / Math.max(point1, point2) * 100);
     document.getElementById("per").setAttribute("value", percent);
   
 }
