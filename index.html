@@ -44,6 +44,7 @@
   graphNum = 0;
   ids = new Array(howManyGraphs);
   results = new Array(howManyGraphs);
+  charts = new Array(howManyGraphs);
   
   function getGraphIDs(howMany,max) {
     check = 1;
@@ -64,7 +65,15 @@
   function drawG (data) {
     clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
-    drawPie(clean, parseInt(data[ids[graphNum]].mark1), parseInt(data[ids[graphNum]].mark2));
+    if (charts[graphNum] == 0) {
+      drawPie(clean, parseInt(data[ids[graphNum]].mark1), parseInt(data[ids[graphNum]].mark2));
+    }
+    else if (charts[graphNum] == 1) {
+      console.log("bar");
+    }
+    else if (charts[graphNum] == 2) {
+      console.log("stack");
+    }
   }
   
   function drawPie (percents, m1, m2) {
@@ -108,7 +117,9 @@
       d3.select('#graph').attr('class','');
       d3.csv("data.csv", function(data) {
         getGraphIDs(howManyGraphs,1000);
-        console.log(ids);
+        console.log("graph ids: " + ids);
+        for(let i = 0; i < howManyGraphs; i++) charts[i] = Math.floor(Math.random() * 3);
+        console.log("charts: " + charts);
         drawG(data);
       });
     });
