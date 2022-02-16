@@ -180,16 +180,17 @@
   }
   
   function drawStack (percents, m1, m2){
-    currX = (-2) * percents[0];
+    console.log(percents);
+    currX = ((-2) * percents[0]) + 25;
     d3.select('svg').selectAll('*').remove();
     d3.select('svg').append('rect')
       .attr('x', 100)
       .attr('y', 25)
-      .attr('height', 300)
+      .attr('height', 400)
       .attr('width', 200)
       .attr('fill','white')
       .attr('stroke','black')
-      .attr('stroke-width',2);
+      .attr('stroke-width',4);
     d3.select('svg').selectAll('.sq')
       .data(percents)
       .enter()
@@ -205,7 +206,7 @@
       })
       .attr('fill','white')
       .attr('stroke','black')
-      .attr('stroke-width', 1);
+      .attr('stroke-width', 2);
       
   }
   
