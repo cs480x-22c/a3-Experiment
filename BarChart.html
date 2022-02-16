@@ -97,8 +97,8 @@ function generateGraph(){
         .style('height', function (d) { return d * 400 + 'px';})
         //.style('background-color', function(d){ if(d == point1 || d == point2){ return "grey"}return "white";})
     	.append("text")
-     	.text(function(d) { if(d == point1 || d == point2) {return "·" } return "";})
-   	.attr("font-size","34px");
+   	 .attr("font-size","75px")
+     	.text(function(d) { if(d == point1 || d == point2) {return "·" } return "";});
 	}
 
 function calcInput() {
