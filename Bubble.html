@@ -75,7 +75,6 @@ console.log(point2);
 function start() {
 	generateBubble();
 	calcInput();
-
 }
 
 function generateBubble(){
@@ -132,11 +131,12 @@ var svg = d3.select("svg")
 
 function calcInput() {
     var input = document.getElementById("userInput").value;
-    var percent = (100 -(Math.min(point1, point2) / Math.max(point1 , point2) * 100)
+    var percent = 100 -(Math.min(point1, point2) / Math.max(point1 , point2) * 100;
     document.getElementById("per").setAttribute("value", percent);
-  
-}
+						       
     var results = [input, percent, "bubble"];
     console.log(results);
+}
+  
   
 </script>
