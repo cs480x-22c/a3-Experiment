@@ -21,6 +21,7 @@
     <button id='agree'>Agree</button>
   </div>
   <div id='graph' class='hidden'>
+    <h2 id='page'></h2>
     <h2>What percentage is the smaller mark of the bigger mark?</h2>
     <h3>For example: If the smaller marked segment is half the size of the larger one, type 50 (representing 50%). Also, if the mark is not in the center of a segment, input 0.</h3>
     <svg id='canvas'></svg>
@@ -45,7 +46,7 @@
   console.log(d3); // test if d3 is loaded
   width = 400;
   height = 450;
-  howManyGraphs = 20;
+  howManyGraphs = 5;
   graphNum = 0;
   ids = new Array(howManyGraphs);
   results = new Array(howManyGraphs);
@@ -69,6 +70,9 @@
   }
   
   function drawG (data) {
+    d3.select('#page')
+      .append('text')
+      .text((graphNum+1) + "/" + howManyGraphs;
     clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
     if (charts[graphNum] == 0) {
