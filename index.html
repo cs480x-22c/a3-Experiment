@@ -119,7 +119,7 @@
     d3.select('svg').selectAll('*').remove();
     
     xlen = 300/percents.length;
-    xval = 0;
+    xval = (-1) * xlen;
     tempI = new Array(percents.length);
     for(let i = 0; i < percents.length; i++) tempI[i] = i;
     g = d3.select('svg').append("g")
@@ -144,7 +144,7 @@
         xval += xlen;
         return xval;
       })
-      .attr('y', 350)
+      .attr('y', function(d) { return yScale(d); })
       .attr("width", xScale.bandwidth())
       .attr("height", function(d) { return 350 - yScale(d); })
       .attr('fill','white')
