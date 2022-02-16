@@ -1,48 +1,6 @@
-<head>
-  <title>MFaria Graph Experiment</title>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-</head>
+//This Javascript File is not attached to the index.html, as the same code below is in a <script> in the html file
+//For some reason linking this file to the index breaks some of the code and I can't see why
 
-<body>
-  <h1>Graph Size Experiment</h1>
-  <div id='open'>
-    <p>
-      In this experiment,
-      <br>you are asked to judge
-      <br>what is the percent of a smaller value to a larger value in several charts.
-      <br>
-      <br>The only thing that will be recorded are your answers.
-      <br>Click the "agree" button to continue.
-      <br>
-      <br>Thank you! - Mattheus Faria
-    </p>
-    <button id='disagree'>Disagree</button>
-    <button id='agree'>Agree</button>
-  </div>
-  <div id='graph' class='hidden'>
-    <h2 id='page'></h2>
-    <h2>What percentage is the smaller mark of the bigger mark?</h2>
-    <h3>For example: If the smaller marked segment is half the size of the larger one, type 50 (representing 50%). Also, if the mark is not in the center of a segment, input 0.</h3>
-    <svg id='canvas'></svg>
-    <h2>___</h2>
-    <form id='submittions'>
-      <input id='guess' type='text' required maxlength='2'></input>
-      <input type='button' id='submit' value='Submit'></input>
-    </form>
-    <h3 id='warning' class='hidden'>Please enter a number<h3>
-  </div>
-  <div id='closed' class='hidden'>
-    <h2>Thank you for participating!</h2>
-    <h3>Please copy and paste the lists below and send them to me however.</h3>
-    <p id='ch' class='hidden'></p>
-    <p id='gi' class='hidden'></p>
-    <p id='ex' class='hidden'></p>
-    <p id='in' class='hidden'></p>
-  </div>
-</body>
-
-<script>
   console.log(d3); // test if d3 is loaded
   width = 400;
   height = 450;
@@ -53,7 +11,7 @@
   charts = new Array(howManyGraphs);
   expected = new Array(howManyGraphs);
   page = d3.select('#page');
-
+  
   document.getElementById('submittions').addEventListener('submit', function(e) {
     e.preventDefault();
     document.getElementById('submit').click();
@@ -74,7 +32,7 @@
       else check = 1;
     }
   }
-
+  
   function drawG (data) {
     page.append('text').text((graphNum+1) + "/" + howManyGraphs);
     clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(',');
@@ -89,7 +47,7 @@
       drawStack(clean, parseInt(data[ids[graphNum]].mark1), parseInt(data[ids[graphNum]].mark2));
     }
   }
-
+  
   function drawPie (percents, m1, m2) {
     d3.select('svg').selectAll('*').remove();
     //marked = percents.filter(percent => (percents.indexOf(percent) == m1) || (percents.indexOf(percent) == m2));
@@ -125,10 +83,10 @@
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
-
+  
   function drawBar (percents, m1, m2){
     d3.select('svg').selectAll('*').remove();
-
+    
     xlen = 300/percents.length;
     xval = (-1) * xlen;
     counter = 0;
@@ -136,23 +94,23 @@
     mark1Y = 0;
     mark2X = 0;
     mark2Y = 0;
-
+    
     tempI = new Array(percents.length);
     for(let i = 0; i < percents.length; i++) tempI[i] = i;
     g = d3.select('svg').append('g')
       .attr('transform', 'translate(50,50)');
     xScale = d3.scaleBand().range([0, 300]);
     yScale = d3.scaleLinear().range([350,0]);
-
+    
     xScale.domain(tempI);
     yScale.domain([0, d3.max(percents, function(d) { return d })]);
-
+    
     g.append('g')
       .attr('transform','translate(0,350)')
       .call(d3.axisBottom(xScale).ticks(percents.length));
     g.append('g')
       .call(d3.axisLeft(yScale).ticks(0));
-
+    
     g.selectAll('.bar')
       .data(percents)
       .enter()
@@ -189,16 +147,16 @@
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
-
+  
   function drawStack (percents, m1, m2){
     d3.select('svg').selectAll('*').remove();
-
+    
     currY = ((-4) * percents[0]) + 25;
     lastY = percents[0];
     counter = 0;
     mark1Y = 0;
     mark2Y = 0;
-
+    
     d3.select('svg').append('rect')
       .attr('x', 100)
       .attr('y', 25)
@@ -215,11 +173,11 @@
       .attr('y', function(d) {
         currY += lastY*4;
         lastY = d;
-
+     
         if (counter == m1) mark1Y = currY + d*2;
         if (counter == m2) mark2Y = currY + d*2;
         counter++;
-
+      
         return currY;
       })
       .attr('width',200)
@@ -242,17 +200,17 @@
       .attr('stroke','black')
       .attr('stroke-width',2);
   }
-
+  
   d3.select('#agree')
     .on('click', function(){
       d3.select('#open').attr('class','hidden');
       d3.select('#graph').attr('class','');
       d3.csv('data.csv', function(data) {
         getGraphIDs(howManyGraphs,1000);
-
+        
         for(let i = 0; i < howManyGraphs; i++) charts[i] = Math.floor(Math.random() * 3);
         for(let i = 0; i < howManyGraphs; i++) expected[i] = Math.floor(data[ids[i]].ratio);
-
+        
         drawG(data);
       });
     });
@@ -284,7 +242,7 @@
         }
       }
     });
-
+  
   function logs () {
     d3.select('#ch').attr('class','')
       .append('text')
@@ -303,5 +261,3 @@
       .text("Input: " + results.toString());
     console.log("Input: " + results);
   }
-
-</script>
