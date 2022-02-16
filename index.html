@@ -33,6 +33,11 @@
   </div>
   <div id='closed' class='hidden'>
     <h2>Thank you for participating!</h2>
+    <h3>Please copy and paste the lists below and send them to me however.</h3>
+    <p id='ch' class='hidden'></p>
+    <p id='gi' class='hidden'></p>
+    <p id='ex' class='hidden'></p>
+    <p id='in' class='hidden'></p>
   </div>
 </body>
 
@@ -238,7 +243,7 @@
         getGraphIDs(howManyGraphs,1000);
         
         for(let i = 0; i < howManyGraphs; i++) charts[i] = Math.floor(Math.random() * 3);
-        for(let i = 0; i < howManyGraphs; i++) expected[i] = data[ids[i]].ratio;
+        for(let i = 0; i < howManyGraphs; i++) expected[i] = Math.floor(data[ids[i]].ratio);
         
         drawG(data);
       });
@@ -272,9 +277,21 @@
     });
   
   function logs () {
+    d3.select('#ch').attr('class','')
+      .append('text')
+      .text(charts.toString());
     console.log("charts: " + charts);
+    d3.select('#gi').attr('class','')
+      .append('text')
+      .text(ids.toString());
     console.log("graph ids: " + ids);
+    d3.select('#ex').attr('class','')
+      .append('text')
+      .text(expected.toString());
     console.log("expected: " + expected);
+    d3.select('#in').attr('class','')
+      .append('text')
+      .text(results.toString());
     console.log("Input: " + results);
   }
   
