@@ -46,7 +46,9 @@ This was reflected with a difference in the shade of the blue and pink. The key 
 of the red bar. In order to calculate those values, we used the formula log2(|judged percent - true percent| + 1/8. Where judged percent is
 the guess the user inputted and the true percent is the actual percentage. 
 
+![CI graph](R/000010.png)
 
+Here the accuracy average of the guesses made using each style of graph is shown along with a bootstraped 95% confidence interval in using R + ggplot2 using the stat_summary geom. 
 
 # Design Achievements
 * The results chart is broken down and organized well. It breaks each question down into the responses and the accuracy.
