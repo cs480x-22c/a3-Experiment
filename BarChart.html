@@ -95,10 +95,10 @@ function generateGraph(){
         .attr('class', 'bar')
 	.attr("style", "outline: solid black;")		
         .style('height', function (d) { return d * 400 + 'px';})
-        .style('background-color', function(d){ if(d == point1 || d == point2){ return "grey"}return "white";})
+        .style('background-color', function(d){ if(d == point1 || d == point2){ return "grey"}return "white";});
 	
     svg.append("text")
-    	.text(function(d) { if(d == point1 || d == point2) {return "·" } return "";})
+    	.text(function(d) { if(d.data == point1 || d.data == point2) {return "·" } return "";})
    	.attr("font-size","34px");
 	}
 
