@@ -181,6 +181,8 @@
   
   function drawStack (percents, m1, m2){
     console.log(percents);
+    colors = ['blue', 'orange','green','red','purple','yellow', 'pink', 'gray', 'brown', 'cyan'];
+    
     currX = ((-4) * percents[0]) + 25;
     d3.select('svg').selectAll('*').remove();
     d3.select('svg').append('rect')
@@ -205,7 +207,9 @@
         return d;
       })
       .attr('fill','white')
-      .attr('stroke','green')
+      .attr('stroke', function(d) {
+        return colors[d.index];
+      })
       .attr('stroke-width', 2);
       
   }
