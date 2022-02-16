@@ -96,8 +96,6 @@ function generateGraph(){
 	.attr("style", "outline: solid black;")		
         .style('height', function (d) { return d * 400 + 'px';})
      //   .style('background-color', function(d){ if(d == point1 || d == point2){ return "grey"}return "white";})
-
-    svg.append("text")
 	.text(function(d) { if(d == point1 || d == point2) {return "·" } return "";});
 	}
 
