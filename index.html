@@ -65,7 +65,7 @@
   function drawG (data) {
     clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
-    charts[graphNum] =1;
+    charts[graphNum] = 2;
     if (charts[graphNum] == 0) {
       drawPie(clean, parseInt(data[ids[graphNum]].mark1), parseInt(data[ids[graphNum]].mark2));
     }
@@ -181,6 +181,15 @@
   
   function drawStack (percents, m1, m2){
     d3.select('svg').selectAll('*').remove();
+    stack = d3.select('svg').append('rect')
+      .attr('x', 100)
+      .attr('y', 25)
+      .attr('height', 300)
+      .attr('width', 200)
+      .attr('fill','white')
+      .attr('stroke','black')
+      .attr('stroke-width',2);
+
   }
   
   d3.select('#agree')
