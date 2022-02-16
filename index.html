@@ -54,6 +54,13 @@
   expected = new Array(howManyGraphs);
   page = d3.select('#page');
   
+  var idfg = document.getElementById("guess");
+  idfg.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("submit").click();
+    }
+  });
   
   function getGraphIDs(howMany,max) {
     check = 1;
