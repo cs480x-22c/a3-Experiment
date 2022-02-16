@@ -118,7 +118,7 @@
   function drawBar (percents, m1, m2){
     d3.select('svg').selectAll('*').remove();
     
-    xlen = 20;
+    xlen = 300/percents.length;
     xval = 0;
     tempI = new Array(percents.length);
     for(let i = 0; i < percents.length; i++) tempI[i] = i;
@@ -141,7 +141,8 @@
       .enter()
       .append('rect')
       .attr('x', function(d) { 
-        return xScale(d.index);
+        xval += xlen;
+        return xval;
       })
       .attr('y', 350)
       .attr("width", xScale.bandwidth())
