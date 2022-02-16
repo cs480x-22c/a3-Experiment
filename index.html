@@ -139,9 +139,9 @@
       .enter()
       .append('rect')
       .attr('x', function(d) { return xScale(d.index); } )
-      .attr('y', function(d) { return yScale(d.percents); } )
+      .attr('y', function(d) { return yScale(d); } )
       .attr("width", xScale.bandwidth())
-      .attr("height", function(d) { return 350 - yScale(d.percents); });
+      .attr("height", function(d) { return 350 - yScale(d); });
   }
   
   function drawStack (percents, m1, m2){
