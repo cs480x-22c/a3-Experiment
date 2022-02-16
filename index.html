@@ -184,7 +184,7 @@
     colors = ['blue', 'orange','green','red','purple','yellow', 'pink', 'gray', 'brown', 'cyan'];
     counter = -1;
     currY = ((-4) * percents[0]) + 25;
-    lastY = 25/4;
+    lastY = percents[0];
     d3.select('svg').selectAll('*').remove();
     d3.select('svg').append('rect')
       .attr('x', 100)
@@ -201,7 +201,7 @@
       .attr('x', 100)
       .attr('y', function(d) {
         currY += lastY*4;
-        lastY = d*4;
+        lastY = d;
         return currY;
       })
       .attr('width',200)
