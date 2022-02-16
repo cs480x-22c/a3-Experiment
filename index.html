@@ -52,7 +52,7 @@
   results = new Array(howManyGraphs);
   charts = new Array(howManyGraphs);
   expected = new Array(howManyGraphs);
-  page = d3.select('#page').append('text');
+  page = d3.select('#page');
   
   
   function getGraphIDs(howMany,max) {
@@ -72,7 +72,6 @@
   }
   
   function drawG (data) {
-    page.remove('text');
     page.append('text').text((graphNum+1) + "/" + howManyGraphs);
     clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
@@ -264,6 +263,7 @@
       results[graphNum] = g;
       if(results[graphNum] == '') d3.select('#warning').attr('class', '');
       else {
+        page.select('text').remove();
         d3.select('#warning').attr('class', 'hidden');
         document.getElementById('guess').value = "";
         graphNum++;
