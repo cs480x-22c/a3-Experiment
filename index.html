@@ -120,6 +120,12 @@
     
     xlen = 300/percents.length;
     xval = (-1) * xlen;
+    counter = 0;
+    mark1X = 0;
+    mark1Y = 0;
+    mark2X = 0;
+    mark2Y = 0;
+    
     tempI = new Array(percents.length);
     for(let i = 0; i < percents.length; i++) tempI[i] = i;
     g = d3.select('svg').append("g")
@@ -142,6 +148,15 @@
       .append('rect')
       .attr('x', function(d) { 
         xval += xlen;
+        if (counter == m1) {
+          mark1X = xval + (xlen/2);
+          mark1Y = yScale(d) + ((350 - yScale(d))/2);
+        }
+        if (counter == m2) {
+          mark2X = xval + (xlen/2);
+          mark2Y = yScale(d) + ((350 - yScale(d))/2);
+        }
+        counter++;
         return xval;
       })
       .attr('y', function(d) { return yScale(d); })
@@ -150,6 +165,18 @@
       .attr('fill','white')
       .attr('stroke','black')
       .attr('stroke-width', 1);
+    g.append('circle')
+      .attr('cx', mark1X)
+      .attr('cy', mark1Y)
+      .attr('r', 3)
+      .attr('stroke','black')
+      .attr('stroke-width',2);
+    g.append('circle')
+      .attr('cx', mark2X)
+      .attr('cy', mark2Y)
+      .attr('r', 3)
+      .attr('stroke','black')
+      .attr('stroke-width',2);
   }
   
   function drawStack (percents, m1, m2){
