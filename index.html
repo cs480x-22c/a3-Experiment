@@ -54,8 +54,8 @@
   expected = new Array(howManyGraphs);
   page = d3.select('#page');
   
-  document.getElementById("submittions").submit(function() {
-    document.getElementById("submit").click();
+  d3.select('#submittions').submit(function() {
+    d3.select('#submit').click();
   });
   
   function getGraphIDs(howMany,max) {
@@ -76,7 +76,7 @@
   
   function drawG (data) {
     page.append('text').text((graphNum+1) + "/" + howManyGraphs);
-    clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(",");
+    clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(',');
     clean = clean.map(datapoint => Number(datapoint));
     if (charts[graphNum] == 0) {
       drawPie(clean, parseInt(data[ids[graphNum]].mark1), parseInt(data[ids[graphNum]].mark2));
@@ -109,13 +109,13 @@
     arcs.append('path')
       .attr('d', arc)
       .attr('fill', 'white')
-      .attr("stroke", "black")
-      .style("stroke-width", "1px");
+      .attr('stroke', 'black')
+      .style('stroke-width', '1px');
     arcs.append('circle')
       .attr('transform', function(c) {
         c.innerRadius = 0;
         c.outerRadius = radius;
-        return "translate(" + arc.centroid(c) + ")";
+        return 'translate(' + arc.centroid(c) + ')';
       })
       .attr('r', function (d) {
         if(d.index == m1 || d.index == m2) return 3;
@@ -138,8 +138,8 @@
     
     tempI = new Array(percents.length);
     for(let i = 0; i < percents.length; i++) tempI[i] = i;
-    g = d3.select('svg').append("g")
-      .attr("transform", "translate(50,50)");
+    g = d3.select('svg').append('g')
+      .attr('transform', 'translate(50,50)');
     xScale = d3.scaleBand().range([0, 300]);
     yScale = d3.scaleLinear().range([350,0]);
     
@@ -170,8 +170,8 @@
         return xval;
       })
       .attr('y', function(d) { return yScale(d); })
-      .attr("width", xScale.bandwidth())
-      .attr("height", function(d) { return 350 - yScale(d); })
+      .attr('width', xScale.bandwidth())
+      .attr('height', function(d) { return 350 - yScale(d); })
       .attr('fill','white')
       .attr('stroke','black')
       .attr('stroke-width', 1);
@@ -246,7 +246,7 @@
     .on('click', function(){
       d3.select('#open').attr('class','hidden');
       d3.select('#graph').attr('class','');
-      d3.csv("data.csv", function(data) {
+      d3.csv('data.csv', function(data) {
         getGraphIDs(howManyGraphs,1000);
         
         for(let i = 0; i < howManyGraphs; i++) charts[i] = Math.floor(Math.random() * 3);
@@ -271,12 +271,12 @@
         document.getElementById('guess').value = "";
         graphNum++;
         if(graphNum < howManyGraphs){
-          d3.csv("data.csv", function(data) {
+          d3.csv('data.csv', function(data) {
             drawG(data);
           });
         }
         else {
-          console.log("Printing Results");
+          console.log('Printing Results');
           logs();
           d3.select('#graph').attr('class','hidden');
           d3.select('#closed').attr('class','');
