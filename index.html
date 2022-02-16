@@ -46,7 +46,7 @@
   console.log(d3); // test if d3 is loaded
   width = 400;
   height = 450;
-  howManyGraphs = 5;
+  howManyGraphs = 3;
   graphNum = 0;
   ids = new Array(howManyGraphs);
   results = new Array(howManyGraphs);
@@ -283,19 +283,19 @@
   function logs () {
     d3.select('#ch').attr('class','')
       .append('text')
-      .text(charts.toString());
+      .text("charts: " + charts.toString());
     console.log("charts: " + charts);
     d3.select('#gi').attr('class','')
       .append('text')
-      .text(ids.toString());
+      .text("graph ids: " + ids.toString());
     console.log("graph ids: " + ids);
     d3.select('#ex').attr('class','')
       .append('text')
-      .text(expected.toString());
+      .text("expected: " + expected.toString());
     console.log("expected: " + expected);
     d3.select('#in').attr('class','')
       .append('text')
-      .text(results.toString());
+      .text("Input: " + results.toString());
     console.log("Input: " + results);
   }
   
