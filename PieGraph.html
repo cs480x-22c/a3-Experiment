@@ -127,7 +127,7 @@ function generatePieGraph(){
         .attr("d", path)
 		.attr("stroke", "black")
 		.attr("fill", "white");
-		//.attr("fill", function(d) { return ordScale(d.data.val); });
+		.attr("fill", function(d) { return ordScale(d.data.val); });
 	
 
 
@@ -136,10 +136,10 @@ function generatePieGraph(){
         .innerRadius(0);
 
             
-    arc.append("text")
-        .attr("transform", function(d) {  return "translate(" + label.centroid(d) + ")"; })
-	.attr("font-size", "75px")
-	.text(function(d) { if (d.data.num == 2|| d.data.num == 4) {return "·" } return "";});
+//     arc.append("text")
+//         .attr("transform", function(d) {  return "translate(" + label.centroid(d) + ")"; })
+// 	.attr("font-size", "75px")
+// 	.text(function(d) { if (d.data.num == 2|| d.data.num == 4) {return "·" } return "";});
 
  }
 
