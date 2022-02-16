@@ -180,8 +180,9 @@
   }
   
   function drawStack (percents, m1, m2){
+    currX = (-2) * percents[0];
     d3.select('svg').selectAll('*').remove();
-    stack = d3.select('svg').append('rect')
+    d3.select('svg').append('rect')
       .attr('x', 100)
       .attr('y', 25)
       .attr('height', 300)
@@ -189,7 +190,23 @@
       .attr('fill','white')
       .attr('stroke','black')
       .attr('stroke-width',2);
-
+    d3.select('svg').selectAll('.sq')
+      .data(percents)
+      .enter()
+      .append('rect')
+      .attr('x', 100)
+      .attr('y', function(d) {
+        currX += d*2;
+        return currX;
+      })
+      .attr('width',200)
+      .attr('height', function(d) {
+        return d*2;
+      })
+      .attr('fill','white')
+      .attr('stroke','black')
+      .attr('stroke-width', 1);
+      
   }
   
   d3.select('#agree')
