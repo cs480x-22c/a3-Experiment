@@ -43,12 +43,16 @@ The results chart above lists all the questions and what each respondent recorde
 had bars that are distanced from each other, while questions 5-8 had bars that were right next to each other. The chart indicates this
 with the 2 different colors for each set of questions. The odd questions didn't have the hover over line assistance, while the even questions did.
 This was reflected with a difference in the shade of the blue and pink. The key at the bottom of the chart is the actual percentage value that the blue bar was 
-of the red bar. In order to calculate those values, we used the formula log2(|judged percent - true percent| + 1/8. Where judged percent is
+of the red bar. In order to calculate those values, we used the Cleveland-McGill error score; log2(|judged percent - true percent| + 1/8. Where judged percent is
 the guess the user inputted and the true percent is the actual percentage. 
 
 ![CI graph](R/000010.png)
 
-Here the accuracy average of the guesses made using each style of graph is shown along with a bootstraped 95% confidence interval in using R + ggplot2 using the stat_summary geom. 
+Here the average accuracy of the guesses made using each style of graph is shown along with a bootstraped 95% confidence interval in using R + ggplot2 using the stat_summary geom.Accuracy was measured using the Cleveland-McGill error score from the origional study. This chart indicates that the chart style with the  most accurate average score was the distanced bars with the bar displayed upon the mouse being hovered. The average score was lower than comparing neighbors with the hover bar's aid. The significant overlap between the confidence intervals of the two suggests that this may have been a fluke. However, this could be interpreted as users faced with neighboring bars having the cvonfidence to forgo the aid of the bar and scoring worse as a result. There was vurtually no over lap between the distanced bars with the hover bar and without, indicating a significant imporvment of the user's accuracy.
+
+![cleveland CI results ](img/cleveland-results.png)
+
+When compared to the results of Cleveland & McGill's study it can be seen that the accuracy of the diastanced bars with teh hover bar aid was comperable to the score of the neighboring bars of a bar chart, and significatntly better than teh distanced bars without neighbors. This confirms the findings of our study that the addition to a bar chart of a line extending across the screen when bars are selected by the user can lead to an increase in accuracy when comparing distanced bars. 
 
 # Design Achievements
 * The results chart is broken down and organized well. It breaks each question down into the responses and the accuracy.
