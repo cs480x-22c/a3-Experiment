@@ -34,11 +34,16 @@ The results page:
 
 ## Results
 
+![alt text](https://github.com/MFaria27/a3-Experiment/blob/main/Img/results.png?raw=true)
 
+I had some trouble getting a proper bootstrapped 95% confidence interval on ggplot2, but as these results show, the bar chart did infact had the lowest average error. Pie charts and stacked bar charts were significantly behind the bar chart error, but they weren't to0 far apart from each other.
 
 ## Technical Achievements
 
-
+Complete randomization of almost everything was something that took a lot of time to correctly implement into the experiment. The order of the graphs, which graph type, what data goes into the graph, which segemnts are marked; everything other than the number of graphs displayed was 100% random. Also, the fact that the code makes it so that the graphs content did not need to be altered per graph type was really difficult to implement, so it is very nice seeing that all the website has to do is choose a graph type for a  graph to be generated
 
 ## Design Achievements
 
+Creating a canvas that clearly displayed each graph in the exact center of the canvas was quite a design feat (in code that is). You can also resize it to generally everything and the different elements on the page would resize to be better readable. The only thing is the canvas will not change, as having a small canvas makes it difficult to read the graph, so that remained constant
+
+###Also, Thank you Professor Lane for the extension : )
