@@ -53,6 +53,7 @@
   charts = new Array(howManyGraphs);
   expected = new Array(howManyGraphs);
   
+  
   function getGraphIDs(howMany,max) {
     check = 1;
     counter = 0;
@@ -70,9 +71,8 @@
   }
   
   function drawG (data) {
-    d3.select('#page')
-      .append('text')
-      .text((graphNum+1) + "/" + howManyGraphs);
+    page = d3.select('#page').append('text').text('');
+    page.text((graphNum+1) + "/" + howManyGraphs);
     clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
     if (charts[graphNum] == 0) {
