@@ -9,10 +9,7 @@ console.log(d3); // test if d3 is loaded
   expected = new Array(howManyGraphs);
   page = d3.select('#page');
   
-  document.getElementById('submittions').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('submit').click();
-  });
+
   
   function getGraphIDs(howMany,max) {
     check = 1;
