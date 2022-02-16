@@ -34,7 +34,7 @@ The results page:
 
 ## Results
 
-![alt text](https://github.com/MFaria27/a3-Experiment/blob/main/Img/Results.png?raw=true)
+![alt text](https://github.com/MFaria27/a3-Experiment/blob/main/Img/Results.PNG?raw=true)
 
 I had some trouble getting a proper bootstrapped 95% confidence interval on ggplot2, but as these results show, the bar chart did infact had the lowest average error. Pie charts and stacked bar charts were significantly behind the bar chart error, but they weren't to0 far apart from each other.
 
