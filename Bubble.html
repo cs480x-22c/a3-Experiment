@@ -124,7 +124,7 @@ var svg = d3.select("svg")
       .attr("cy", function (d) { return y(d.val1); } )
       .attr("r", function (d) { return d.val2; } )
 	  .attr("stroke", "black")
-      .style("fill", function(d){ if(d.val2 == point1 || d.val2 == point2){return "grey"}return "None";});
+      .style("fill", function(d){ if(d.val2 == point1 || d.val2 == point2){return "grey"}return "None"};);
 
 }
 
