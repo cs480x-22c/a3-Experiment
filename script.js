@@ -9,8 +9,6 @@ console.log(d3); // test if d3 is loaded
   expected = new Array(howManyGraphs);
   page = d3.select('#page');
   
-
-  
   function getGraphIDs(howMany,max) {
     check = 1;
     counter = 0;
