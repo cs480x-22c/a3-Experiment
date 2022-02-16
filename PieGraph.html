@@ -138,6 +138,7 @@ function generatePieGraph(){
             
     arc.append("text")
         .attr("transform", function(d) {  return "translate(" + label.centroid(d) + ")"; })
+	.attr("text-size", "50px")
 	.text(function(d) { if (d.data.num == 2|| d.data.num == 4) {return "·" } return "";});
 
  }
