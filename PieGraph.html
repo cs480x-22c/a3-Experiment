@@ -136,7 +136,7 @@ function generatePieGraph(){
 
             
     arc.append("text")
-	 .text(function(d) { if (data[d] == data[2] || data[d] == data[4]) {return "·" } return "";})
+	 .text(function(d) { if (d.num == 2|| d.num == 4) {return "·" } return "";})
         .attr("transform", function(d) { 
         return "translate(" + label.centroid(d) + ")"; 
     })
