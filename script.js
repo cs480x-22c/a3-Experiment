@@ -1,4 +1,7 @@
-console.log(d3); // test if d3 is loaded
+//This Javascript File is not attached to the index.html, as the same code below is in a <script> in the html file
+//For some reason linking this file to the index breaks some of the code and I can't see why
+
+  console.log(d3); // test if d3 is loaded
   width = 400;
   height = 450;
   howManyGraphs = 20;
@@ -9,6 +12,11 @@ console.log(d3); // test if d3 is loaded
   expected = new Array(howManyGraphs);
   page = d3.select('#page');
   
+  document.getElementById('submittions').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('submit').click();
+  });
+
   function getGraphIDs(howMany,max) {
     check = 1;
     counter = 0;
