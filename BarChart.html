@@ -95,9 +95,10 @@ function generateGraph(){
         .attr('class', 'bar')
 	.attr("style", "outline: solid black;")		
         .style('height', function (d) { return d * 400 + 'px';})
+    	.style("background-color", "white")
         //.style('background-color', function(d){ if(d == point1 || d == point2){ return "grey"}return "white";})
     	.append("text")
-   	 .attr("font-size","75px")
+   	.style("font-size","75px")
      	.text(function(d) { if(d == point1 || d == point2) {return "·" } return "";});
 	}
 
