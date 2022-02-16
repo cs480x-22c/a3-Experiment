@@ -141,7 +141,10 @@
       .attr('x', function(d) { return xScale(d.index); } )
       .attr('y', function(d) { return yScale(d); } )
       .attr("width", xScale.bandwidth())
-      .attr("height", function(d) { return 350 - yScale(d); });
+      .attr("height", function(d) { return d; })
+      .attr('fill','white')
+      .attr('stroke','black')
+      .attr('stroke-width', 1);
   }
   
   function drawStack (percents, m1, m2){
