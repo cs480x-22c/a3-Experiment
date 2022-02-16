@@ -180,12 +180,14 @@
   }
   
   function drawStack (percents, m1, m2){
-    console.log(percents);
-    colors = ['blue', 'orange','green','red','purple','yellow', 'pink', 'gray', 'brown', 'cyan'];
-    counter = -1;
+    d3.select('svg').selectAll('*').remove();
+    
     currY = ((-4) * percents[0]) + 25;
     lastY = percents[0];
-    d3.select('svg').selectAll('*').remove();
+    counter = 0;
+    mark1Y = 0;
+    mark2Y = 0;
+    
     d3.select('svg').append('rect')
       .attr('x', 100)
       .attr('y', 25)
@@ -202,6 +204,15 @@
       .attr('y', function(d) {
         currY += lastY*4;
         lastY = d;
+      
+        if (counter == m1) {
+          mark1Y = currY + d*2;
+        }
+        if (counter == m2) {
+          mark2Y = currY + d*2;
+        }
+        counter++;
+      
         return currY;
       })
       .attr('width',200)
@@ -209,12 +220,20 @@
         return d*4;
       })
       .attr('fill','white')
-      .attr('stroke', function(d) {
-        counter++;
-        return colors[counter];
-      })
+      .attr('stroke', 'black')
       .attr('stroke-width', 2);
-      
+    d3.select('svg').append('circle')
+      .attr('cx', 200)
+      .attr('cy', mark1Y)
+      .attr('r', 3)
+      .attr('stroke','black')
+      .attr('stroke-width',2);
+    d3.select('svg').append('circle')
+      .attr('cx', 200)
+      .attr('cy', mark2Y)
+      .attr('r', 3)
+      .attr('stroke','black')
+      .attr('stroke-width',2);
   }
   
   d3.select('#agree')
