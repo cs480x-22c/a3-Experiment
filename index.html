@@ -65,6 +65,7 @@
   function drawG (data) {
     clean = (data[ids[graphNum]].data).substring(1, (data[ids[graphNum]].data).length-1).split(",");
     clean = clean.map(datapoint => Number(datapoint));
+    charts[graphNum] =1;
     if (charts[graphNum] == 0) {
       drawPie(clean, parseInt(data[ids[graphNum]].mark1), parseInt(data[ids[graphNum]].mark2));
     }
@@ -116,7 +117,7 @@
   
   function drawBar (percents, m1, m2){
     d3.select('svg').selectAll('*').remove();
-    g = svg.append("g")
+    g = d3.select('svg').append("g")
       .attr("transform", "translate(100,100)");
     xScale = d3.scaleBand().range([0, 400]);
     yScale = d3.scaleLinear().range([450,0]);
