@@ -122,14 +122,14 @@
     xScale = d3.scaleBand().range([0, 300]);
     yScale = d3.scaleLinear().range([350,0]);
     
-    xScale.domain(percents.map(function(d) { return d.index; }));
+    xScale.domain([0, percents.length-1]);
     yScale.domain([0, d3.max(percents, function(d) { return d })]);
     
     g.append('g')
       .attr('transform','translate(0,350)')
       .call(d3.axisBottom(xScale));
     g.append('g')
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yScale).ticks(0));
   }
   
   function drawStack (percents, m1, m2){
