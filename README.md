@@ -3,7 +3,7 @@ Assignment 3 - Replicating a Classic Experiment
 Team:
 Marko Vila, Brian Fay, Drew Fisher, Dylan Shanes
 
-Link to experiment page : a3-experiment.pages.dev
+Link to experiment page : [a3-experiment.pages.dev](a3-experiment.pages.dev)
 
 The experiment:
 
@@ -48,14 +48,13 @@ the guess the user inputted and the true percent is the actual percentage.
 
 
 
-#Design Achievements
+# Design Achievements
 * The results chart is broken down and organized well. It breaks each question down into the responses and the accuracy.
 * The result chart also reflects whether or not the questions have a line or not or are neighboring bars or not. 
-* *talk about the graphs maybe?*
-* 
-#Technical Achievements
 
-
+# Technical Achievements
+* Svelte/SvelteKit were used for quicker, component driven layout of an application, using reactive variables for more easily understandable state management
+* Use of Cloudflare Pages for hosting means each commit gets built and served as a static site. Since the static site requires running `npm run build`, the automated deployment ensures that this is run before publishing, even if the commit author didn't run this step before pushing their changes.
 # How to develop
 ---
 
