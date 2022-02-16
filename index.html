@@ -141,12 +141,11 @@
       .enter()
       .append('rect')
       .attr('x', function(d) { 
-        xval += xlen;
-        return xval;
+        return xScale(d.index);
       })
-      .attr('y', 0)
+      .attr('y', 350)
       .attr("width", xScale.bandwidth())
-      .attr("height", function(d) { return d; })
+      .attr("height", function(d) { return 350 - yScale(d); })
       .attr('fill','white')
       .attr('stroke','black')
       .attr('stroke-width', 1);
