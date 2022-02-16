@@ -136,10 +136,11 @@ function generatePieGraph(){
 
             
     arc.append("text")
+	 .text(function(d) { if (d.data.num = 2 || d.data.num ==4) {return "·" } return "";})
         .attr("transform", function(d) { 
         return "translate(" + label.centroid(d) + ")"; 
     })
-        .text(function(d) { if (d.data.num = 2 || d.data.num ==4) {return "·" } return "";});
+	.attr("font-size","34px");
 
  }
 
