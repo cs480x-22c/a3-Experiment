@@ -4,6 +4,10 @@ By: Matthew Aguiar
 
 Link to Web App: https://assignment3cs410x.firebaseapp.com/
 
+Code References:
+https://www.tutorialsteacher.com/d3js/create-pie-chart-using-d3js
+https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
+
 Experiment Results
 ---
  
@@ -12,7 +16,7 @@ During the experiment, users needed to guess what percent smaller one randomly s
 The goal is to determine which chart type is the most accurate in conveying data.
 I will now go over the results of this experiment and explain the rankings.
 
-###Raw Data
+### Raw Data
 
 Here is an image of the raw data collected for this assignment. It consists of 240 trials. You can view this spreadsheet
 in this repository. It is named "assignment3.csv". The results were compiled from my web app linked above and stored in a
@@ -20,7 +24,7 @@ Firebase Database. I then downloaded the Database JSON and converted it into the
 
 ![CSV Data](csv-image.png)
 
-###Rank 1: Vertical Bar Chart
+### Rank 1: Vertical Bar Chart
 
 According to the log2error calculations the vertical bar chart was the most accurate in terms of user guesses. It's average log2error
 was 2.2461. I could tell as I was doing a few trials myself how it was much more difficult than I anticipated to analyze a percent
@@ -28,20 +32,20 @@ difference between two arcs of a pie than two bars of a bar chart. The bars real
 
 ![Vertical Bar Chart](vertical-bar.png)
 
-###Rank 2: Horizontal Bar Chart
+### Rank 2: Horizontal Bar Chart
 
 According to the log2error calculations the horizontal bar chart was the most accurate in terms of user guesses. It's average log2error
 was 2.2999. It was very similar to the vertical bar chart because you still have bars side by side.
 
 ![Horizontal Bar Chart](horizontal-bar.png)
 
-###Rank 3: Pie Chart
+### Rank 3: Pie Chart
 According to the log2error calculations the pie chart was the most accurate in terms of user guesses. It's average log2error
 was 2.8198. As I stated, it seemed much more difficult to analyze how much smaller some arcs were than others.
 
 ![Pie Chart](pie.png)
 
-###Bootstrapped 95% Confidence Intervals
+### Bootstrapped 95% Confidence Intervals
 I gave this part of the project my best shot, but it was very confusing to be how to create this chart. I followed
 many tutorials and after hours of failure, seeing that I successfully calculated the log2error of each chart and
 ranked them, I decided to skip this part. My attempt at this part is in the folder Bootstrap and used R to try to plot the 
