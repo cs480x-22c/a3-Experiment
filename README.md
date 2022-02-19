@@ -25,22 +25,30 @@ The bar chart is also created from the data in a csv file. The bar heights are s
 The website consists of 6 different graphs, the colored stacked bar chart, grayscale stacked bar chart, colored pie chart, grayscale pie chart, colored bar chart, and the grayscale bar chart. In order to assist the user on which two portions of the graphs they were comparing we decided to include asterisks to highlight the two specific portions. We phrased the questions as “how many times bigger is the bigger portion than the smaller portion”. We felt that this was a better way to phrase it than using percentages because it is a lot less complicated for someone to say how much bigger something is than having to deal with percentages. We wanted the user experience to be as simple as possible. This is why when the user enters their answer, the graph simply goes away so that they can move onto the next question as efficiently as possible without having to think of any other buttons to press and have their full concentration on the experiment. At the end of the experiment, their results are compiled in the form of a csv that consists of the following data points:
 
 
-Participant Number: the id of the participant
-Chart Number: the specific chart that the answer correlates to
-1 = Colored Stacked Bar Chart
-2 = Grayscale Stacked Bar Chart
-3 = Colored Pie Chart
-4 = Grayscale Pie Chart
-5 = Colored Bar Chart
-6 = Grayscale Bar Chart
-True Value: The correct answer of how many times bigger the bigger portion is
-Observed Value: the value that the user entered
-Error Rate: the error rate that was calculated
+- Participant Number: the id of the participant
+- Chart Number: the specific chart that the answer correlates to
+    - 1 = Colored Stacked Bar Chart
+    - 2 = Grayscale Stacked Bar Chart
+    - 3 = Colored Pie Chart
+    - 4 = Grayscale Pie Chart
+    - 5 = Colored Bar Chart
+    - 6 = Grayscale Bar Chart
+- True Value: The correct answer of how many times bigger the bigger portion is
+- Observed Value: the value that the user entered
+- Error Rate: the error rate that was calculated
 
 
 # R Graphs and Analysis
+We decided to create a boxplot with jitter of each chart type, graphing the error values using the ggpubr package, a cousin if you will of ggplot2. The box plot is great in that it shows the mean, range, error, and confidence intervals all on the same graph. The jitter also allows us to see all the data points on each chart, showing us any outliers that might be skewing the data. 
+It was found that the Colored Bar Chart, Colored Pie Chart, and Gray stacked bar chart were interpreted the easiest. This can be seen by the smaller variance as depicted by the smaller size of the boxes. This supports our hypothesis that the colored charts will be interpreted with more success than those with no color. This can be seen with the colored bar chart as well as the colored pie chart. 
+In addition to this, we hypothesized that the bar charts would have more success than the other charts. This can also be seen as the colored bar chart was the one that had the most success. We found that the Gray Stacked Bar Chart also performed very well which was unexpected. We think the chart may have been easier to interpret because it was a horizontal stacked bar chart rather than a vertical stacked bar chart. This would allow the user to use the height of the chart as a commonality when comparing the two sections of the chart. In addition to this, we were surprised to see how much variance there was in the colored stacked bar chart. 
+In general, the gray charts are seen to have more variance than the colored charts as predicted. The colored stacked bar chart had a lot of variance, which was unpredicted. We think this may have been because the red color did not pop enough in comparison to the other colors used in the stacked bar chart, making it more difficult for the user to interpret the graph. Also we think this may have been because there were too many colors associated with the stacked bar and it was confusing for the user to have the portions laid out horizontally to compare the different sizes.
+
 ![Screenshot (58)](https://user-images.githubusercontent.com/48228807/154776583-b438e5a3-916a-4063-a60f-8b0cde516c62.png)
 
+# Discussion 
+When looking back over the instructions for this assignment, we had not released that 200 trials per visualization type in total where needed. We were not able to reach this goal, but were able to get 29 participants to take the quiz, totalling 29 trials per visualization. 
+In the future, to improve this experiment we would run more trials on each of the visualizations to collect more data and also have varying data sets. 
 
 GitHub Details
 ---
