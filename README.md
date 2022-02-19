@@ -1,95 +1,57 @@
-Assignment 3 - Replicating a Classic Experiment  
-===
+## Web Link 
+https://gabi246.github.io/a3-Experiment/ 
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
+# Hypothesis 
+Our study will focus on which type of graph is easiest to interpret and if color impacts the user’s ability to interpret the graph. We will be comparing Bar graphs, Stacked Bar Charts, and Pie Charts. For our two trials of each chart, we will be using gray and red to act as the color variable in our study. We decided to choose red because of its brightness and notability to be associated with being quick (like Lightning McQueen :) ). 
 
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
+We hypothesize that the Bar graph will be interpreted the easiest followed by the pie chart then the stacked bar chart. We are also hypothesized that the charts using color will be interpreted with more success than those with no color. 
 
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
+# Data Generation 
+The data that is used to generate the pie chart, bar chart, and stacked bar chart is generated from an R file. The values are randomly generated from 0 to 100 and then saved to a csv file. \
 
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
+# Stacked Bar Chart
+In making a stacked bar chart, I first created a custom object that structured those values in the csv so they would be easier to extract when building the stacked bar chart. This object consisted of a label depicting each portion of the stacked bar, the value which was the numeric value or how long each portion of the stacked bar was, and finally a boolean value titled chosen which was true if it was one of the two portions of the graph that was being compared. This was data was then passed into the function that actually created the stacked bar that checked the csv and if the “chartNum” value was set to 1 it would make a colored stacked bar chart and if the “chartNum” value was set to 2 it would make a grayscale stacked bar chart. The way the graph is structured is through creating a bunch of rectangles next to each other that is contained in an svg using d3. 
 
-Going Beyond Cleveland-McGill
----
+![Screenshot (59)](https://user-images.githubusercontent.com/48228807/154776685-4530394d-5b66-42c6-8e41-5a5350f098b0.png)
 
-Several have expressed interest in conducting surveys of various sorts. I encourage you go move beyond Cleveland and McGill if you can think of other interesting visualization experiment designs and corresponding analyses. 
+# Pie Chart
+The Pie Chart is created from data in a csv file. The arclength for each of the slices in the pie chart are calculated using a d3 arc library from the total radius from the width and height of the svg element. Next, when filling the chart with a color, it depends on what the chart number is. If the chart number is three, then the pie chart is filled with color. But if the chart number is four, then the pie chart is filled with gray. The asterisk is then applied to the on the slices that are going to be compared and if the chart is colored, the slices also turn red. 
 
-You might study how people interpret COVID visualizations, for example.
-If you decide to go in a custom route, simply contact staff so we can help you set acceptable parameters.
-Basically, we still want you to do a multi-trial study with each participant, to raise the chance that you get solid results.
-How you measure "error" and similar facets also matter. But you can't go wrong with finding a visualization study online to start from :)
+![Screenshot (60)](https://user-images.githubusercontent.com/48228807/154776792-1e9f357f-2b49-4b97-b0d9-f9512ecfc4cd.png)
 
-Requirements
----
+# Bar Chart
+The bar chart is also created from the data in a csv file. The bar heights are scaled to fit the svg file. In a similar way to the pie chart, the bar chart determines whether or not it is colored or gray using the chart number.
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+![Screenshot (61)](https://user-images.githubusercontent.com/48228807/154776795-9baed3e8-6f26-4e4c-98b1-8555b91c0817.png)
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
+# Web Interface 
+The website consists of 6 different graphs, the colored stacked bar chart, grayscale stacked bar chart, colored pie chart, grayscale pie chart, colored bar chart, and the grayscale bar chart. In order to assist the user on which two portions of the graphs they were comparing we decided to include asterisks to highlight the two specific portions. We phrased the questions as “how many times bigger is the bigger portion than the smaller portion”. We felt that this was a better way to phrase it than using percentages because it is a lot less complicated for someone to say how much bigger something is than having to deal with percentages. We wanted the user experience to be as simple as possible. This is why when the user enters their answer, the graph simply goes away so that they can move onto the next question as efficiently as possible without having to think of any other buttons to press and have their full concentration on the experiment. At the end of the experiment, their results are compiled in the form of a csv that consists of the following data points:
 
-## General Requirements
 
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
+- Participant Number: the id of the participant
+- Chart Number: the specific chart that the answer correlates to
+    - 1 = Colored Stacked Bar Chart
+    - 2 = Grayscale Stacked Bar Chart
+    - 3 = Colored Pie Chart
+    - 4 = Grayscale Pie Chart
+    - 5 = Colored Bar Chart
+    - 6 = Grayscale Bar Chart
+- True Value: The correct answer of how many times bigger the bigger portion is
+- Observed Value: the value that the user entered
+- Error Rate: the error rate that was calculated
 
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
 
-Background
----
+# R Graphs and Analysis
+We decided to create a boxplot with jitter of each chart type, graphing the error values using the ggpubr package, a cousin if you will of ggplot2. The box plot is great in that it shows the mean, range, error, and confidence intervals all on the same graph. The jitter also allows us to see all the data points on each chart, showing us any outliers that might be skewing the data. 
+It was found that the Colored Bar Chart, Colored Pie Chart, and Gray stacked bar chart were interpreted the easiest. This can be seen by the smaller variance as depicted by the smaller size of the boxes. This supports our hypothesis that the colored charts will be interpreted with more success than those with no color. This can be seen with the colored bar chart as well as the colored pie chart. 
+In addition to this, we hypothesized that the bar charts would have more success than the other charts. This can also be seen as the colored bar chart was the one that had the most success. We found that the Gray Stacked Bar Chart also performed very well which was unexpected. We think the chart may have been easier to interpret because it was a horizontal stacked bar chart rather than a vertical stacked bar chart. This would allow the user to use the height of the chart as a commonality when comparing the two sections of the chart. In addition to this, we were surprised to see how much variance there was in the colored stacked bar chart. 
+In general, the gray charts are seen to have more variance than the colored charts as predicted. The colored stacked bar chart had a lot of variance, which was unpredicted. We think this may have been because the red color did not pop enough in comparison to the other colors used in the stacked bar chart, making it more difficult for the user to interpret the graph. Also we think this may have been because there were too many colors associated with the stacked bar and it was confusing for the user to have the portions laid out horizontally to compare the different sizes.
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+![Screenshot (58)](https://user-images.githubusercontent.com/48228807/154776583-b438e5a3-916a-4063-a60f-8b0cde516c62.png)
 
-![cleveland bar chart](img/cleveland-bar.png)
-
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
-
-![cleveland table](img/cleveland-table.png)
-
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
-
-![cleveland equation](img/cleveland-equation.png)
-
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
-
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
-
-![cleveland results](img/cleveland-results.png)
+# Discussion 
+When looking back over the instructions for this assignment, we had not released that 200 trials per visualization type in total where needed. We were not able to reach this goal, but were able to get 29 participants to take the quiz, totalling 29 trials per visualization. 
+In the future, to improve this experiment we would run more trials on each of the visualizations to collect more data and also have varying data sets. 
 
 GitHub Details
 ---
