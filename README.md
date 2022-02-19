@@ -1,3 +1,6 @@
+## Web Link 
+https://gabi246.github.io/a3-Experiment/ 
+
 # Hypothesis 
 Our study will focus on which type of graph is easiest to interpret and if color impacts the user’s ability to interpret the graph. We will be comparing Bar graphs, Stacked Bar Charts, and Pie Charts. For our two trials of each chart, we will be using gray and red to act as the color variable in our study. We decided to choose red because of its brightness and notability to be associated with being quick (like Lightning McQueen :) ). 
 
