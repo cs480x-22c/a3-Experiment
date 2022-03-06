@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<script type="text/javascript" src="app.js"></script>
+<meta name="viewport" content="width=device-width" charset="utf-8">
+   
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+
+<style>
+	
+	#container {
+		width:100%;
+		text-align: center;
+		display: flex;
+  		justify-content: center;
+		display: inline-block;
+		font-family: 'Quicksand', sans-serif;
+	}
+</style>
+
+<html lang="en">
+<title>Results</title>   
+<body onload="sendInput()" method>
+
+<div id="container">
+  <h1>Results</h1><br>
+  <div id="text"></div>
+  <ol id="ol">
+    <li>data: </li>
+  </ol>
+  <a href="/">Start Over</a></div>
+</body>
+
+<script> 
+
+function sendInput() {
+    
+    obj =  window.localStorage.getItem("trial: ");
+    console.log(obj);
+            
+  let liLast = document.createElement('li');
+  ol.append(liLast);
+  liLast.innerHTML = obj;}
+</script>
+</html>

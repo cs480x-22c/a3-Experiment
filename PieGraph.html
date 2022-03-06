@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"  crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width" charset="utf-8">
+
+	<script type="text/javascript" src="app.js"></script>
+
+	<style type="text/css">
+		.container {
+       		text-align: center;
+			display: flex;
+  			justify-content: center;
+			font-family: 'Quicksand', sans-serif;
+		}
+		.input {
+    		display: inline-block;
+		}
+		.btn {
+			margin-top: 10px;
+			display: flex;
+  			justify-content: center;
+		}
+		.graph{
+			display: block;
+			height: 400px;
+			width: 600px;
+			margin-left: auto;
+ 		    margin-right: auto;
+		}
+
+	</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+
+</head>
+<title>PieGraph</title>  
+<body onload="start()">
+	<svg class="graph" width="500" height="400"></svg>
+	<p class="container">Please input how much smaller you think the indicated slice is from the larger one</p><br>
+	<form id="form" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSem31Rwenl8ys0SmFXxWK8wpimxpvQew6HCI0Dc5MEkXb3uMg/formResponse" target="hidden_iframe"onsubmit="submitted=true;">
+		<div class="container">
+		<input type="text" name="entry.1400593830" id="userInput" class="input" title="input"></input>
+			<p class="input">   %</p>
+		<input hidden type="text" name="entry.1119470707" id="per" class="per" title="per"></input>
+		<input hidden type="text" name="entry.560768253" value="piechart" id="chart" class="bc" title="bc"></input>
+		</div>
+		<div class="btn">
+			<button type="submit">Submit</button>
+			<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/PieGraph.html';}"></iframe>
+			<a href='/a3-Experiment/Bubble.html'>Next</a>	
+		</div>
+	</form>	
+</body>
+</html>
+
+<script>
+
+console.log(d3);
+// Random Dataset
+var r1 = (Math.random());
+var r2 =  (Math.random());
+var r3 =  (Math.random());
+var r4 =  (Math.random());
+var r5 =  (Math.random());
+var sum = (r1+ r2+ r3+ r4+ r5); 
+r1 = r1 / sum * 100;
+r2 = r2 / sum * 100;
+r3 = r3 / sum * 100;
+r4 = r4 / sum * 100;
+r5 = r5 / sum * 100;
+var data = [
+	{num: 1, val: r1},
+	{num: 2, val: r2},
+	{num: 3, val: r3},
+	{num: 4, val: r4},
+	{num: 5, val: r5}
+];
+
+var p1 =data[Math.floor(Math.random() * 5)];
+var p2 =data[Math.floor(Math.random() * 5)];
+var point1 = p1.val;
+var point2 = p2.val;
+
+
+while (point1 == point2){
+    point2 = data[Math.floor(Math.random() * 5)].val;
+}
+
+console.log(data);
+console.log(point1);
+console.log(point2);
+	
+function start() {
+	generatePieGraph();
+	calcInput();
+}
+
+function generatePieGraph(){
+    // Display data
+	var svg = d3.select("svg"),
+            width = svg.attr("width"),
+            height = svg.attr("height"),
+            radius = 150;
+
+			var ordScale = d3.scaleOrdinal()
+                            .domain(data)
+                            .range(['white','grey','white','grey','white']);
+
+	var g = svg.append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+	var pie = d3.pie().value(function(d) { 
+		return d.val; 
+    });
+
+    var arc = g.selectAll("arc")
+        .data(pie(data))
+		.enter().append("g")
+        .attr("class", "arc")
+
+	var path = d3.arc()
+	    .outerRadius(radius)
+        .innerRadius(0);
+
+    arc.append("path")
+        .attr("d", path)
+		.attr("stroke", "black")
+		.attr("fill", function(d) { return ordScale(d.data.val); });
+	
+
+
+	var label = d3.arc()
+        .outerRadius(radius)
+        .innerRadius(0);
+
+            
+//     arc.append("text")
+//         .attr("transform", function(d) {  return "translate(" + label.centroid(d) + ")"; })
+// 	.attr("font-size", "75px")
+// 	.text(function(d) { if (d.data.num == 2|| d.data.num == 4) {return "·" } return "";});
+
+ }
+
+function calcInput() {
+    var percent = 100 - (Math.min(point1, point2) / Math.max(point1, point2) * 100);
+    document.getElementById("per").setAttribute("value", percent);
+    
+	var input = document.getElementById("userInput").value;
+	var results = [input, percent, "piechart"]
+	console.log(results);
+
+}
+
+</script>

@@ -1,13 +1,52 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width" charset="utf-8">
 
 <style>
+	#container {
+		width:100%;
+		text-align: center;
+		display: flex;
+  		justify-content: center;
+		display: inline-block;
+		font-family: 'Quicksand', sans-serif;
+	}
 </style>
+<script src="https://d3js.org/d3.v7.min.js"  charset="utf-8" crossorigin="anonymous"></script>
+<html lang="en">
+	<title>Home Page</title>  
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet"charset="utf-8" crossorigin="anonymous">
+<script type="text/javascript" src="app.js"></script>
+<div id="container">
+  <h1>Experiment</h1><br>
+  <p> In this experiment, you will be asked to judge the size difference between two points on a graph</p><br>
+  <p> Your input should represent the percentage of size of the smaller point from the larger point</p><br>
+  <p> For example, the smaller circle here is 50% of the size of the larger circle</p><br>
+  <p> IMPORTANT: To record your answer, click "submit". To go to the next question after submitting, click "next"</p><br>
+  <canvas id="circles" width="100" height="100"></canvas>
 
-<body>
-  <h1> Experiment </h1>
+  <canvas id="circles1" width="100" height="100"></canvas><br> 
+  <a href="/a3-Experiment/BarChart.html">Start</a>
+
+</div>
 </body>
+</html>
 
 <script>
-  console.log(d3); // test if d3 is loaded
-</script>
+
+	var canvas = document.getElementById("circles");
+	if (canvas.getContext)
+	{	var con=canvas.getContext("2d");
+		con.beginPath();
+		con.arc(50, 50, 10, 0, 2 * Math.PI, false);
+		con.stroke();
+	}
+	var canvas = document.getElementById("circles1");
+	if (canvas.getContext)
+	{	var con=canvas.getContext("2d");
+		con.beginPath();
+		con.arc(50, 50, 20, 0, 2 * Math.PI, false);
+		con.stroke();
+	}
+	
+
+</script> 

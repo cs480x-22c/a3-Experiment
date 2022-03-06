@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"  crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width" charset="utf-8">
+
+	<script type="text/javascript" src="app.js"></script>
+
+	<style type="text/css">
+		.container {
+       		text-align: center;
+			display: flex;
+  			justify-content: center;
+			font-family: 'Quicksand', sans-serif;
+		}
+		.input {
+    		display: inline-block;
+		}
+		.btn {
+			margin-top: 10px;
+			display: flex;
+  			justify-content: center;
+		}
+		.graph{
+			display: block;
+			height: 400px;
+			width: 600px;
+			margin-left: auto;
+ 		    margin-right: auto;
+		}
+
+	</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" charset="utf-8" crossorigin="anonymous">
+
+</head>
+<title>Bubble Plot</title>  
+<body onload="start()">
+	<svg class="graph" width="500" height="400"></svg>
+	<p class="container">Please input how much smaller you think the indicated circle is from the larger one</p><br>
+	<form id="form" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSem31Rwenl8ys0SmFXxWK8wpimxpvQew6HCI0Dc5MEkXb3uMg/formResponse" target="hidden_iframe" onsubmit="submitted=true;">
+	<div class="container">
+		<input type="text" name="entry.1400593830" id="userInput" class="input" title="input"></input>
+		<p class="input">   %</p>
+		<input hidden type="text" name="entry.1119470707" id="per" class="per" title="per"></input>
+		<input hidden type="text" name="entry.560768253" value="bubblegraph" id="chart" class="bc" title="bc"></input>
+	</div>
+	<div class="btn">
+		<button type="submit">Submit</button>
+		<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/a3-Experiment/Bubble.html';}"></iframe>
+		<a href='/a3-Experiment/index.html'">Finish</a>
+	</div>
+</form>	
+</body>
+</html>
+
+<script>
+
+console.log(d3);
+// Random Dataset
+var data = [
+	{num: 1, val1:  Math.random() * 100, val2: (Math.random()) * 100},
+	{num: 2, val1:  Math.random() * 100, val2: (Math.random()) * 100},
+	{num: 3, val1:  Math.random() * 100, val2: (Math.random()) * 100},
+	{num: 4, val1:  Math.random() * 100, val2: (Math.random()) * 100},
+	{num: 5, val1:  Math.random() * 100, val2: (Math.random()) * 100}
+];
+
+
+var point1 = data[2].val2;
+var point2 = data[4].val2;
+console.log(point1);
+console.log(point2);
+
+function start() {
+	generateBubble();
+	calcInput();
+}
+
+function generateBubble(){
+	// set the dimensions and margins of the graph
+    var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width = 500 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("svg")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+		    // Add X axis
+  var x = d3.scaleLinear()
+    .domain([1, 5])
+    .range([ 10, width ]);
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickValues([]));
+
+  // Add Y axis
+  var y = d3.scaleLinear()
+    .domain([1, 100])
+    .range([ height, 10]);
+  svg.append("g")
+    .call(d3.axisLeft(y).tickValues([]));
+
+	
+  // Add a scale for bubble size
+  var z = d3.scaleLinear()
+    .domain([10, 20])
+    .range([ 1, 20]);
+
+  // Add dots
+  svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+      .attr("cx", function (d) { return x(d.num); } )
+      .attr("cy", function (d) { return y(d.val1); } )
+      .attr("r", function (d) { return d.val2; } )
+      .attr("stroke", "black")
+      .style("fill", function(d){ if(d.val2 == point1 || d.val2 == point2){return "grey"}return "white"});
+
+}
+
+
+
+function calcInput() {
+    var input = document.getElementById("userInput").value;
+    var percent = (100 -(Math.min(point1, point2) / Math.max(point1 , point2)) * 100);
+    var p = document.getElementById("per");
+    p.setAttribute("value", percent);					    
+						       
+    var results = [input, percent, "bubble"]
+    console.log(results);
+}
+  
+  
+</script>
