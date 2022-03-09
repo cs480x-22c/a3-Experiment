@@ -1,81 +1,42 @@
-Assignment 3 - Replicating a Classic Experiment  
+Experiment Information
 ===
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
+Link to website, hosted on glitch: https://a3experiment.glitch.me/
 
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
+This application used d3.js and html in the front-end and node.js, express.js, and mongoose in the back-end. We utilized html to create the survey and transition between different graphs that were made using d3. During the survey, the plots were each marked with 2 dots, signifying which parts of the chart we wanted to compare. The data was collected during the survey and sent to the server when the survey was submitted. After the data was sent to the server using a POST request, we parsed the data and put it in a mongoDB server. Then, we used mongoDB tools to convert it into a csv file so as to analyze the results using both the bootstrapped log2 error distribution used by Cleveland and McGill and a graph with normal error. 
 
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
+Experiment Results In Order of Performance
+===
 
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
-
-Going Beyond Cleveland-McGill
+Bar
 ---
+![first chart](./bar2.png)
 
-Several have expressed interest in conducting surveys of various sorts. I encourage you go move beyond Cleveland and McGill if you can think of other interesting visualization experiment designs and corresponding analyses. 
+Our bar chart was our best performing chart. This is similar to Cleveland & McGill's results, as it is easier to compare two bars' height as opposed to other visualizations.
 
-You might study how people interpret COVID visualizations, for example.
-If you decide to go in a custom route, simply contact staff so we can help you set acceptable parameters.
-Basically, we still want you to do a multi-trial study with each participant, to raise the chance that you get solid results.
-How you measure "error" and similar facets also matter. But you can't go wrong with finding a visualization study online to start from :)
-
-Requirements
+Line
 ---
+![first chart](./line2.png)
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+Our line chart was worse in performance compared to the bar chart, but beat out the pie chart by a significant margin. This is reasonable, as similarly to the bar chart, the line chart compares the data vertically. 
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
-
-## General Requirements
-
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
-
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
-
-Background
+Pie
 ---
+![first chart](./pie2.png)
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+Box plots were the worst performing chart out of the three. This could be for a couple reasons, the first theory being the lack of knowledge about how to read a slice of a circle.  Secondly, pie charts could overall be harder to compare sizes due to the lack of alignment between each slice. (The slices weren't always next to each other, creating a different visual effect.) This caused for a wide variability in answers, creating more outliers than the other two charts. Thirdly, as a slice of the chart can be oriented differently, it creates very different visual effects causing the subject to become confused to the true size of the shape. 
 
-![cleveland bar chart](img/cleveland-bar.png)
+Results in detailed graphs
+===
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+error graph
+---
+![first chart](./errorgraph.png)
 
-![cleveland table](img/cleveland-table.png)
+Our bar chart results are very similar to the Cleveland and McGill results, as you can see. Our pie chart results, on the other hand, were marginally poorer than Cleveland and McGill, with a greater spread. According to their technique, they labeled their slices with letters at the halfway of each slice, and their slices were all rather large. In contrast, in our study we only reduced the size of our pie chart segments when they were nearly unnoticeable. These characteristics could have improved graphical perception.
+
+bootstrapped log2 error distribution
+---
 
 __Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
 Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
@@ -83,24 +44,27 @@ To compensate, they came up with a logarithmic scale for error with this equatio
 
 ![cleveland equation](img/cleveland-equation.png)
 
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
+![first chart](./bootstrappedlog2errordistribution.png)
 
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
+## Technical Achievements
+- **Server**: Used Node.JS server with express.JS framework.
+![image](https://user-images.githubusercontent.com/73619173/157150750-cd4a0555-4b80-4170-9c5f-77688a41cbf7.png)
+![image](https://user-images.githubusercontent.com/73619173/157148820-788b5521-9d7c-4b8e-bcc7-b427c1b44618.png)
+![image](https://user-images.githubusercontent.com/73619173/157148850-f1acfac2-9a38-493a-adcc-eba49df1054b.png)
 
-![cleveland results](img/cleveland-results.png)
+- **Database**: Used MongoDB and mongoose to send data to a mongoDB database.
+![image](https://user-images.githubusercontent.com/73619173/157149150-aeb8f4de-3136-4e70-a092-92c6e3199d3c.png)
+![image](https://user-images.githubusercontent.com/73619173/157150498-909b116d-e2e8-4cad-9f0e-8fff2a73d405.png)
 
-GitHub Details
----
+- **Database Tools**: First time using MongoDB tools. Learned how to generate CSV file with selective data fields using the tools. This had to be downloaded separately and set as a root path so it could be used in my terminal.
 
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+- **dotenv**: Used to protect sensitive data information, such as admin username and password.
+![image](https://user-images.githubusercontent.com/73619173/157149665-94c4d5c1-50b9-4c3c-bbce-85f93bbd08d4.png)
+
+- **body-parser**: Used bodyparser to easily parse JSON data being passed from the client to the server.
+
+### Design Achievements
+- We added a counter to tell participants how many questions they had completed and how many were remaining
+- When creating the chart, we kept in mind the need for consistency between different charts, thus, we have a consistent chart design and sizing.
+- Explored how different color can affect graphs but later returned to comparison with dots. 
+- We added our to dots to the middle of the graphs; while this differs from Cleveland and McGill's example, it provided a clearer comparison and improved the users' graphical perception of the object. 

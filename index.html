@@ -1,13 +1,291 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
-
-<style>
-</style>
-
+<!DOCTYPE html>
+<html>
+<head>
+	<title> a3 </title>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
 <body>
-  <h1> Experiment </h1>
+	<header id="header">
+		<h2> Welcome! Please enter a user ID to continue: </h2>
+	</header>
+	<div id ="vis">
+		<svg width="300" height="300" radius="140"> </svg>
+	<script type="text/javascript">
+		let svg = d3.select("svg");
+		/*let colorSet = ["#FF0000","#0000FF","#f2f2f2","#e2e2e2","#cecece",
+				        "#b4b4b4","#979797","#7a7a7a","#5f5f5f","#404040"];*/
+		let colorSet = ["#fff", "#fff", "#fff", "#fff", "#fff", "#fff", "#fff", "#fff", "#fff", "#fff"]
+		let data = [];
+		let trial_num = 0;
+		let vis_type = "";
+		let trials = {};
+		const trials_per_chart_type = 20;
+		let completed_trials = [0,0,0];
+		let participant_id = false;
+		function make_data()
+		{
+			let count = Math.floor(6 * Math.random() + 5);
+			data = [count];
+			for(i = 0 ; i < count ; i++) { data[i] = 15 + Math.floor(Math.random() * 85); }
+			return data;
+		}
+		function remove_chart()
+		{
+			svg.selectAll("*").remove();
+		}
+		function create_pie_chart(data)
+		{
+			vis_type = "Pie";
+			var svg = d3.select("svg");
+			let g = svg.append("g").attr("transform","translate(150,150)");
+			var pie = d3.pie();
+			var arc = d3.arc().innerRadius(0).outerRadius(140);
+			var arcs = g.selectAll("arc").data(pie(data)).enter().append("g");
+			arcs.append("path").attr("fill", "white")
+				.style("stroke", "black")
+				.style("stroke-width", 2)
+				.attr("d", arc);
+			// Dot adding code based on number adding code from https://www.geeksforgeeks.org/d3-js-pie-function/
+			arcs.append("circle")
+				.attr("transform",(d)=>{ 
+                    return "translate("+ 
+                    arc.centroid(d) + ")"; 
+				})
+				.attr("r", 2.5)
+				.style("stroke", "none")
+				.style("fill", (d,i) => {
+					if (i <= 1) {
+						return "black";
+					} else {
+						return "none";
+					}
+				});
+		}
+		function create_bar_chart(data)
+		{
+			vis_type = "Bar";
+			let y_scale = d3.scaleLinear().domain([0, 100]).range([220, 0]).nice();
+			const point = svg.selectAll("rect").data(data).join("rect")
+				.style("stroke", "black")
+				.attr("fill", "white")
+				.attr("x", function(d, i) { return 40 + 20 * i + 5 * (i + 1); })
+				.attr("y", function(d) { return 40 + y_scale(d); })
+				.attr("width", 20)
+				.attr("height", function(d) { return y_scale(100 - d); });
+			var y_axis = d3.axisLeft(y_scale).ticks(1).tickFormat(d => "");
+			svg.append("g").attr("transform", "translate(40,40)").call(y_axis);
+			const dots = svg.selectAll("circle").data(data).join("circle")
+				.style("stroke", "none")
+				.attr("r", 2.5)
+				.attr("cx", function(d, i) { return 50 + 20 * i + 5 * (i + 1); })
+				.attr("cy", function(d) { return 40 + y_scale(d/2); })
+				.style("fill", (d,i) => {
+					if (i <= 1) {
+						return "black";
+					} else {
+						return "none";
+					}
+				});
+		}
+        function create_line_plot(data)
+        {
+			vis_type = "Line";
+			var svg = d3.select("svg"), width = svg.attr("width")-40, height = svg.attr("height")-40;
+			var y = d3.scaleLinear().domain([0, 100]).range([220, 0]).nice();
+			svg.append("g")
+				.attr("transform", "translate(40,40)")
+				.call(d3.axisLeft(y).ticks(5).tickFormat(d => ""));
+			var x = d3.scaleLinear()
+				.domain(d3.extent(data, function(d,i) { return i; }))
+				.range([ 0, width ]);
+			//line
+			svg.append("path")
+				.datum(data)
+				.attr("fill", "none")
+				.attr("stroke", "black")
+				.attr("stroke-width", 2)
+				.attr("d", d3.line()
+					.x(function(d, i) { return 40 + 20 * i + 5 * (i + 1); })
+					.y(function(d) { return 40+y(d) }));
+			//dot
+			svg.selectAll("myCircles")
+				.data(data)
+				.enter()
+				.append("circle")
+					.attr("fill", "white")
+					.attr("stroke", "black")
+					.attr("cx", function(d,i) { return 40 + 20 * i + 5 * (i + 1); })
+					.attr("cy", function(d) { return 40+y(d) })
+					.attr("r", 5);
+			svg.selectAll("smolCircles")
+				.data(data)
+				.enter()
+				.append("circle")
+				.attr("stroke", "none")
+				.attr("cx", function(d,i) { return 40 + 20 * i + 5 * (i + 1); })
+				.attr("cy", function(d) { return 40+y(d) })
+				.attr("r", 2.5)
+				.style("fill", (d,i) => {
+					if (i <= 1) {
+						return "black";
+					} else {
+						return "none";
+					}
+				});
+        	}
+		function calculate_ans()
+		{
+			let val1 = data[0];
+			let val2 = data[1];
+			let answer = 100;
+			if( val1 > val2 ) { answer = Math.floor( 100 * val2 / val1 ); }
+			if( val2 > val1 ) { answer = Math.floor( 100 * val1 / val2 ); }
+			return answer;
+		}
+		function submit_vals(input)
+		{
+			sendData(participant_id, (trial_num + 1), vis_type, calculate_ans(), input, Math.log2(Math.abs(calculate_ans() - input) + .125));
+			trial_num++;
+		}
+		function show_complete_message(input)
+		{
+			document.getElementById("header").innerHTML = "<h2> You finished! Congratulations! </h2>";
+			document.getElementById("counter").remove();
+			document.getElementById("form").remove();
+		}
+		function new_chart()
+		{
+			let input = document.getElementById("input");
+			if(data.length > 0 && input.value.length > 0)
+			{
+				submit_vals(input.value);
+				document.getElementById("input").value = '';
+			}
+			else if (data.length > 0)
+			{
+				return;
+			}
+			
+			remove_chart();
+			data = make_data();
+			
+			let unfinished_types = 3;
+			for (let i = 0; i < 3; ++i)
+			{
+				if (completed_trials[i] >= trials_per_chart_type)
+				{
+					--unfinished_types;
+				}
+			}
+			if (unfinished_types == 0)
+			{
+				show_complete_message();
+			}
+			else
+			{
+				update_displayed_counter();
+				let decider = Math.floor(Math.random() * unfinished_types);
+				if (decider == 0)
+				{
+					if (completed_trials[0] < trials_per_chart_type)
+					{
+						create_pie_chart(data);
+						++completed_trials[0];
+					}
+					else if (completed_trials[1] < trials_per_chart_type)
+					{
+						create_bar_chart(data);
+						++completed_trials[1];
+					}
+					else if (completed_trials[2] < trials_per_chart_type)
+					{
+						create_line_plot(data);
+						++completed_trials[2];
+					}
+					else
+					{ console.log("Tried to create a plot of the first unfinished type, but all three types are finished."); }
+				}
+				else if (decider == 1)
+				{
+					if (completed_trials[0] < trials_per_chart_type)
+					{
+						create_bar_chart(data);
+						++completed_trials[1];
+					}
+					else if (completed_trials[1] < trials_per_chart_type)
+					{
+						create_line_plot(data);
+						++completed_trials[2];
+					}
+					else
+					{ console.log("Tried to create a plot of the second unfinished type, but there is no more than one unfinished type."); }
+				}
+				else if (decider == 2)
+				{
+					if (completed_trials[0] < trials_per_chart_type)
+					{
+						create_line_plot(data);
+						++completed_trials[2];
+					}
+					else
+					{ console.log("Tried to create a plot of the third unfinished type, but there are no more than two unfinished types."); }
+				}
+				else { console.log("Invalid plot type"); }
+			}
+		}
+		function onButtonPress()
+		{
+			if (participant_id === false)
+			{
+				// Get participant ID
+				let input = document.getElementById("input");
+				if(input.value.length > 0)
+				{
+					participant_id = input.value;
+					document.getElementById("input").value = '';
+					
+					new_chart();
+					
+					// Set up document
+					document.getElementById("header").innerHTML = '<h2> Two values in the graph have dots. </h2>		<h2> What do you think the percent of the smaller value to the larger value is? </h2>		<h3> e.g. If you think the smaller one is exactly 1/2 of the bigger one, input "50" </h3>';
+				}
+				// If the user didn't enter a participant ID yet, don't generate a chart yet
+			}
+			else
+			{
+				new_chart();
+			}
+		}
+		
+		function update_displayed_counter() {
+			document.getElementById("counter").innerHTML = "Chart " + trial_num + "/" + (3*trials_per_chart_type);
+		}
+		
+		function sendData(participantID, trialN, chartType, actualPercent, enteredPercent, error) {
+			json = { participantID: participantID, trialN: trialN, chartType: chartType, actualPercent: actualPercent, enteredPercent: enteredPercent, error: error},
+			body = JSON.stringify(json);
+			fetch('/newData', {
+	  			method: 'POST',
+	   			headers: {
+					 'Accept': 'application/json, text/plain, */*',
+					 'Content-Type': 'application/json'
+				},
+		   		body: body
+	 		})
+	 		.then(res => res) // parse the JSON from the server
+			.then(data => {
+	   		});
+		}
+	</script>
+	<br>
+	<h3 id="counter"> </h3>
+	<br>
+	<form name="input" id="form" action="javascript:void(null)">
+		<label for="input">Input:</label>
+		<input type="text" id="input" name="input">
+		<input type="submit" value="Submit" onclick="onButtonPress()"/><br/>
+	</form>
+	<h1 id="completemessage"> </h1>
+	</div>
 </body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+</html>
